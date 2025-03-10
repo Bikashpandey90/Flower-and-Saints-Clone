@@ -13,11 +13,30 @@ class ProductService extends HttpService {
         }
     }
 
-    async getProductForHome(page: number) {
+    async getProductForHome(page: number, limit = 10, search: string = '') {
         try {
             const response = await this.getRequest('/product/home-product', {
                 auth: false, params: {
                     page: page,
+                    limit: limit,
+                    search: search
+
+                }
+            }
+
+            )
+            return response
+        } catch (exception) {
+            throw exception
+        }
+    }
+    async getSearchProduct(page: number, limit = 10, search: string = '') {
+        try {
+            const response = await this.getRequest('/product/home-product', {
+                auth: false, params: {
+                    page: page,
+                    limit: limit,
+                    search: search
 
                 }
             }

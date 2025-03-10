@@ -1,4 +1,4 @@
-import { Eye, Heart, ShoppingCart, Star } from "lucide-react";
+import { Heart, ShoppingCart, Star } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
@@ -68,7 +68,7 @@ export function ProductCard({
               className="object-cover transition-transform group-hover:scale-110 h-full w-full"
             />
           </div>
-          {discount && <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">{discount}% off</Badge>}
+          {discount > 0 && <Badge className="absolute top-2 left-2 bg-red-500 hover:bg-red-600">{discount}% off</Badge>}
           {isNew && <Badge className="absolute top-2 left-2 bg-green-500 hover:bg-green-600">New</Badge>}
           {isFeatured && <Badge className="absolute top-2 left-2 bg-purple-500 hover:bg-purple-600">Featured</Badge>}
           {isBestseller && <Badge className="absolute top-2 left-2 bg-amber-500 hover:bg-amber-600">Bestseller</Badge>}
@@ -77,10 +77,7 @@ export function ProductCard({
               <Heart className="h-4 w-4" />
               <span className="sr-only">Add to wishlist</span>
             </Button>
-            <Button size="icon" variant="secondary" className="h-8 w-8 rounded-full">
-              <Eye className="h-4 w-4" />
-              <span className="sr-only">Quick view</span>
-            </Button>
+
           </div>
           <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white p-2 translate-y-full group-hover:translate-y-0 transition-transform">
             <Button className="w-full gap-2"

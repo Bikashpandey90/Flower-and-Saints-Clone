@@ -1,11 +1,13 @@
 import { LucideHome, LucideLaptop, LucideSearch, LucideShirt, LucideShoppingBag, LucideWatch } from "lucide-react";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useNavigate } from "react-router-dom";
 
 
-const NotFound=()=>{
-    return <>
-     <div className="flex flex-col items-center justify-center min-h-screen bg-background text-foreground p-4">
+const NotFound = () => {
+  const navigate = useNavigate()
+  return <>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-background text-foreground p-4">
       <LucideShoppingBag className="w-20 h-20 text-primary mb-4" />
       <h1 className="text-4xl font-bold mb-2">404</h1>
       <h2 className="text-2xl font-semibold mb-4">Oops! Page Not Found</h2>
@@ -22,15 +24,27 @@ const NotFound=()=>{
       </div>
 
       <div className="grid grid-cols-3 gap-4 mb-8 w-full max-w-md">
-        <Button variant="outline" className="flex flex-col items-center justify-center p-4 h-24">
+        <Button variant="outline" className="flex flex-col items-center justify-center p-4 h-24"
+          onClick={() => {
+            navigate('/category/clothing')
+          }}
+        >
           <LucideShirt className="h-8 w-8 mb-2" />
           <span>Clothing</span>
         </Button>
-        <Button variant="outline" className="flex flex-col items-center justify-center p-4 h-24">
+        <Button variant="outline" className="flex flex-col items-center justify-center p-4 h-24"
+          onClick={() => [
+            navigate('/category/accessories')
+          ]}
+        >
           <LucideWatch className="h-8 w-8 mb-2" />
           <span>Accessories</span>
         </Button>
-        <Button variant="outline" className="flex flex-col items-center justify-center p-4 h-24">
+        <Button variant="outline" className="flex flex-col items-center justify-center p-4 h-24"
+          onClick={() => {
+            navigate('/category/electronics')
+          }}
+        >
           <LucideLaptop className="h-8 w-8 mb-2" />
           <span>Electronics</span>
         </Button>
@@ -42,7 +56,7 @@ const NotFound=()=>{
         </a>
       </Button>
     </div>
-    </>;
+  </>;
 }
 
 export default NotFound;

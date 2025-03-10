@@ -3,7 +3,7 @@ import { Check } from "lucide-react"
 import { motion } from "framer-motion"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { useSearchParams } from "react-router-dom"
+import { useNavigate, useSearchParams } from "react-router-dom"
 import orderSvc from "./order.service"
 
 const FadingCircle = ({ delay, size }: { delay: number; size: string }) => (
@@ -31,6 +31,7 @@ export default function PaymentSuccess() {
     const [searchParams] = useSearchParams()
     const data = searchParams.get('data')
     const [decodeData, setDecodeData] = useState<any>(null)
+    const navigate = useNavigate()
 
     useEffect(() => {
         setMounted(true)
@@ -171,11 +172,16 @@ export default function PaymentSuccess() {
                         <Button
                             className="w-full text-sm sm:text-base py-2 text-white"
                             style={{ backgroundColor: "#60BB47", borderColor: "#60BB47" }}
+                            onClick={() => {
+                                navigate('/order')
+                            }}
                         >
                             View Order Details
                         </Button>
-                        <Button variant="outline" className="w-full text-sm sm:text-base py-2">
-                            Return to Dashboard
+                        <Button variant="outline" className="w-full text-sm sm:text-base py-2" onClick={() => {
+                            navigate('/')
+                        }}>
+                            Return to Home
                         </Button>
                     </div>
                 </CardContent>

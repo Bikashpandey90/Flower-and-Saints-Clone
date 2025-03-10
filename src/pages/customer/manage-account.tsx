@@ -84,7 +84,7 @@ export default function ManageAccount() {
                         <div className="flex flex-col items-center space-y-4 sm:flex-row sm:space-x-6 sm:space-y-0">
                             <div className="relative">
                                 <Avatar className="h-24 w-24 border-2 border-muted">
-                                    <AvatarImage src={auth.loggedInUser.image} alt="Profile picture" />
+                                    <AvatarImage src={auth.loggedInUser.image} alt="Profile picture" className="object-cover" />
                                     <AvatarFallback>JD</AvatarFallback>
                                 </Avatar>
                                 {editingPersonalInfo && (

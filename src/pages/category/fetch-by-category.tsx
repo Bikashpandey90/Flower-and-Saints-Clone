@@ -6,18 +6,19 @@ import { Separator } from "@/components/ui/separator"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { NavLink, useParams } from "react-router-dom"
-import categorySvc from "./category.service"
+import categorySvc, { CategoryData } from "./category.service"
 import { Product } from "@/components/Shopping Cart PopOver/shopping-cart"
 import { ProductCard } from "@/components/Product Card/productCard"
+import brandSvc, { BrandData } from "../brand/brand.service"
 
 // Sample data - in a real app this would come from an API
-const categories = [
-    { id: 1, name: "Electronics", count: 1245 },
-    { id: 2, name: "Clothing", count: 842 },
-    { id: 3, name: "Home & Kitchen", count: 654 },
-    { id: 4, name: "Books", count: 423 },
-    { id: 5, name: "Sports & Outdoors", count: 321 },
-]
+// const categories = [
+//     { id: 1, name: "Electronics", count: 1245 },
+//     { id: 2, name: "Clothing", count: 842 },
+//     { id: 3, name: "Home & Kitchen", count: 654 },
+//     { id: 4, name: "Books", count: 423 },
+//     { id: 5, name: "Sports & Outdoors", count: 321 },
+// ]
 
 const subCategories = {
     Electronics: ["Smartphones", "Laptops", "Tablets", "Headphones", "Cameras", "Smart Home"],
@@ -27,15 +28,7 @@ const subCategories = {
     "Sports & Outdoors": ["Exercise & Fitness", "Outdoor Recreation", "Team Sports", "Water Sports", "Winter Sports"],
 }
 
-const brands = [
-    { id: 1, name: "Apple", count: 124 },
-    { id: 2, name: "Samsung", count: 98 },
-    { id: 3, name: "Sony", count: 76 },
-    { id: 4, name: "Dell", count: 65 },
-    { id: 5, name: "LG", count: 54 },
-    { id: 6, name: "Bose", count: 43 },
-    { id: 7, name: "Canon", count: 32 },
-]
+
 
 const priceRanges = [
     { id: 1, range: "Under $25", count: 245 },
@@ -45,94 +38,17 @@ const priceRanges = [
     { id: 5, range: "$200 & Above", count: 76 },
 ]
 
-// const products = [
-//     {
-//         id: 1,
-//         name: "Wireless Noise Cancelling Headphones",
-//         price: 199.99,
-//         rating: 4.5,
-//         reviewCount: 1245,
-//         image: "/placeholder.svg?height=200&width=200",
-//         category: "Electronics",
-//         subCategory: "Headphones",
-//         brand: "Sony",
-//         bestSeller: true,
-//         discount: 15,
-//     },
-//     {
-//         id: 2,
-//         name: "Ultra HD Smart TV 55-inch",
-//         price: 499.99,
-//         rating: 4.3,
-//         reviewCount: 867,
-//         image: "/placeholder.svg?height=200&width=200",
-//         category: "Electronics",
-//         subCategory: "TVs",
-//         brand: "Samsung",
-//         bestSeller: false,
-//         discount: 0,
-//     },
-//     {
-//         id: 3,
-//         name: "Smartphone Pro Max",
-//         price: 999.99,
-//         rating: 4.7,
-//         reviewCount: 2134,
-//         image: "/placeholder.svg?height=200&width=200",
-//         category: "Electronics",
-//         subCategory: "Smartphones",
-//         brand: "Apple",
-//         bestSeller: true,
-//         discount: 0,
-//     },
-//     {
-//         id: 4,
-//         name: "Bluetooth Portable Speaker",
-//         price: 79.99,
-//         rating: 4.2,
-//         reviewCount: 543,
-//         image: "/placeholder.svg?height=200&width=200",
-//         category: "Electronics",
-//         subCategory: "Speakers",
-//         brand: "Bose",
-//         bestSeller: false,
-//         discount: 10,
-//     },
-//     {
-//         id: 5,
-//         name: "Digital SLR Camera with 18-55mm Lens",
-//         price: 649.99,
-//         rating: 4.6,
-//         reviewCount: 321,
-//         image: "/placeholder.svg?height=200&width=200",
-//         category: "Electronics",
-//         subCategory: "Cameras",
-//         brand: "Canon",
-//         bestSeller: false,
-//         discount: 5,
-//     },
-//     {
-//         id: 6,
-//         name: "Gaming Laptop 15.6-inch",
-//         price: 1299.99,
-//         rating: 4.4,
-//         reviewCount: 765,
-//         image: "/placeholder.svg?height=200&width=200",
-//         category: "Electronics",
-//         subCategory: "Laptops",
-//         brand: "Dell",
-//         bestSeller: false,
-//         discount: 0,
-//     },
-// ]
+
 
 
 
 
 export default function CategoryListPage() {
-    const [selectedCategory, setSelectedCategory] = useState("Electronics")
+    const [selectedCategory, setSelectedCategory] = useState<string>()
     const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
     const [products, setProduct] = useState<Product[]>([])
+    const [categories, setCategories] = useState<CategoryData[]>([])
+    const [brands, setBrand] = useState<BrandData[]>([])
     const { slug } = useParams();
 
 
@@ -142,14 +58,41 @@ export default function CategoryListPage() {
 
             if (response) {
                 setProduct(response.detail.products)
+                setSelectedCategory(response.detail.category.title)
             }
+        } catch (exception) {
+            console.log(exception)
+        }
+    }
+    const fetchCategories = async () => {
+        try {
+            const response = await categorySvc.getHomeCategoryList()
+            setCategories(response.detail)
+
+
+        } catch (exception) {
+            console.log(exception)
+        }
+    }
+    const fetchBrand = async () => {
+        try {
+            const response = await brandSvc.getHomeBrandList()
+            setBrand(response.detail)
+
+
         } catch (exception) {
             console.log(exception)
         }
     }
     useEffect(() => {
         fetchProducts()
+        fetchCategories()
+        fetchBrand()
     }, [])
+
+
+
+
 
 
     return (
@@ -186,14 +129,16 @@ export default function CategoryListPage() {
                         <h3 className="font-semibold text-lg mb-3">Department</h3>
                         <ul className="space-y-2">
                             {categories.map((category) => (
-                                <li key={category.id} className="flex items-center justify-between">
+                                <li key={category._id} className="flex items-center justify-between">
                                     <button
-                                        className={`text-left hover:text-primary ${selectedCategory === category.name ? "font-medium text-primary" : ""}`}
-                                        onClick={() => setSelectedCategory(category.name)}
+                                        className={`text-left hover:text-primary ${selectedCategory === category.title ? "font-medium text-primary" : ""}`}
+                                        onClick={() => setSelectedCategory(category.title)}
                                     >
-                                        {category.name}
+                                        {category.title}
                                     </button>
-                                    <span className="text-sm text-muted-foreground">({category.count})</span>
+                                    <span className="text-sm text-muted-foreground">
+                                        {/* ({category.count}) */}
+                                    </span>
                                 </li>
                             ))}
                         </ul>
@@ -254,14 +199,17 @@ export default function CategoryListPage() {
                         <h3 className="font-semibold text-lg mb-3">Brand</h3>
                         <ul className="space-y-2">
                             {brands.map((brand) => (
-                                <li key={brand.id} className="flex items-center justify-between">
+                                <li key={brand._id} className="flex items-center justify-between">
                                     <div className="flex items-center">
-                                        <Checkbox id={`brand-${brand.id}`} className="mr-2" />
-                                        <label htmlFor={`brand-${brand.id}`} className="text-sm cursor-pointer">
-                                            {brand.name}
+                                        <Checkbox id={`brand-${brand._id}`} className="mr-2" />
+                                        <label htmlFor={`brand-${brand._id}`} className="text-sm cursor-pointer">
+                                            {brand.title}
                                         </label>
                                     </div>
-                                    <span className="text-sm text-muted-foreground">({brand.count})</span>
+                                    <span className="text-sm text-muted-foreground">
+
+                                        {/* brand count */}
+                                    </span>
                                 </li>
                             ))}
                         </ul>
@@ -330,66 +278,8 @@ export default function CategoryListPage() {
 
                                 productId={product._id}
                             />
-                            // <div key={product._id} className="border rounded-md overflow-hidden hover:shadow-md transition-shadow">
-                            //     <div className="relative">
-                            //         <NavLink to={`/product/${product._id}`}>
-                            //             <div className="aspect-square relative">
-                            //                 <img
 
-                            //                     src={product.images[0] || "/placeholder.svg"}
-                            //                     alt={product.title}
-                            //                     className="object-contain p-4"
-                            //                 />
-                            //             </div>
-                            //         </NavLink>
-                            //         {/* {product.seller && (
-                            //             <div className="absolute top-2 left-2 bg-amber-400 text-black text-xs font-bold px-2 py-1 rounded">
-                            //                 Best Seller
-                            //             </div>
-                            //         )} */}
-                            //         {product.discount > 0 && (
-                            //             <div className="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded">
-                            //                 {product.discount}% off
-                            //             </div>
-                            //         )}
-                            //     </div>
-                            //     <div className="p-4">
-                            //         <NavLink to={`/product/${product._id}`} className="hover:text-primary">
-                            //             <h3 className="font-medium line-clamp-2 mb-1">{product.title}</h3>
-                            //         </NavLink>
-                            //         <div className="flex items-center mb-1">
-                            //             <div className="flex">
-                            //                 {/* {Array.from({ length: 5 }).map((_, i) => (
-                            //                     // <Star
-                            //                     //     key={i}
-                            //                     //     className={`h-4 w-4 ${i < Math.floor(product.rating)
-                            //                     //         ? "fill-yellow-400 text-yellow-400"
-                            //                     //         : i < product.rating
-                            //                     //             ? "fill-yellow-400 text-yellow-400 fill-half"
-                            //                     //             : "text-gray-300"
-                            //                     //         }`}
-                            //                     // />
-                            //                 ))} */}
-                            //             </div>
-                            //             {/* <span className="text-xs text-muted-foreground ml-1">({product.reviewCount.toLocaleString()})</span> */}
-                            //         </div>
-                            //         <div className="flex items-baseline">
-                            //             <span className="text-lg font-bold">${product.price.toFixed(2)}</span>
-                            //             {product.discount > 0 && (
-                            //                 <span className="text-sm text-muted-foreground line-through ml-2">
-                            //                     ${(product.price / (1 - product.discount / 100)).toFixed(2)}
-                            //                 </span>
-                            //             )}
-                            //         </div>
-                            //         <p className="text-xs text-muted-foreground mt-1">
-                            //             {product.price >= 35 ? (
-                            //                 <span className="text-green-600">FREE Delivery</span>
-                            //             ) : (
-                            //                 <span>FREE delivery with orders over $35</span>
-                            //             )}
-                            //         </p>
-                            //     </div>
-                            // </div>
+
                         ))}
                     </div>
 

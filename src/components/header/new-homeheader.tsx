@@ -13,7 +13,8 @@ import { Button } from "../ui/button"
 import { ChevronDown, Globe, Heart, Mail, MapPin, Menu, Phone, ShoppingCart, User, Search } from "lucide-react"
 import { Input } from "../ui/input"
 import { AuthContext } from "@/context/auth-context"
-import ShoppingCartPopover, { Cart } from "../Shopping Cart PopOver/shopping-cart"
+import ShoppingCartPopover from "../Shopping Cart PopOver/shopping-cart"
+import SearchBar from "../header-check/search-bar"
 
 
 const HomeHeaderNew = () => {
@@ -116,7 +117,8 @@ const HomeHeaderNew = () => {
                                 </SheetHeader>
                                 <div className="py-4 overflow-y-auto h-full">
                                     <div className="px-4 mb-4">
-                                        <Input placeholder="Search products..." className="w-full" />
+                                        <SearchBar />
+                                        {/* <Input placeholder="Search products..." className="w-full" /> */}
                                     </div>
                                     <nav className="space-y-1">
                                         {[
@@ -176,10 +178,11 @@ const HomeHeaderNew = () => {
 
                     {/* Search */}
                     <div className="hidden md:flex flex-1 max-w-md mx-4">
-                        <div className="relative w-full">
+                        <SearchBar />
+                        {/* <div className="relative w-full">
                             <Input placeholder="Search for products..." className="w-full pl-10 pr-4 py-2 rounded-full" />
                             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                        </div>
+                        </div> */}
                     </div>
 
                     {/* Actions */}

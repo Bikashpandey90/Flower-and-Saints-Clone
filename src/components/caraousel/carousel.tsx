@@ -1,12 +1,10 @@
 import { useEffect, useState, useRef } from "react"
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
-import { Button } from "@/components/ui/button"
-import { ChevronRight, Pause } from "lucide-react"
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel"
 import type { CarouselApi } from "@/components/ui/carousel"
 import bannerSvc, { type BannerData } from "@/pages/banner/banner.service"
 
 const CarouselSlider = () => {
-  const [autoplay, setAutoplay] = useState(true)
+  const [autoplay] = useState(true)
   const [banners, setBanners] = useState<BannerData[]>([])
   const [api, setApi] = useState<CarouselApi>()
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
@@ -49,10 +47,10 @@ const CarouselSlider = () => {
     }
   }, [api, autoplay])
 
-  // Toggle autoplay function
-  const toggleAutoplay = () => {
-    setAutoplay((current) => !current)
-  }
+  // // Toggle autoplay function
+  // const toggleAutoplay = () => {
+  //   setAutoplay((current) => !current)
+  // }
 
   return (
     <section className="w-full">
@@ -67,12 +65,15 @@ const CarouselSlider = () => {
         <CarouselContent>
           {banners.map((banner, index) => (
             <CarouselItem key={index} className="relative">
-              <div className="relative h-[200px] sm:h-[250px] md:h-[350px] lg:h-[450px] w-full">
-                <a href={banner.link}>
+              <div className="relative h-[200px] sm:h-[250px] md:h-[350px] lg:h-[450px] w-full ">
+                <a href={banner.link}
+                  target="_banner"
+                >
                   <img
                     src={banner.image || "/placeholder.svg"}
                     alt={banner.title}
                     className="w-full h-full object-cover"
+
                   />
                 </a>
                 {/* <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent flex flex-col justify-center px-8 md:px-16">

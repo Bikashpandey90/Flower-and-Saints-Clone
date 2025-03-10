@@ -33,7 +33,7 @@ export default function CustomerDashboard() {
 
     const fetchRecommendations = async () => {
         try {
-            const response = await productSvc.getProductForHome()
+            const response = await productSvc.getProductForHome(1)
             setRecommendations(response.detail)
 
         } catch (exception) {
@@ -108,7 +108,7 @@ export default function CustomerDashboard() {
                         <div className="flex items-center gap-3">
                             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
                                 {
-                                    auth.loggedInUser?.image ? <img src={auth.loggedInUser.image} className="h-full w-full rounded-full" /> : <User className="h-5 w-5 text-primary" />
+                                    auth.loggedInUser?.image ? <img src={auth.loggedInUser.image} className="h-full w-full object-cover rounded-full" /> : <User className="h-5 w-5 text-primary" />
                                 }
                             </div>
                             <div>
