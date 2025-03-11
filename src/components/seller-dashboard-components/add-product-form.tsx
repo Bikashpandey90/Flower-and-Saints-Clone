@@ -39,9 +39,6 @@ export function AddProductForm() {
     stock: Yup.number().min(0).required(),
     brand: Yup.string().notRequired(),
     discount: Yup.number().min(0).max(100).optional().default(0)
-
-
-
   })
 
   const { control, handleSubmit, setError, formState: { errors } } = useForm({
@@ -55,8 +52,6 @@ export function AddProductForm() {
       stock: 0,
       brand: '',
       discount: 0
-
-
     }
   })
 
@@ -116,7 +111,7 @@ export function AddProductForm() {
 
   return (
 
-    <form onSubmit={handleSubmit(submitForm)} className="space-y-6 pt-6">
+    <form onSubmit={handleSubmit(submitForm)} className="space-y-6 pt-6" >
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Image upload section - Column 1 */}
         <div className="flex flex-col items-center justify-start">
@@ -174,7 +169,7 @@ export function AddProductForm() {
       {/* Price, Discount, Stock, Brand section */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         <div>
-          <Label>Price ($)</Label>
+          <Label>Price (Nrs)</Label>
           <TextInputField
             type={InputType.NUMBER}
             name="price"

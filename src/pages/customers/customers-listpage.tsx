@@ -49,12 +49,25 @@ const CustomerListPage = () => {
       if (result.isConfirmed) {
         await customerSvc.deleteUser(id)
         toast.success("User deleted successfully")
+        loadCustomers()
       }
 
     } catch (exception) {
       console.log(exception)
       toast.error("Error deleting user")
     }
+  }
+  // Function to truncate email with ellipsis
+  const truncateEmail = (email: string, maxLength = 20) => {
+    if (email.length <= maxLength) return email
+
+    // Find a good breaking point (@ symbol or dot)
+    const atIndex = email.indexOf("@")
+    if (atIndex > 0 && atIndex < maxLength - 3) {
+      return email.substring(0, atIndex + 1) + "..."
+    }
+
+    return email.substring(0, maxLength) + "..."
   }
 
   return (
@@ -111,7 +124,9 @@ const CustomerListPage = () => {
                     />
                     <div>
                       <div className="font-medium">{user.name}</div>
-                      <div className="text-base text-gray-500 overflow-clip">{user.email}</div>
+                      <div className="text-base text-gray-500 overflow-clip">
+                        {truncateEmail(user.email)}
+                      </div>
                     </div>
                   </div>
                 </TableCell>

@@ -10,7 +10,8 @@ export interface CategoryData {
     createdAt: Date,
     status: CategoryStatus,
     image: any,
-    parentId: string | null
+    parentId: string | null,
+    slug?: string
 }
 
 class CategoryService extends HttpService {

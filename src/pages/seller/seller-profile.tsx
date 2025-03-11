@@ -1,5 +1,5 @@
 
-import { useContext, useEffect } from "react"
+import { useContext, useEffect, useState } from "react"
 import {
     Box,
     Edit,
@@ -16,9 +16,30 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { AuthContext } from "@/context/auth-context"
+import { Product } from "../products/admin-products.page"
+import productSvc from "../products/products.service"
+import { useNavigate } from "react-router-dom"
 
 export default function SellerProfile() {
+
     const auth = useContext(AuthContext) as { loggedInUser: any }
+    const [myproducts, setMyProducts] = useState<Product[]>([])
+    const navigate = useNavigate()
+
+    const fetchMyProducts = async () => {
+        try {
+            const response = await productSvc.getMyProducts()
+            setMyProducts(response.detail)
+
+
+        } catch (exception) {
+            console.log(exception)
+        }
+    }
+    useEffect(() => {
+        fetchMyProducts()
+    }, [])
+
     return (
         <div className="flex min-h-screen w-full flex-col bg-muted/40">
             <div className="flex flex-col">
@@ -35,10 +56,10 @@ export default function SellerProfile() {
                                 <div className="flex-1">
                                     <div className="flex flex-col gap-1 md:flex-row md:items-center md:justify-between">
                                         <div>
-                                            <h1 className="text-2xl font-bold md:text-3xl">Sarah's Craft Corner</h1>
+                                            <h1 className="text-2xl font-bold md:text-3xl">{auth.loggedInUser.name.split(' ')[0]}'s Shop</h1>
                                             <div className="flex items-center gap-2 text-muted-foreground">
                                                 <MapPin className="h-4 w-4" />
-                                                <span>{auth.loggedInUser.address}</span>
+                                                <span>{auth.loggedInUser.address ? auth.loggedInUser.address : "Kathmandu"} </span>
                                                 <span className="text-sm">•</span>
                                                 <div className="flex items-center">
                                                     <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
@@ -126,7 +147,7 @@ export default function SellerProfile() {
                                         <div>
                                             <h3 className="text-sm font-medium text-muted-foreground">Shop Description</h3>
                                             <p className="mt-1">
-                                                Sarah's Craft Corner offers handmade crafts, custom gifts, and DIY kits for all ages.
+                                                {auth.loggedInUser.name.split(' ')[0]}'s Shop offers handmade crafts, custom gifts, and DIY kits for all ages.
                                                 Specializing in paper crafts, knitting, and personalized home decor, we bring creativity to your
                                                 doorstep with carefully curated materials and detailed instructions.
                                             </p>
@@ -192,27 +213,32 @@ export default function SellerProfile() {
 
                                 <Card>
                                     <CardHeader>
-                                        <CardTitle>Featured Products</CardTitle>
+                                        <CardTitle>Your Store Listing's</CardTitle>
                                         <CardDescription>Your best-selling and featured products</CardDescription>
                                     </CardHeader>
                                     <CardContent>
                                         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                                            {[1, 2, 3].map((item) => (
-                                                <div key={item} className="group overflow-hidden rounded-lg border">
+                                            {myproducts.map((item, index) => (
+                                                <div key={index} className="group overflow-hidden rounded-lg border">
                                                     <div className="aspect-square relative overflow-hidden">
                                                         <img
-                                                            src={`https://i.etsystatic.com/42566345/r/il/68a9e9/6112150340/il_570xN.6112150340_2rlj.jpg`}
-                                                            alt={`Product ${item}`}
+
+
+                                                            src={item.images[0]}
+                                                            alt={`${item.title}`}
+                                                            onClick={() => {
+                                                                navigate(`/products/${item.slug}`)
+                                                            }}
 
 
                                                             className="object-contain  transition-transform group-hover:scale-105"
                                                         />
                                                     </div>
                                                     <div className="p-3">
-                                                        <h3 className="font-medium">Handmade Craft Kit #{item}</h3>
+                                                        <h3 className="font-medium">{item.title}</h3>
                                                         <div className="flex items-center justify-between mt-1">
-                                                            <span className="text-sm text-muted-foreground">$24.99</span>
-                                                            <Badge variant="secondary">Best Seller</Badge>
+                                                            <span className="text-sm text-muted-foreground">Nrs {item.actualAmt}</span>
+                                                            <Badge variant="secondary">{item.category[0].title}</Badge>
                                                         </div>
                                                     </div>
                                                 </div>

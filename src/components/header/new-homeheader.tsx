@@ -11,10 +11,10 @@ import { NavLink, useNavigate } from "react-router-dom"
 import { useContext, useEffect, useState } from "react"
 import { Button } from "../ui/button"
 import { ChevronDown, Globe, Heart, Mail, MapPin, Menu, Phone, ShoppingCart, User, Search } from "lucide-react"
-import { Input } from "../ui/input"
 import { AuthContext } from "@/context/auth-context"
 import ShoppingCartPopover from "../Shopping Cart PopOver/shopping-cart"
 import SearchBar from "../header-check/search-bar"
+import { toast } from "react-toastify"
 
 
 const HomeHeaderNew = () => {
@@ -49,6 +49,18 @@ const HomeHeaderNew = () => {
     //     fetchCartProducts();
     // }, []);
 
+    const LogOut = () => {
+        try {
+            localStorage.removeItem('token')
+            localStorage.removeItem('refToken');
+            navigate('/')
+            auth.loggedInUser = null
+            toast.info("Logged out")
+
+        } catch (exception) {
+            console.error("Error logging out:", exception);
+        }
+    }
 
 
 
@@ -227,12 +239,23 @@ const HomeHeaderNew = () => {
                                             <NavLink to="/orders">Orders</NavLink>
                                         </DropdownMenuItem>
                                         <DropdownMenuItem asChild>
-                                            <NavLink to="/wishlist">Wishlist</NavLink>
+                                            <NavLink to="/chat">Chats</NavLink>
                                         </DropdownMenuItem>
                                         <DropdownMenuSeparator />
-                                        <DropdownMenuItem><NavLink to={auth.loggedInUser ? '' : '/login'}>
-                                            {auth.loggedInUser ? "Sign out" : "Sign In"}
-                                        </NavLink></DropdownMenuItem>
+                                        <DropdownMenuItem>
+
+                                            {/* <NavLink to={auth.loggedInUser ? '' : '/login'}>
+                                                {auth.loggedInUser ? "Sign out" : "Sign In"}
+                                            </NavLink> */}
+                                            <Button variant='ghost' onClick={
+                                                () => {
+                                                    auth.loggedInUser ? LogOut() : navigate('/login')
+                                                }
+                                            }>
+                                                {auth.loggedInUser ? 'Sign Out' : "Sign In"}
+                                            </Button>
+
+                                        </DropdownMenuItem>
                                     </DropdownMenuContent>
                                 )
                             }

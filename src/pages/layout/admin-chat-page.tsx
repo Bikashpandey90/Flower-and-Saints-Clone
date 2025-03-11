@@ -1,31 +1,41 @@
 
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import UserSidebar from '@/components/User-sidebar/user-sidebar'
 import ChatView from '@/components/Chat-view/chat-view'
 import { useDispatch } from 'react-redux'
 import { getUserList } from '@/reducer/chat-reducer'
 import { AppDispatch } from '@/config/store.config'
+import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '@/context/auth-context'
 
 export interface User {
-    _id: string
-    name: string
-    email: string
-    role: string
-    image: string
-  }
-  export const Chat=()=>{
+  _id: string
+  name: string
+  email: string
+  role: string
+  image: string
+}
+export const Chat = () => {
 
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate()
+  const auth = useContext(AuthContext) as { loggedInUser: any }
+  useEffect(() => {
+    if (!auth.loggedInUser) {
+      navigate('/login')
+    }
+  }, [auth])
 
-  
+
+
 
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
 
 
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(getUserList());
-  },[])
+  }, [])
 
   return (
     <div className="flex h-[calc(100vh-120px)] bg-gray-100">

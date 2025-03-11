@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
-import { NavLink, useParams } from "react-router-dom"
+import { NavLink, useNavigate, useParams } from "react-router-dom"
 import { formatDateTOYMD } from "@/lib/utils"
 import productSvc from "@/pages/products/products.service"
 import { AuthContext } from "@/context/auth-context"
@@ -89,6 +89,7 @@ export default function ProductDetail() {
     const [productStatus, setProductStatus] = useState("inactive")
     const [product, setProduct] = useState<Product | null>(null);
     const auth = useContext(AuthContext) as { loggedInUser: any }
+    const navigate = useNavigate()
 
     const { id } = useParams()
 
@@ -113,6 +114,7 @@ export default function ProductDetail() {
 
     const handleStatusToggle = () => {
         setProductStatus(product?.status === "active" ? "inactive" : "active")
+        console.log(productStatus)
     }
 
     return (
@@ -144,7 +146,7 @@ export default function ProductDetail() {
                     </Button>
                     <AlertDialog>
                         <AlertDialogTrigger asChild>
-                            <Button variant="destructive" size="sm" className="flex items-center gap-1">
+                            <Button variant='default' size="sm" className="flex items-center gap-1">
                                 <Trash2 className="h-4 w-4" />
                                 Delete
                             </Button>
@@ -159,7 +161,7 @@ export default function ProductDetail() {
                             </AlertDialogHeader>
                             <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                <AlertDialogAction className="bg-destructive text-destructive-foreground">Delete</AlertDialogAction>
+                                <AlertDialogAction className="bg-primary text-destructive-foreground">Delete</AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
                     </AlertDialog>
@@ -354,7 +356,13 @@ export default function ProductDetail() {
                             <NavLink to="/products">Back to Products</NavLink>
                         </Button>
                         <div className="flex gap-2">
-                            <Button variant="outline">Preview</Button>
+                            <Button variant="outline"
+                                onClick={() => {
+                                    navigate('/products/' + product?.slug)
+
+                                }}
+
+                            >Preview</Button>
                             <Button>Save Changes</Button>
                         </div>
                     </CardFooter>

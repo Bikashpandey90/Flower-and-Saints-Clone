@@ -112,7 +112,7 @@ const ShoppingCartPopover = () => {
                                 <div className="flex-1">
                                     <h5 className="font-medium text-sm">{item.product.title}</h5>
                                     <div className="text-sm text-muted-foreground">
-                                        {item.quantity} × ${item.product.price.toFixed(2)}
+                                        {item.quantity} × Nrs {item.product.actualAmt.toFixed(2)}
                                     </div>
                                 </div>
                                 <Button variant="ghost" size="icon" className="h-8 w-8"
@@ -137,7 +137,9 @@ const ShoppingCartPopover = () => {
                             auth.loggedInUser ?
                                 <div className="flex justify-between mb-3">
                                     <span>Subtotal:</span>
-                                    <span className="font-medium">Rs. 5500</span>
+                                    <span className="font-medium">{carts.reduce((total, cart) => {
+                                        return total + cart.product.actualAmt * cart.quantity;
+                                    }, 0).toFixed(2)}</span>
                                 </div>
                                 : <></>
                         }

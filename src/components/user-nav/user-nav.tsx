@@ -70,7 +70,9 @@ export function UserNav() {
         <DropdownMenuItem onClick={() => {
           localStorage.removeItem('token');
           localStorage.removeItem('refToken');
+          auth.loggedInUser = null
           navigate('/');
+
           toast.info("Logged out !")
 
         }}>

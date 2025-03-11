@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { NavLink, useParams } from "react-router-dom"
+import { NavLink, useNavigate, useParams } from "react-router-dom"
 import categorySvc, { CategoryData } from "./category.service"
 import { Product } from "@/components/Shopping Cart PopOver/shopping-cart"
 import { ProductCard } from "@/components/Product Card/productCard"
@@ -50,6 +50,7 @@ export default function CategoryListPage() {
     const [categories, setCategories] = useState<CategoryData[]>([])
     const [brands, setBrand] = useState<BrandData[]>([])
     const { slug } = useParams();
+    const navigate = useNavigate()
 
 
     const fetchProducts = async () => {
@@ -85,10 +86,13 @@ export default function CategoryListPage() {
         }
     }
     useEffect(() => {
-        fetchProducts()
+
         fetchCategories()
         fetchBrand()
     }, [])
+    useEffect(() => {
+        fetchProducts()
+    }, [selectedCategory])
 
 
 
@@ -132,7 +136,12 @@ export default function CategoryListPage() {
                                 <li key={category._id} className="flex items-center justify-between">
                                     <button
                                         className={`text-left hover:text-primary ${selectedCategory === category.title ? "font-medium text-primary" : ""}`}
-                                        onClick={() => setSelectedCategory(category.title)}
+                                        onClick={() => {
+                                            setSelectedCategory(category.title)
+                                            navigate(`/category/${category.slug}`)
+                                        }
+                                        }
+
                                     >
                                         {category.title}
                                     </button>

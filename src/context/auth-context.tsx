@@ -7,12 +7,12 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode }>) => {
 
-    const dispatch=useDispatch();
+    const dispatch = useDispatch();
 
     // const {data,isLoading,error}=useGetLoggedInUser() as {data:any,isLoading:boolean,error:any};
     const [data, setData] = useState<any>();
     const [isLoading, setIsLoading] = useState(true);
-    
+
     const getLoggedInUser = async () => {
         try {
             const token = localStorage.getItem('token') || null;
@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode 
 
     useEffect(() => {
         getLoggedInUser()
+        
 
 
     }, [])
@@ -51,25 +52,25 @@ export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode 
     // },[])
 
     useEffect(() => {
-        
-            const loadingProgress = document.getElementById("loading-progress");
-            const topLayout = document.getElementById("top-layout");
-            const bottomLayout = document.getElementById("bottom-layout");
-            const splashScreen = document.getElementById("splash-screen");
 
-            setTimeout(() => {
-                if (loadingProgress) loadingProgress.style.width = "100%";
-            }, 100);
+        const loadingProgress = document.getElementById("loading-progress");
+        const topLayout = document.getElementById("top-layout");
+        const bottomLayout = document.getElementById("bottom-layout");
+        const splashScreen = document.getElementById("splash-screen");
 
-            setTimeout(() => {
-                if (topLayout) topLayout.style.transform = "translateY(-100%)";
-                if (bottomLayout) bottomLayout.style.transform = "translateY(100%)";
-            }, 2000);
+        setTimeout(() => {
+            if (loadingProgress) loadingProgress.style.width = "100%";
+        }, 100);
 
-            setTimeout(() => {
-                if (splashScreen) splashScreen.style.display = "none";
-            }, 3000);
-        
+        setTimeout(() => {
+            if (topLayout) topLayout.style.transform = "translateY(-100%)";
+            if (bottomLayout) bottomLayout.style.transform = "translateY(100%)";
+        }, 2000);
+
+        setTimeout(() => {
+            if (splashScreen) splashScreen.style.display = "none";
+        }, 3000);
+
     }, [isLoading]);
 
     if (isLoading)
@@ -97,13 +98,11 @@ export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode 
 
     return (<>
 
-        <AuthContext.Provider 
-        value={{
-            loggedInUser: data || null,
-            setLoggedInUser: setData
-
-
-        }}>
+        <AuthContext.Provider
+            value={{
+                loggedInUser: data || null,
+                setLoggedInUser: setData
+            }}>
             {children}
 
         </AuthContext.Provider>

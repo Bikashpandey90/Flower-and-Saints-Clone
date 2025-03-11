@@ -9,7 +9,7 @@ const FeaturedCollections = () => {
                 {[
                     { title: "New Arrivals", image: "https://d2731avvelbbmh.cloudfront.net/whetstone-products/jeevee_erp/2025-03-06/bd/bdd531628b1841651d65f0d339631598c13ef7fe" },
                     { title: "Most Popular", image: "https://www.stuff.tv/wp-content/uploads/sites/2/2022/06/iOS-16-best-features.jpg?w=1024" },
-                    { title: "Bestsellers", image: "https://lh4.googleusercontent.com/proxy/90emGskZjxDS6e_62DonPgCBbfqzH49Yge3majQNfvEWcLSydsD5FC9pPapaBlSZlZLQwVQULTYVXr_5siVJtbf1OJoiOUuJd7RKiDzUABZw37aHSjePdJTOuZw" },
+                    { title: "Bestsellers", image: "/src/components/Featured/image.jpg" },
                 ].map((collection, index) => (
                     <NavLink
                         to={`/collection/${collection.title.toLowerCase().replace(/\s+/g, "-")}`}
