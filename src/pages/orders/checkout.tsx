@@ -1,3 +1,4 @@
+"use client"
 
 import type React from "react"
 
@@ -12,9 +13,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator"
 import { NavLink } from "react-router-dom"
 import orderSvc from "./order.service"
-import { AuthContext } from "@/context/auth-context";
-import { v4 as uuidv4 } from 'uuid';
-import CryptoJS from 'crypto-js'
+import { AuthContext } from "@/context/auth-context"
+import { v4 as uuidv4 } from "uuid"
+import CryptoJS from "crypto-js"
+import type { Product } from "../products/admin-products.page"
 // Types
 interface CartItem {
     id: string
@@ -25,39 +27,41 @@ interface CartItem {
 }
 
 export interface OrderData {
-    detail: OrderDetail[];
-    message: string;
-    options: any | null;
-    status: string;
+    detail: OrderDetail[]
+    message: string
+    options: any | null
+    status: string
 }
 
 export interface OrderDetail {
-    _id: string;
-    buyer: Buyer;
-    createdAt: string;
-    createdBy: string | null;
-    deliveryCharge: number;
-    discount: number;
-    isPaid: boolean;
-    orderDate: string;
-    serviceCharge: number;
-    status: string;
-    subTotal: number;
-    tax: number;
-    total: number;
-    updatedAt: string;
-    updatedBy: string | null;
-    __v: number;
+    _id: string
+    buyer: Buyer
+    createdAt: string
+    createdBy: string | null
+    deliveryCharge: number
+    discount: number
+    isPaid: boolean
+    product?: Product
+    totalAmt?: number
+    orderDate: string
+    serviceCharge: number
+    status: string
+    subTotal: number
+    tax: number
+    total: number
+    updatedAt: string
+    updatedBy: string | null
+    __v: number
 }
 
 interface Buyer {
-    _id: string;
-    name: string;
-    email: string;
+    _id: string
+    name: string
+    email: string
     phone?: string
+    image?: string
     // Add more properties if necessary
 }
-
 
 export default function EsewaCheckoutPage() {
     // Mock data - in a real app, this would come from your state management or API
@@ -67,6 +71,8 @@ export default function EsewaCheckoutPage() {
 
     // State for form
     const [deliveryOption, setDeliveryOption] = useState("standard")
+
+    const [order_id, setOrderId] = useState<string | "">("")
     const auth = useContext(AuthContext) as { loggedInUser: any }
 
     // Calculate totals
@@ -82,101 +88,130 @@ export default function EsewaCheckoutPage() {
         alert("Redirecting to eSewa for payment...")
     }
 
-
     const fetchOrders = async () => {
         try {
             const response = await orderSvc.listOrders()
-            setOrderData(response.detail)
-
+            setOrderData(response.data.detail)
         } catch (exception) {
             console.log(exception)
         }
     }
+
     useEffect(() => {
         fetchOrders()
     }, [])
 
-    const latestOrderTotal = orderData.length ? orderData[orderData.length - 1].total.toString() : "10";
-    const order_id = orderData.length ? orderData[orderData.length - 1]?._id : '';
+    const latestOrderTotal = orderData.length ? orderData[orderData.length - 1].total.toString() : "10"
+    const orderId = orderData.length ? orderData[orderData.length - 1]?._id : ""
+    console.log("Order Id Check :", order_id)
+    useEffect(() => {
+        setOrderId(orderId)
+    }, [orderId])
+    console.log("Last check", order_id)
 
-
-    console.log(orderData)
     const [formData, setFormData] = useState({
         amount: latestOrderTotal,
-        tax_amount: '0',
+        tax_amount: "0",
         total_amount: latestOrderTotal,
-        transaction_uuid: uuidv4(),
-        product_service_charge: '0',
-        product_delivery_charge: '0',
+        transaction_uuid: uuidv4(), // Use a generated UUID as default
+        product_service_charge: "0",
+        product_delivery_charge: "0",
         product_code: "EPAYTEST",
         success_url: "http://localhost:5173/payment-success",
         failure_url: "http://localhost:5173/payementfailed",
-        signature: '',
+        signature: "",
         secret: import.meta.env.VITE_APP_ESEWA_SECRET,
-        orderId: order_id,
-        signed_field_names: 'total_amount,transaction_uuid,product_code',
-
+        orderId: "",
+        signed_field_names: "total_amount,transaction_uuid,product_code",
     })
+    console.log(formData)
     console.log("Order Id : ", order_id)
 
     interface SignatureParams {
-        total_amount: string;
-        transaction_uuid: string;
-        product_code: string;
-        secret: string;
+        total_amount: string
+        transaction_uuid: string
+        product_code: string
+        secret: string
         // orderId: string;
     }
 
     const generateSignature = ({ total_amount, transaction_uuid, product_code, secret }: SignatureParams): string => {
-        const hashString = `total_amount=${total_amount},transaction_uuid=${transaction_uuid},product_code=${product_code}`;
-        const hash = CryptoJS.HmacSHA256(hashString, secret);
+        const hashString = `total_amount=${total_amount},transaction_uuid=${transaction_uuid},product_code=${product_code}`
+        const hash = CryptoJS.HmacSHA256(hashString, secret)
         const hashedSignature = CryptoJS.enc.Base64.stringify(hash)
         return hashedSignature
-    };
+    }
     useEffect(() => {
-        // const { total_amount, transaction_uuid, product_code, secret } = formData;
-        // const hashedSignature = generateSignature({ total_amount, transaction_uuid, product_code, secret });
-
-        // if (orderData) {
-        //     setFormData({ ...formData, signature: hashedSignature });
-
-        // }
-
         if (orderData.length > 0) {
-            const totalAmount = orderData[orderData.length - 1].total.toString(); // Ensure you are using the correct order index
-            // const order_id = orderData[0]._id
-            setFormData((prevFormData) => ({
-                ...prevFormData,
-                amount: totalAmount,
-                total_amount: totalAmount,
-                // orderId: order_id,
-                signature: generateSignature({
+            const totalAmount = orderData[orderData.length - 1].total.toString()
+            const latestOrder = orderData[orderData.length - 1]
+            setOrderId(latestOrder._id)
+
+            // Only update transaction_uuid when order_id is not empty
+            if (latestOrder._id) {
+                setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    amount: totalAmount,
                     total_amount: totalAmount,
-                    transaction_uuid: prevFormData.transaction_uuid,
-                    product_code: prevFormData.product_code,
-                    secret: prevFormData.secret,
-                    // orderId: order_id
-                })
-            }));
+                    transaction_uuid: latestOrder._id, // Only set this when we have a valid ID
+                    signature: generateSignature({
+                        total_amount: totalAmount,
+                        transaction_uuid: latestOrder._id, // Use the ID directly from latestOrder
+                        product_code: prevFormData.product_code,
+                        secret: prevFormData.secret,
+                    }),
+                }))
+            } else {
+                // Just update the amounts if we don't have an order ID yet
+                setFormData((prevFormData) => ({
+                    ...prevFormData,
+                    amount: totalAmount,
+                    total_amount: totalAmount,
+                }))
+            }
         }
     }, [orderData])
 
     return (
         <>
-            <form action="https://rc-epay.esewa.com.np/api/epay/main/v2/form" method="POST">
+            <form action="https://rc-epay.esewa.com.np/api/epay/main/v2/form" method="POST" className="hidden">
                 <input type="hidden" id="amount" name="amount" required value={formData.amount} />
                 <input type="hidden" id="tax_amount" name="tax_amount" value={formData.tax_amount} required />
                 <input type="hidden" id="total_amount" name="total_amount" value={formData.total_amount} required />
                 <input type="hidden" id="transaction_uuid" name="transaction_uuid" value={formData.transaction_uuid} required />
                 <input type="hidden" id="product_code" name="product_code" value={formData.product_code} required />
-                <input type="hidden" id="product_service_charge" name="product_service_charge" value={formData.product_service_charge} required />
-                <input type="hidden" id="product_delivery_charge" name="product_delivery_charge" value={formData.product_delivery_charge} required />
+                <input
+                    type="hidden"
+                    id="product_service_charge"
+                    name="product_service_charge"
+                    value={formData.product_service_charge}
+                    required
+                />
+                <input
+                    type="hidden"
+                    id="product_delivery_charge"
+                    name="product_delivery_charge"
+                    value={formData.product_delivery_charge}
+                    required
+                />
                 <input type="hidden" id="success_url" name="success_url" value={formData.success_url} required />
                 {/* <input type="text" id="orderId" name="orderId" value={formData.orderId} required /> */}
-                <input type="hidden" id="failure_url" name="failure_url" value="https://developer.esewa.com.np/failure" required />
-                <input type="hidden" id="signed_field_names" name="signed_field_names" value={formData.signed_field_names} required />
+                <input
+                    type="hidden"
+                    id="failure_url"
+                    name="failure_url"
+                    value="https://developer.esewa.com.np/failure"
+                    required
+                />
+                <input
+                    type="hidden"
+                    id="signed_field_names"
+                    name="signed_field_names"
+                    value={formData.signed_field_names}
+                    required
+                />
                 <input type="hidden" id="signature" name="signature" value={formData.signature} required />
-                <input value="Submit" id="payment-initiate-button" type="submit" className="" />
+                <input value="Submit" id="payment-initiate-button" type="submit" className="hidden" />
             </form>
 
             <div className="container mx-auto px-4 py-4 max-w-7xl">
@@ -262,23 +297,19 @@ export default function EsewaCheckoutPage() {
                                     <CardTitle>Shipping Address</CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <Select  >
+                                    <Select>
                                         <SelectTrigger>
                                             <SelectValue placeholder="Select an address" />
                                         </SelectTrigger>
                                         <SelectContent>
-
-                                            <SelectItem value={auth.loggedInUser?.address}>
-                                                {auth.loggedInUser?.address}
-                                            </SelectItem>
-
+                                            <SelectItem value={auth.loggedInUser?.address}>{auth.loggedInUser?.address}</SelectItem>
                                         </SelectContent>
                                     </Select>
 
                                     <div className="mt-4">
                                         <Button variant="outline" type="button" className="w-full" onClick={() => { }}>
                                             Add a new address
-                                        </Button >
+                                        </Button>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -335,10 +366,14 @@ export default function EsewaCheckoutPage() {
                             </Card>
 
                             {/* Place Order Button */}
-                            <Button type="submit" className="w-full" size="lg"
+                            <Button
+                                type="submit"
+                                className="w-full"
+                                size="lg"
                                 onClick={() => {
-                                    document.getElementById('payment-initiate-button')?.click()
-                                }}>
+                                    document.getElementById("payment-initiate-button")?.click()
+                                }}
+                            >
                                 Place Order and Pay with eSewa
                             </Button>
 
@@ -356,12 +391,8 @@ export default function EsewaCheckoutPage() {
                         </form>
                     </div>
                 </div>
-
             </div>
-
         </>
-
-
     )
 }
 

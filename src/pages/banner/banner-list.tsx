@@ -10,16 +10,6 @@ import bannerSvc from "./banner.service"
 import { BannerListTableSkeleton } from "@/components/skeleton/table-skeleton"
 import { Input } from "@/components/ui/input"
 
-interface Banner {
-  id: string
-  image: string
-  title: string
-  link: string
-  startDate: string
-  endDate: string
-  status: string
-
-}
 
 export default function BannersPage() {
   const [data, setData] = useState([])
@@ -40,12 +30,12 @@ export default function BannersPage() {
       try {
         const response = await bannerSvc.getAllBannerList(page, 10, search)
         console.log("API Response:", response);
-        setData(response.detail)
+        setData(response.data.detail)
         setPagination({
-          page: +response.options.currentPage,
-          limit: +response.options.limit,
-          total: response.options.total,
-          totalNoPages: Math.ceil(+response.options.totalData / +response.options.limit),
+          page: +response.data.options.currentPage,
+          limit: +response.data.options.limit,
+          total: response.data.options.total,
+          totalNoPages: Math.ceil(+response.data.options.totalData / +response.data.options.limit),
         })
 
       } catch (exception) {

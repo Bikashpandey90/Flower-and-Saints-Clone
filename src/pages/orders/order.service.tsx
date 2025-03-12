@@ -64,6 +64,14 @@ class OrderService extends HttpService {
             throw exception
         }
     }
+    async getOrderDetail(id: string) {
+        try {
+            const detail = await this.getRequest('/order/' + id + '/detail', { auth: true })
+            return detail
+        } catch (exception) {
+            throw exception
+        }
+    }
 
 
 }

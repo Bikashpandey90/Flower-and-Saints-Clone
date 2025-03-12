@@ -24,9 +24,9 @@ export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode 
                         "Authorization": "Bearer " + localStorage.getItem('token')
                     }
                 }) as any
-                setData(response.detail)
+                setData(response.data.detail)
 
-                dispatch(setLoggedInUser(response.detail))  // setting logged in user via reducer
+                dispatch(setLoggedInUser(response.data.detail))  // setting logged in user via reducer
             }
 
         } catch (exception) {
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode 
 
     useEffect(() => {
         getLoggedInUser()
-        
+
 
 
     }, [])

@@ -17,7 +17,7 @@ const BannerSlider = () => {
     const loadHomeBanner = async () => {
         try {
             const result = await bannerSvc.getHomeBannerList();
-            setBannerData(result.detail || []);
+            setBannerData(result.data.detail || []);
 
         } catch (exception) {
             console.log(exception);

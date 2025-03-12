@@ -17,13 +17,13 @@ const PopularProducts = () => {
         try {
             setLoading(true)
             const response = await productSvc.getProductForHome(page)
-            if (response.detail.length === 0) {
+            if (response.data.detail.length === 0) {
                 setHasMore(false)
             } else {
                 setProduct((prevProducts) => {
                     // Convert the current and new products to a Set to remove duplicates
                     const productMap = new Map(prevProducts.map(product => [product._id, product]));
-                    response.detail.forEach(product => productMap.set(product._id, product));
+                    response.data.detail.forEach((product: Product) => productMap.set(product._id, product));
 
                     return Array.from(productMap.values()); // Convert Map back to an array
                 });

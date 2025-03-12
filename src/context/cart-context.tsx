@@ -36,7 +36,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     const fetchCart = async () => {
         try {
             const response = await orderSvc.getMyCart(); // Ensure this API call fetches the cart items
-            setCarts(response.detail);
+            setCarts(response.data.detail);
         } catch (error) {
             console.error("Error fetching cart:", error);
         }

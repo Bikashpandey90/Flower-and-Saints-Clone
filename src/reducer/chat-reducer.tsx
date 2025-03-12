@@ -1,86 +1,86 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import {get, post} from "@/config/axios.config"
+import { get, post } from "@/config/axios.config"
 
 
 
 
 
 
-export const getUserList=createAsyncThunk(
+export const getUserList = createAsyncThunk(
     "chat/getUserList",
-    async()=>{
-        try{
+    async () => {
+        try {
 
-            const listUsers=await get('/chat/list-user',{
-                headers:{
-                    "Authorization":"Bearer "+localStorage.getItem("token")
+            const listUsers = await get('/chat/list-user', {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token")
                 }
             });
 
-            return listUsers.data;
-            
+            return listUsers.data.data;
 
-        }catch(exception){
+
+        } catch (exception) {
             throw exception
         }
 
     }
 )
-export const getChatDetail=createAsyncThunk(
+export const getChatDetail = createAsyncThunk(
     "chat/getChatDetail",
-    async(data:any)=>{
+    async (data: any) => {
 
-        try{
-            const response=await get('/chat/detail/'+data,{
-                headers:{
-                    "Authorization":"Bearer "+localStorage.getItem("token")
+        try {
+            const response = await get('/chat/detail/' + data, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token")
 
                 }
             })
-            return response.data
+            return response.data.data
 
-        }catch(exception){
+        } catch (exception) {
             throw exception
         }
     }
 
-    
+
 )
 
-export const sendChatDetail=createAsyncThunk(
-        'chat/sendChatDetail',
-        async(data: { receiver: string; message: string })=>{
-            try{
-                
-                const response=await post('/chat/send',data,{
-                    headers:{
-                        "Authorization":"Bearer "+localStorage.getItem("token")
-                    }
-                })
-                return response.data
+export const sendChatDetail = createAsyncThunk(
+    'chat/sendChatDetail',
+    async (data: { receiver: string; message: string }) => {
+        try {
 
-            }catch(exception){
+            const response = await post('/chat/send', data, {
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                }
+            })
+            return response.data.data
 
-                throw exception
-            }
+        } catch (exception) {
 
+            throw exception
         }
+
+    }
 )
 
-const ChatSlice=createSlice({
-    name:'chat',
-    initialState:{
-        loggedInUser:null,
-        chatUserList:null,
-        currentUserMessage:[] as any
-       
+const ChatSlice = createSlice({
+    name: 'chat',
+    initialState: {
+        loggedInUser: null,
+        chatUserList: null,
+        currentUserMessage: [] as any
+
     },
-    reducers:{
-        setLoggedInUser:(state,payload)=>{
+    reducers: {
+        setLoggedInUser: (state, payload) => {
             //payloadAction: type:(name.functionName), payload
             //type: chat/setHello
 
-           state.loggedInUser=payload.payload;
+            state.loggedInUser = payload.payload;
 
         },
         // setChat:(state,payload)=>{
@@ -88,36 +88,36 @@ const ChatSlice=createSlice({
 
         // }
     },
-    extraReducers:(builder)=>{
-        builder.addCase(getUserList.fulfilled,(state,payloadAction)=>{
-            state.chatUserList=payloadAction.payload;
+    extraReducers: (builder) => {
+        builder.addCase(getUserList.fulfilled, (state, payloadAction) => {
+            state.chatUserList = payloadAction.payload;
         })
-        builder.addCase(getUserList.rejected,(state)=>{
+        builder.addCase(getUserList.rejected, (state) => {
 
-            state.chatUserList=null;
+            state.chatUserList = null;
         })
-        builder.addCase(getChatDetail.fulfilled,(state,payloadAction)=>{
-            state.currentUserMessage=payloadAction.payload;
+        builder.addCase(getChatDetail.fulfilled, (state, payloadAction) => {
+            state.currentUserMessage = payloadAction.payload;
         })
-        builder.addCase(getChatDetail.rejected,(state)=>{
+        builder.addCase(getChatDetail.rejected, (state) => {
 
-            state.currentUserMessage=null;
+            state.currentUserMessage = null;
         })
 
-        builder.addCase(sendChatDetail.fulfilled,(state,payloadAction)=>{
-            state.currentUserMessage=[
+        builder.addCase(sendChatDetail.fulfilled, (state, payloadAction) => {
+            state.currentUserMessage = [
                 ...state.currentUserMessage,
                 payloadAction.payload
             ]
         })
-        builder.addCase(sendChatDetail.rejected,(state)=>{
+        builder.addCase(sendChatDetail.rejected, (state) => {
 
-            state.currentUserMessage=null;
+            state.currentUserMessage = null;
         })
 
     }
-    
+
 
 })
-export const {setLoggedInUser}=ChatSlice.actions
+export const { setLoggedInUser } = ChatSlice.actions
 export default ChatSlice.reducer

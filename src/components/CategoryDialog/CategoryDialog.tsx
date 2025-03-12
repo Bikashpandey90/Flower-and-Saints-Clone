@@ -49,7 +49,7 @@ export function CategoryDialog({ isOpen, onClose, category }: CategoryDialogProp
     async ({ page = 1 }) => {
       try {
         const response = await categorySvc.getAllCategoryList(page, 40)
-        setCategories(response.detail)
+        setCategories(response.data.detail)
 
       } catch (exception) {
         console.error(exception)

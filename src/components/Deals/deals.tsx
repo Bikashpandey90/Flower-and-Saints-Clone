@@ -11,7 +11,7 @@ const DealSection = () => {
     const fetchProducts = async () => {
         try {
             const response = await productSvc.getDealsProduct()
-            setProduct(response.detail)
+            setProduct(response.data.detail)
 
 
         } catch (exception) {

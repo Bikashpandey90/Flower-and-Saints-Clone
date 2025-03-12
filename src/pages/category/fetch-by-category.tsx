@@ -58,8 +58,8 @@ export default function CategoryListPage() {
             const response = await categorySvc.fetchProductBySlug(slug as string)
 
             if (response) {
-                setProduct(response.detail.products)
-                setSelectedCategory(response.detail.category.title)
+                setProduct(response.data.detail.products)
+                setSelectedCategory(response.data.detail.category.title)
             }
         } catch (exception) {
             console.log(exception)
@@ -68,7 +68,7 @@ export default function CategoryListPage() {
     const fetchCategories = async () => {
         try {
             const response = await categorySvc.getHomeCategoryList()
-            setCategories(response.detail)
+            setCategories(response.data.detail)
 
 
         } catch (exception) {
@@ -78,7 +78,7 @@ export default function CategoryListPage() {
     const fetchBrand = async () => {
         try {
             const response = await brandSvc.getHomeBrandList()
-            setBrand(response.detail)
+            setBrand(response.data.detail)
 
 
         } catch (exception) {

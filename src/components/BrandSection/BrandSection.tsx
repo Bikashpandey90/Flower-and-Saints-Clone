@@ -11,7 +11,7 @@ const BrandSection = () => {
     const fetchBrand = async () => {
         try {
             const response = await brandSvc.getHomeBrandList()
-            setBrand(response.detail)
+            setBrand(response.data.detail)
         } catch (exception) {
             console.log(exception)
         }

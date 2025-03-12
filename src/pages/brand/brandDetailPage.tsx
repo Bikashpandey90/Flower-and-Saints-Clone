@@ -26,7 +26,7 @@ export default function BrandDetailsPage() {
     setLoading(true)
     try {
       const response = await brandSvc.getBrandById(id as string) // Await the API call
-      setDetail(response.detail)
+      setDetail(response.data.detail)
     } catch (exception) {
       toast.error("Error fetching brand")
       navigate('/admin/brands')

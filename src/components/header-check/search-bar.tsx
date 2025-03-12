@@ -69,7 +69,7 @@ export default function SearchBar({ className = "", onClose, isMobile = false }:
     const loadSearchProducts = useCallback(async ({ page = 1 }) => {
         try {
             const response = await productSvc.getProductForHome(page, 5, search)
-            setProducts(response.detail)
+            setProducts(response.data.detail)
 
         } catch (exception) {
             console.log(exception)

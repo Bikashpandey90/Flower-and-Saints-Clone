@@ -68,7 +68,7 @@ interface Product {
     title: string;
     slug: string;
     category: Category[];
-    brand: Brand[] | null;
+    brand: Brand | null;
     price: number;
     discount: number;
     actualAmt: number;
@@ -96,7 +96,7 @@ export default function ProductDetail() {
     const getProductDetails = async () => {
         try {
             const response = await productSvc.getProductById(id as string)
-            setProduct(response.detail)
+            setProduct(response.data.detail)
         } catch (exception) {
             console.error(exception)
         }

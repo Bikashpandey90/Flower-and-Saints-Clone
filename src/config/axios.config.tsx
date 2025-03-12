@@ -5,8 +5,6 @@ const axiosInstance = axios.create({
     timeoutErrorMessage: "Server time out",
     headers: {
         "Content-Type": "application/json",
-
-
     },
 });
 
@@ -20,7 +18,7 @@ export interface AxiosCustomResponse {
 }
 
 axiosInstance.interceptors.response.use((response: AxiosResponse) => {
-    return response.data;
+    return response;
 }, (error: AxiosError) => {
 
     //case handle 

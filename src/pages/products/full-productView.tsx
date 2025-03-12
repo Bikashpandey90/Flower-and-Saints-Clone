@@ -36,7 +36,7 @@ export default function ProductView() {
   const [showFullDescription, setShowFullDescription] = useState(false)
   const [isChatOpen, setIsChatOpen] = useState(false)
   const navigate = useNavigate()
-  const [loading, setLoading] = useState(false)
+  const [loading] = useState(false)
 
   const [relatedProducts, setRelatedProduct] = useState<Product[]>([])
   // Get the first paragraph of description for the preview
@@ -52,9 +52,9 @@ export default function ProductView() {
   const fetchProduct = async () => {
     try {
       const response = await productSvc.fetchProductBySlug(slug as string)
-      setProduct(response.detail.product)
+      setProduct(response.data.detail.product)
       console.log("Fetched Product", product)
-      setRelatedProduct(response.detail.related)
+      setRelatedProduct(response.data.detail.related)
 
     } catch (exception) {
       console.log(exception)

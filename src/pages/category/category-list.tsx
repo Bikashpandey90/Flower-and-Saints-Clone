@@ -39,12 +39,12 @@ export default function CategorysPage() {
       try {
         const response = await categorySvc.getAllCategoryList(page, 10, search)
         console.log("API Response:", response); 
-        setData(response.detail)
+        setData(response.data.detail)
         setPagination({
-          page: +response.options.currentPage,
-          limit: +response.options.limit,
-          total: response.options.total,
-          totalNoPages: Math.ceil(+response.options.totalData / +response.options.limit),
+          page: +response.data.options.currentPage,
+          limit: +response.data.options.limit,
+          total: response.data.options.total,
+          totalNoPages: Math.ceil(+response.data.options.totalData / +response.data.options.limit),
         })
         
       } catch (exception) {

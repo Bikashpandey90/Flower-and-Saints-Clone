@@ -1,5 +1,5 @@
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
     ArrowUpDown,
     ChevronDown,
@@ -7,6 +7,7 @@ import {
     Eye,
     Filter,
     MoreHorizontal,
+    Package,
     Truck,
 } from "lucide-react"
 
@@ -33,175 +34,34 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { OrderDetails } from "@/components/seller-dashboard-components/order-details"
+import orderSvc from "../orders/order.service"
+import { OrderDetail } from "../orders/checkout"
+import { useNavigate } from "react-router-dom"
+// import { OrderDetails } from "@/components/seller-dashboard-components/order-details"
 
-// Sample order data
-const initialOrders = [
-    {
-        id: "ORD-5723",
-        customer: {
-            name: "Alex Johnson",
-            email: "alex@example.com",
-            avatar: "/placeholder.svg?height=32&width=32&text=AJ",
-        },
-        date: "2023-11-14T09:45:00",
-        total: 129.99,
-        items: 3,
-        paymentStatus: "Paid",
-        fulfillmentStatus: "Shipped",
-        trackingNumber: "TRK928374651",
-    },
-    {
-        id: "ORD-5722",
-        customer: {
-            name: "Sarah Miller",
-            email: "sarah@example.com",
-            avatar: "/placeholder.svg?height=32&width=32&text=SM",
-        },
-        date: "2023-11-14T08:12:00",
-        total: 79.95,
-        items: 2,
-        paymentStatus: "Paid",
-        fulfillmentStatus: "Delivered",
-        trackingNumber: "TRK837465192",
-    },
-    {
-        id: "ORD-5721",
-        customer: {
-            name: "Michael Chen",
-            email: "michael@example.com",
-            avatar: "/placeholder.svg?height=32&width=32&text=MC",
-        },
-        date: "2023-11-13T16:30:00",
-        total: 249.99,
-        items: 1,
-        paymentStatus: "Paid",
-        fulfillmentStatus: "Shipped",
-        trackingNumber: "TRK736451928",
-    },
-    {
-        id: "ORD-5720",
-        customer: {
-            name: "Emily Rodriguez",
-            email: "emily@example.com",
-            avatar: "/placeholder.svg?height=32&width=32&text=ER",
-        },
-        date: "2023-11-13T14:22:00",
-        total: 54.97,
-        items: 3,
-        paymentStatus: "Paid",
-        fulfillmentStatus: "Processing",
-        trackingNumber: null,
-    },
-    {
-        id: "ORD-5719",
-        customer: {
-            name: "David Kim",
-            email: "david@example.com",
-            avatar: "/placeholder.svg?height=32&width=32&text=DK",
-        },
-        date: "2023-11-13T11:05:00",
-        total: 199.95,
-        items: 2,
-        paymentStatus: "Pending",
-        fulfillmentStatus: "Pending",
-        trackingNumber: null,
-    },
-    {
-        id: "ORD-5718",
-        customer: {
-            name: "Jessica Taylor",
-            email: "jessica@example.com",
-            avatar: "/placeholder.svg?height=32&width=32&text=JT",
-        },
-        date: "2023-11-12T17:45:00",
-        total: 149.99,
-        items: 1,
-        paymentStatus: "Paid",
-        fulfillmentStatus: "Delivered",
-        trackingNumber: "TRK645192837",
-    },
-    {
-        id: "ORD-5717",
-        customer: {
-            name: "Robert Wilson",
-            email: "robert@example.com",
-            avatar: "/placeholder.svg?height=32&width=32&text=RW",
-        },
-        date: "2023-11-12T15:30:00",
-        total: 89.97,
-        items: 3,
-        paymentStatus: "Failed",
-        fulfillmentStatus: "Cancelled",
-        trackingNumber: null,
-    },
-    {
-        id: "ORD-5716",
-        customer: {
-            name: "Amanda Brown",
-            email: "amanda@example.com",
-            avatar: "/placeholder.svg?height=32&width=32&text=AB",
-        },
-        date: "2023-11-12T10:15:00",
-        total: 299.99,
-        items: 1,
-        paymentStatus: "Refunded",
-        fulfillmentStatus: "Returned",
-        trackingNumber: "TRK546192837",
-    },
-    {
-        id: "ORD-5715",
-        customer: {
-            name: "Thomas Garcia",
-            email: "thomas@example.com",
-            avatar: "/placeholder.svg?height=32&width=32&text=TG",
-        },
-        date: "2023-11-11T13:20:00",
-        total: 124.95,
-        items: 2,
-        paymentStatus: "Paid",
-        fulfillmentStatus: "Shipped",
-        trackingNumber: "TRK451928376",
-    },
-    {
-        id: "ORD-5714",
-        customer: {
-            name: "Olivia Martinez",
-            email: "olivia@example.com",
-            avatar: "/placeholder.svg?height=32&width=32&text=OM",
-        },
-        date: "2023-11-11T09:10:00",
-        total: 74.99,
-        items: 1,
-        paymentStatus: "Paid",
-        fulfillmentStatus: "Processing",
-        trackingNumber: null,
-    },
-]
+
 
 export default function OrdersPage() {
-    const [orders] = useState(initialOrders)
-    const [searchQuery] = useState("")
+    // const [orders] = useState(initialOrders)
     const [statusFilter, setStatusFilter] = useState("all")
-    const [selectedOrder, setSelectedOrder] = useState<any>(null)
     const [isDetailsOpen, setIsDetailsOpen] = useState(false)
+    const [orders, setOrders] = useState<OrderDetail[]>([])
+    const navigate = useNavigate()
 
     // Filter orders based on search query and status filter
-    const filteredOrders = orders.filter((order) => {
-        const matchesSearch =
-            order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            order.customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            order.customer.email.toLowerCase().includes(searchQuery.toLowerCase())
+    // const filteredOrders = orders.filter((order) => {
+    //     const matchesSearch =
+    //         order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    //         order.customer.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    //         order.customer.email.toLowerCase().includes(searchQuery.toLowerCase())
 
-        const matchesStatus = statusFilter === "all" || order.fulfillmentStatus.toLowerCase() === statusFilter.toLowerCase()
+    //     const matchesStatus = statusFilter === "all" || order.fulfillmentStatus.toLowerCase() === statusFilter.toLowerCase()
 
-        return matchesSearch && matchesStatus
-    })
+    //     return matchesSearch && matchesStatus
+    // })
+    console.log(statusFilter)
 
-    const handleViewDetails = (order: any) => {
-        setSelectedOrder(order)
-        setIsDetailsOpen(true)
-    }
+
 
     const getPaymentStatusBadge = (status: string) => {
         switch (status) {
@@ -263,6 +123,20 @@ export default function OrdersPage() {
             minute: "2-digit",
         }).format(date)
     }
+
+    const fetchOrders = async () => {
+        try {
+            const response = await orderSvc.listOrders()
+            setOrders(response.data.detail)
+
+        } catch (exception) {
+            console.log(exception)
+        }
+    }
+    useEffect(() => {
+        fetchOrders()
+    }, [])
+
 
     return (
         <div className="flex min-h-screen w-full flex-col">
@@ -369,38 +243,54 @@ export default function OrdersPage() {
                                         </TableRow>
                                     </TableHeader>
                                     <TableBody>
-                                        {filteredOrders.length === 0 ? (
+                                        {orders.length === 0 ? (
                                             <TableRow>
                                                 <TableCell colSpan={8} className="h-24 text-center">
                                                     No orders found.
                                                 </TableCell>
                                             </TableRow>
                                         ) : (
-                                            filteredOrders.map((order) => (
-                                                <TableRow key={order.id}>
-                                                    <TableCell className="font-medium">{order.id}</TableCell>
+                                            orders.map((order) => (
+                                                <TableRow key={order._id}>
+                                                    <TableCell className="font-medium">
+
+                                                        <Package className="ml-4 h-8 w-8 text-gray-300" />
+                                                    </TableCell>
                                                     <TableCell>
                                                         <div className="flex items-center gap-2">
                                                             <img
-                                                                src={order.customer.avatar || "/placeholder.svg"}
+                                                                src={order.buyer?.image || "/placeholder.svg"}
                                                                 width={28}
                                                                 height={28}
-                                                                alt={order.customer.name}
-                                                                className="rounded-full"
+                                                                alt={order.buyer.name}
+                                                                className="rounded-full object-cover h-8 w-8 "
                                                             />
                                                             <div className="hidden flex-col sm:flex">
-                                                                <span className="text-sm font-medium">{order.customer.name}</span>
-                                                                <span className="text-xs text-muted-foreground">{order.customer.email}</span>
+                                                                <span className="text-sm font-medium">{order.buyer.name}</span>
+                                                                <span className="text-xs text-muted-foreground">{order.buyer.email}</span>
                                                             </div>
                                                         </div>
                                                     </TableCell>
-                                                    <TableCell className="hidden md:table-cell">{formatDate(order.date)}</TableCell>
-                                                    <TableCell className="hidden md:table-cell">{order.items}</TableCell>
-                                                    <TableCell>${order.total.toFixed(2)}</TableCell>
-                                                    <TableCell className="hidden sm:table-cell">
-                                                        {getPaymentStatusBadge(order.paymentStatus)}
+                                                    <TableCell className="hidden md:table-cell">{formatDate(order.createdAt)}</TableCell>
+                                                    <TableCell className="hidden md:table-cell">
+                                                        <div className="flex items-center gap-2">
+                                                            <img
+                                                                src={order.product?.images[0] || "/placeholder.svg"}
+                                                                width={28}
+                                                                height={28}
+                                                                alt={order.product?.title}
+                                                                className="rounded-base object-cover h-8 w-8"
+                                                            />
+                                                            <span>{order.product?.title}</span>
+                                                        </div>
                                                     </TableCell>
-                                                    <TableCell>{getFulfillmentStatusBadge(order.fulfillmentStatus)}</TableCell>
+                                                    <TableCell>
+                                                        Nrs {order.totalAmt?.toFixed(2)}
+                                                    </TableCell>
+                                                    <TableCell className="hidden sm:table-cell">
+                                                        {getPaymentStatusBadge(order.status)}
+                                                    </TableCell>
+                                                    <TableCell>{getFulfillmentStatusBadge(order.status)}</TableCell>
                                                     <TableCell className="text-right">
                                                         <DropdownMenu>
                                                             <DropdownMenuTrigger asChild>
@@ -410,7 +300,7 @@ export default function OrdersPage() {
                                                                 </Button>
                                                             </DropdownMenuTrigger>
                                                             <DropdownMenuContent align="end">
-                                                                <DropdownMenuItem onClick={() => handleViewDetails(order)}>
+                                                                <DropdownMenuItem onClick={() => navigate('/seller/order-detail/' + order._id)}>
                                                                     <Eye className="mr-2 h-4 w-4" />
                                                                     View Details
                                                                 </DropdownMenuItem>
@@ -480,7 +370,7 @@ export default function OrdersPage() {
                         <SheetTitle>Order Details</SheetTitle>
                         <SheetDescription>Complete information about this order</SheetDescription>
                     </SheetHeader>
-                    {selectedOrder && <OrderDetails order={selectedOrder} />}
+                    {/* {selectedOrder && <OrderDetails order={selectedOrder} />} */}
                 </SheetContent>
             </Sheet>
         </div>

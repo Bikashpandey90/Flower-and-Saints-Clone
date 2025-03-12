@@ -13,22 +13,22 @@ import { NavLink, useNavigate } from "react-router-dom"
 import * as Yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { LucideEye, LucideEyeOff } from "lucide-react"
-import {  useContext, useState } from "react"
+import { useContext, useState } from "react"
 import { InputType, TextInputField } from "../form/input-field"
 import authSvc, { UserType } from "@/pages/auth/auth.service"
 import { toast } from "react-toastify"
 import { AuthContext } from "@/context/auth-context"
 import { useDispatch } from "react-redux"
-import { setLoggedInUser as setUserDatRedux} from "@/reducer/chat-reducer"
+import { setLoggedInUser as setUserDatRedux } from "@/reducer/chat-reducer"
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-  
-  const dispatch=useDispatch();
-        const {loggedInUser,setLoggedInUser}=useContext(AuthContext) as {loggedInUser: any;setLoggedInUser:Function}
-  
+
+  const dispatch = useDispatch();
+  const { loggedInUser, setLoggedInUser } = useContext(AuthContext) as { loggedInUser: any; setLoggedInUser: Function }
+
   const [showPassword, setShowPassword] = useState(false);
 
   const togglePasswordVisibility = () => {
@@ -57,8 +57,8 @@ export function LoginForm({
       }
       let response: UserType = await authSvc.loginApi(payload);
       setLoggedInUser(response)
-      console.log(loggedInUser
-      )
+      console.log(loggedInUser)
+      console.log(response)
 
       dispatch(setUserDatRedux(response))
 

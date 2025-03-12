@@ -11,14 +11,7 @@ import { BannerListTableSkeleton } from "@/components/skeleton/table-skeleton"
 import { BrandTable } from "@/components/BrandTable/brandTable"
 import { BrandDialog } from "@/components/BrandDialog/BrandDialog"
 
-interface Brand {
-    id: string 
-    image: string
-    title: string
-    createdAt: string
-    status: string
- 
-}
+
 
 export default function BrandsPage() {
   const [data, setData] = useState([])
@@ -38,15 +31,15 @@ export default function BrandsPage() {
       isLoading(true)
       try {
         const response = await brandSvc.getAllBrandList(page, 10, search)
-        console.log("API Response:", response); 
-        setData(response.detail )
+        console.log("API Response:", response);
+        setData(response.data.detail)
         setPagination({
-          page: +response.options.currentPage,
-          limit: +response.options.limit,
-          total: response.options.total,
-          totalNoPages: Math.ceil(+response.options.totalData / +response.options.limit),
+          page: +response.data.options.currentPage,
+          limit: +response.data.options.limit,
+          total: response.data.options.total,
+          totalNoPages: Math.ceil(+response.data.options.totalData / +response.data.options.limit),
         })
-        
+
       } catch (exception) {
         console.error(exception)
         toast.warning("Error fetching brands")
@@ -77,8 +70,8 @@ export default function BrandsPage() {
       loadAllData({ page: newPage })
     }
   }
-  
-  
+
+
 
   return (
     <AnimatePresence>

@@ -29,7 +29,7 @@ export default function SellerProfile() {
     const fetchMyProducts = async () => {
         try {
             const response = await productSvc.getMyProducts()
-            setMyProducts(response.detail)
+            setMyProducts(response.data.detail)
 
 
         } catch (exception) {

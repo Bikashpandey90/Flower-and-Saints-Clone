@@ -1,11 +1,11 @@
 
 import { useEffect, useState } from "react"
 import { format } from "date-fns"
-import { ArrowLeft, ChevronRight, Download, Eye, MoreHorizontal, Package, Search, SlidersHorizontal } from "lucide-react"
+import { Download, Eye, MoreHorizontal, Package, Search, SlidersHorizontal } from "lucide-react"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import {
     DropdownMenu,
@@ -21,11 +21,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import orderSvc from "../orders/order.service"
 import { OrderDetail } from "../orders/checkout"
-import { Separator } from "@radix-ui/react-select"
-import { NavLink } from "react-router-dom"
-import { Avatar } from "@/components/ui/avatar"
-import { AvatarFallback, AvatarImage } from "@radix-ui/react-avatar"
-import { ScrollArea } from "@radix-ui/react-scroll-area"
+import { useNavigate } from "react-router-dom"
 
 // Sample data based on the provided structure
 
@@ -33,14 +29,15 @@ import { ScrollArea } from "@radix-ui/react-scroll-area"
 export default function OrderListing() {
     const [searchQuery, setSearchQuery] = useState("")
     const [statusFilter, setStatusFilter] = useState("all")
-    const [selectedOrder, setSelectedOrder] = useState<OrderDetail | null>(null)
+    const [selectedOrder] = useState<OrderDetail | null>(null)
     const [isDetailOpen, setIsDetailOpen] = useState(false)
     const [orders, setOrders] = useState<OrderDetail[]>([])
+    const navigate = useNavigate()
 
     const fetchOrders = async () => {
         try {
             const response = await orderSvc.listOrders();
-            setOrders(response.detail)
+            setOrders(response.data.detail)
 
         } catch (exception) {
             console.log(exception)
@@ -96,14 +93,9 @@ export default function OrderListing() {
         return new Intl.NumberFormat("en-US", options).format(amount);
     };
 
-    interface HandleViewDetails {
-        (order: OrderDetail): void;
-    }
 
-    const handleViewDetails: HandleViewDetails = (order) => {
-        setSelectedOrder(order);
-        setIsDetailOpen(true);
-    };
+
+
 
 
 
@@ -198,7 +190,11 @@ export default function OrderListing() {
                                         ) : (
                                             filteredOrders.map((order) => (
                                                 <TableRow key={order._id}>
-                                                    <TableCell className="font-medium">{order._id.substring(order._id.length - 8)}</TableCell>
+                                                    <TableCell className="font-medium">
+                                                        {/* {order._id.substring(order._id.length - 8)} */}
+                                                        <Package className="items-center justify-center ml-4 h-10 w-10  text-gray-300" />
+
+                                                    </TableCell>
                                                     <TableCell>
                                                         <div className="font-medium">{order.buyer.name}</div>
                                                         <div className="text-xs text-muted-foreground hidden md:block">{order.buyer.email}</div>
@@ -252,7 +248,7 @@ export default function OrderListing() {
                                                             </DropdownMenuTrigger>
                                                             <DropdownMenuContent align="end">
                                                                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                                                <DropdownMenuItem onClick={() => handleViewDetails(order)}>
+                                                                <DropdownMenuItem onClick={() => navigate('/admin/order-detail/' + order._id)}>
                                                                     <Eye className="mr-2 h-4 w-4" />
                                                                     View Details
                                                                 </DropdownMenuItem>

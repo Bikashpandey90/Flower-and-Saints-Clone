@@ -1,7 +1,5 @@
-"use client"
 
 import type React from "react"
-
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -99,7 +97,7 @@ export function EditProductForm({ productId }: { productId: string }) {
         }
         try {
             const response = await productSvc.getProductById(productId)
-            setProduct(response.detail)
+            setProduct(response.data.detail)
         } catch (exception) {
             console.log(exception)
         }
@@ -108,7 +106,7 @@ export function EditProductForm({ productId }: { productId: string }) {
     const fetchCategories = async () => {
         try {
             const response = await categorySvc.getAllCategoryListUser()
-            setCategories(response.detail)
+            setCategories(response.data.detail)
         } catch (exception) {
             console.error(exception)
         }
@@ -116,7 +114,7 @@ export function EditProductForm({ productId }: { productId: string }) {
     const fetchBrand = async () => {
         try {
             const response = await brandSvc.getHomeBrandList()
-            setBrand(response.detail)
+            setBrand(response.data.detail)
 
         } catch (exception) {
             console.error(exception)

@@ -10,7 +10,7 @@ const CategorySection = () => {
     const fetchCategories = async () => {
         try {
             const response = await categorySvc.getParentCategory();
-            const filteredCategories = response.detail.filter((category: CategoryData) => category.parentId === null);
+            const filteredCategories = response.data.detail.filter((category: CategoryData) => category.parentId === null);
             setCategories(filteredCategories)
 
 
@@ -21,20 +21,20 @@ const CategorySection = () => {
     useEffect(() => {
         fetchCategories()
     }, [])
-    const colors = [
-        { color: "bg-blue-100" },
-        { color: "bg-pink-100" },
-        { color: "bg-green-100" },
-        { color: "bg-purple-100" },
-        { color: "bg-orange-100" },
-        { color: "bg-yellow-100" },
-        { color: "bg-red-100" },
-        { color: "bg-gray-100" },
-        { color: "bg-teal-100" },
-        { color: "bg-lime-100" },
-        { color: "bg-amber-100" },
-        { color: "bg-emerald-100" }
-    ];
+    // const colors = [
+    //     { color: "bg-blue-100" },
+    //     { color: "bg-pink-100" },
+    //     { color: "bg-green-100" },
+    //     { color: "bg-purple-100" },
+    //     { color: "bg-orange-100" },
+    //     { color: "bg-yellow-100" },
+    //     { color: "bg-red-100" },
+    //     { color: "bg-gray-100" },
+    //     { color: "bg-teal-100" },
+    //     { color: "bg-lime-100" },
+    //     { color: "bg-amber-100" },
+    //     { color: "bg-emerald-100" }
+    // ];
 
 
     return (<>

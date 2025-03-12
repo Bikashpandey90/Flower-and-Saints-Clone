@@ -120,8 +120,8 @@ export default function BrandProductListing() {
     const fetchProductBySlug = async () => {
         try {
             const response = await brandSvc.fetchBySlug(slug as string)
-            setProduct(response.detail.products)
-            setBrand(response.detail.brand)
+            setProduct(response.data.detail.products)
+            setBrand(response.data.detail.brand)
 
         } catch (exception) {
             console.log(exception)

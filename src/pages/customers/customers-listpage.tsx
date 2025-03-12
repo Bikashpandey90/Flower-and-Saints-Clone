@@ -25,7 +25,7 @@ const CustomerListPage = () => {
   const loadCustomers = useCallback(async () => {
     try {
       const response = await customerSvc.getAllCustomers();
-      setUser(response.data);
+      setUser(response.data.data);
     } catch (exception) {
       console.log(exception);
     }

@@ -1,5 +1,5 @@
 
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect } from "react"
 
 import { Minus, Plus, Trash2 } from "lucide-react"
 
@@ -59,7 +59,7 @@ export default function CartPage() {
     const subtotal = carts.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
     // Estimated tax (example: 8%)
-    const estimatedTax = subtotal * 0.08
+    const estimatedTax = subtotal * 0.13
 
     // Shipping (free over $35)
     const shipping = subtotal > 35 ? 0 : 5.99

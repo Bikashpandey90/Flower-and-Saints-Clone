@@ -36,6 +36,10 @@ import OrderListing from "@/pages/layout/admin-orderlisting";
 import PaymentSuccess from "@/pages/orders/paymentSucess";
 import CustomerDashboard from "@/pages/customer/customer-dashboard";
 import ManageAccount from "@/pages/customer/manage-account";
+import OrdersPage from "@/pages/seller/order-page";
+import PaymentFailure from "@/pages/orders/payment-failure";
+import OrderDetailPage from "@/pages/orders/order-detail-page";
+import CustomerOrderDetailPage from "@/pages/customers/customer-order-detail";
 
 
 const Routing: FC = () => {
@@ -92,6 +96,11 @@ const Routing: FC = () => {
                     path: 'payment-success',
                     element: <PaymentSuccess />
                 }
+                ,
+                {
+                    path: 'payment-failure',
+                    element: <PaymentFailure />
+                }
                 , {
                     path: '/customer',
                     element: <PermissionCheck allowedRole="customer">
@@ -105,6 +114,10 @@ const Routing: FC = () => {
 
 
                     ]
+                }, {
+                    path: 'order-detail/:id',
+                    element: <CustomerOrderDetailPage />
+
                 }, {
                     path: '/manage-account',
                     element: <PermissionCheck allowedRole="customer">
@@ -176,9 +189,10 @@ const Routing: FC = () => {
                     path: "order",
                     element: <OrderListing />
                 },
-
-
-
+                {
+                    path: "order-detail/:id",
+                    element: <OrderDetailPage />
+                },
                 {
                     path: "*", //wildcard error pages 404
                     element: <NotFound />,
@@ -200,7 +214,11 @@ const Routing: FC = () => {
                     element: <MainContent />
                 }, {
                     path: "orders",
-                    element: <OrderListing />
+                    element: <OrdersPage />
+                },
+                {
+                    path: "order-detail/:id",
+                    element: <OrderDetailPage />
                 }, {
                     path: "chat",
                     element: <Chat />

@@ -14,7 +14,7 @@ const RecentlyViewed = () => {
     const fetchNewArrivals = async () => {
         try {
             const response = await productSvc.getNewArrivals()
-            setNewProducts(response.detail)
+            setNewProducts(response.data.detail)
 
         } catch (exception) {
             console.log(exception)

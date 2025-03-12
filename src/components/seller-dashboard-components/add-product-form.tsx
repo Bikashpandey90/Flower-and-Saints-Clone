@@ -23,7 +23,7 @@ import brandSvc, { BrandData } from "@/pages/brand/brand.service"
 
 
 
-export function AddProductForm() {
+export function AddProductForm({onSuccess}) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [categories, setCategories] = useState<Category[]>([])
@@ -58,7 +58,7 @@ export function AddProductForm() {
   const fetchCategories = async () => {
     try {
       const response = await categorySvc.getAllCategoryListUser()
-      setCategories(response.detail)
+      setCategories(response.data.detail)
     } catch (exception) {
       console.error(exception)
 
@@ -68,7 +68,7 @@ export function AddProductForm() {
   const fetchBrand = async () => {
     try {
       const response = await brandSvc.getHomeBrandList()
-      setBrand(response.detail)
+      setBrand(response.data.detail)
 
     } catch (exception) {
       console.error(exception)

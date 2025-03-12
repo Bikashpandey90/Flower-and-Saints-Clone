@@ -12,7 +12,7 @@ const CarouselSlider = () => {
   const fetchBanners = async () => {
     try {
       const response = await bannerSvc.getHomeBannerList()
-      setBanners(response.detail)
+      setBanners(response.data.detail)
     } catch (exception) {
       console.log(exception)
     }

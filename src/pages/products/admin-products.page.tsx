@@ -119,7 +119,7 @@ export default function AdminProductsPage() {
   const loadAllProducts = useCallback(async ({ page = 1 }) => {
     try {
       const response = await productSvc.getAllProductList(page, 30)
-      setData(response?.detail || [])
+      setData(response?.data.detail || [])
     } catch (exception) {
       console.log(exception)
       toast.error("Error loading products !")

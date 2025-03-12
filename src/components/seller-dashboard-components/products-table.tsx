@@ -157,7 +157,7 @@ export function ProductTable() {
     async ({ page = 1 }) => {
       try {
         const response = await productSvc.getMyProducts(page, 10)
-        setData(response.detail)
+        setData(response.data.detail)
 
       } catch (exception) {
         console.log(exception)
@@ -173,7 +173,7 @@ export function ProductTable() {
 
 
 
-  const productToEdit: ProductData | null = editProductId ? data.find((p) => p._id === editProductId) || null : null
+  // const productToEdit: ProductData | null = editProductId ? data.find((p) => p._id === editProductId) || null : null
 
 
   const handleDeleteConfirm = async (id: string) => {
@@ -215,7 +215,7 @@ export function ProductTable() {
               <TableHead className="w-[50px]">
                 <Checkbox
                   checked={selectedRows.length === data.length && data.length > 0}
-                  // onCheckedChange={handleSelectAll}
+                  onCheckedChange={handleSelectAll}
                   aria-label="Select all"
                 />
               </TableHead>

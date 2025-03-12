@@ -26,7 +26,7 @@ export default function CategoryDetailsPage() {
     setLoading(true)
     try {
       const response = await categorySvc.getCategoryById(id as string) // Await the API call
-      setDetail(response.detail)
+      setDetail(response.data.detail)
     } catch (exception) {
       toast.error("Error fetching category")
       navigate('/admin/categorys')

@@ -34,7 +34,7 @@ export default function CustomerDashboard() {
     const fetchRecommendations = async () => {
         try {
             const response = await productSvc.getProductForHome(1)
-            setRecommendations(response.detail)
+            setRecommendations(response.data.detail)
 
         } catch (exception) {
             console.log(exception)
