@@ -32,7 +32,7 @@ export interface Message {
 }
 
 
-export default function ChatInterface({ seller, onClose }: ChatInterfaceProps) {
+export default function ChatInterface({ seller }: ChatInterfaceProps) {
 
     const [inputMessage, setInputMessage] = useState('')
     const scrollAreaRef = useRef<HTMLDivElement>(null)

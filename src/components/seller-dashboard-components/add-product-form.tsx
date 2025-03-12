@@ -21,14 +21,17 @@ import brandSvc, { BrandData } from "@/pages/brand/brand.service"
 
 
 
+interface AddProductFormProps {
+  onSuccess: () => void;
+}
 
-
-export function AddProductForm({onSuccess}) {
+export function AddProductForm({ onSuccess }: AddProductFormProps): JSX.Element {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [categories, setCategories] = useState<Category[]>([])
   const [brand, setBrand] = useState<BrandData[]>([])
 
+  console.log(onSuccess)
   const ProductDTO = Yup.object({
     title: Yup.string().min(2).max(300).required(),
     description: Yup.string().min(2).max(2000).required(),
