@@ -10,6 +10,7 @@ import { NavLink, useNavigate } from "react-router-dom"
 import orderSvc from "./order.service"
 import { toast } from "react-toastify"
 import { CartContext } from "@/context/cart-context"
+import { formatNumber } from "@/lib/utils"
 
 // Types for our cart items
 
@@ -59,7 +60,7 @@ export default function CartPage() {
     const subtotal = carts.reduce((sum, item) => sum + item.price * item.quantity, 0)
 
     // Estimated tax (example: 8%)
-    const estimatedTax = subtotal * 0.13
+    const estimatedTax = +(subtotal) * 0.13
 
     // Shipping (free over $35)
     const shipping = subtotal > 35 ? 0 : 5.99
@@ -172,7 +173,7 @@ export default function CartPage() {
                                             </div>
                                         </div>
 
-                                        <div className="text-right font-medium">Nrs {item.price.toFixed(2)}</div>
+                                        <div className="text-right font-medium">Nrs {formatNumber(item.price)}</div>
                                     </div>
 
                                     {carts.indexOf(item) < carts.length - 1 && <Separator className="mt-6" />}
@@ -181,7 +182,7 @@ export default function CartPage() {
 
                             <div className="text-right text-lg font-semibold mt-4">
                                 Subtotal ({carts.reduce((sum, item) => sum + item.quantity, 0)} items):
-                                <span className="ml-2">Nrs {subtotal.toFixed(2)}</span>
+                                <span className="ml-2">Nrs {formatNumber(subtotal)}</span>
                             </div>
                         </CardContent>
                     </Card>
@@ -196,7 +197,7 @@ export default function CartPage() {
                             <div className="space-y-3 mb-6">
                                 <div className="flex justify-between">
                                     <span>Items ({carts.reduce((sum, item) => sum + item.quantity, 0)}):</span>
-                                    <span>Nrs {subtotal.toFixed(2)}</span>
+                                    <span>Nrs {formatNumber(subtotal)}</span>
                                 </div>
 
                                 <div className="flex justify-between">
@@ -206,14 +207,14 @@ export default function CartPage() {
 
                                 <div className="flex justify-between">
                                     <span>Estimated tax:</span>
-                                    <span>Nrs {estimatedTax.toFixed(2)}</span>
+                                    <span>Nrs {formatNumber(estimatedTax)}</span>
                                 </div>
 
                                 <Separator className="my-3" />
 
                                 <div className="flex justify-between text-lg font-bold">
                                     <span>Order total:</span>
-                                    <span>Nrs {total.toFixed(2)}</span>
+                                    <span>Nrs {formatNumber(total)}</span>
                                 </div>
                             </div>
 

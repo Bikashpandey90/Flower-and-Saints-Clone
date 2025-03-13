@@ -22,6 +22,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import orderSvc from "../orders/order.service"
 import { OrderDetail } from "../orders/checkout"
 import { useNavigate } from "react-router-dom"
+import { formatNumber } from "@/lib/utils"
 
 // Sample data based on the provided structure
 
@@ -220,7 +221,7 @@ export default function OrderListing() {
                                                     <TableCell className="hidden md:table-cell">
                                                         {format(new Date(order.orderDate), "MMM dd, yyyy")}
                                                     </TableCell>
-                                                    <TableCell className="hidden lg:table-cell">{formatCurrency(order.total)}</TableCell>
+                                                    <TableCell className="hidden lg:table-cell">{formatNumber(order.total)}</TableCell>
                                                     <TableCell className="hidden sm:table-cell">
                                                         <Badge variant="outline" className={`${getStatusBadgeColor(order.status)} capitalize`}>
                                                             {order.status}
@@ -353,7 +354,7 @@ export default function OrderListing() {
                                     <dl className="grid grid-cols-1 gap-2 text-sm">
                                         <div className="grid grid-cols-2">
                                             <dt className="font-medium text-muted-foreground">Subtotal:</dt>
-                                            <dd className="text-right">{formatCurrency(selectedOrder.subTotal)}</dd>
+                                            <dd className="text-right">{formatNumber(selectedOrder.subTotal)}</dd>
                                         </div>
                                         <div className="grid grid-cols-2">
                                             <dt className="font-medium text-muted-foreground">Discount:</dt>

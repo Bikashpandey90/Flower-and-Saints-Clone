@@ -27,6 +27,7 @@ import { EditProductForm } from "./edit-form"
 import productSvc from "@/pages/products/products.service"
 import { toast } from "react-toastify"
 import { useNavigate } from "react-router-dom"
+import { formatNumber } from "@/lib/utils"
 
 export interface ProductData {
 
@@ -271,7 +272,7 @@ export function ProductTable() {
                   </TableCell>
                   <TableCell className="font-medium">{dat.title}</TableCell>
                   <TableCell>{dat.category[0].title}</TableCell>
-                  <TableCell>${dat.price.toFixed(2)}</TableCell>
+                  <TableCell>Nrs {formatNumber(dat.actualAmt)}</TableCell>
                   <TableCell>{dat.stock}</TableCell>
                   <TableCell>{getStatusBadge(dat.status)}</TableCell>
                   <TableCell>

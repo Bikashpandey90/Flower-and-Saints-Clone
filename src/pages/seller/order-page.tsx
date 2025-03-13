@@ -23,7 +23,6 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet"
 import {
     Select,
     SelectContent,
@@ -37,6 +36,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import orderSvc from "../orders/order.service"
 import { OrderDetail } from "../orders/checkout"
 import { useNavigate } from "react-router-dom"
+import { formatNumber } from "@/lib/utils"
 // import { OrderDetails } from "@/components/seller-dashboard-components/order-details"
 
 
@@ -44,7 +44,7 @@ import { useNavigate } from "react-router-dom"
 export default function OrdersPage() {
     // const [orders] = useState(initialOrders)
     const [statusFilter, setStatusFilter] = useState("all")
-    const [isDetailsOpen, setIsDetailsOpen] = useState(false)
+    // const [isDetailsOpen, setIsDetailsOpen] = useState(false)
     const [orders, setOrders] = useState<OrderDetail[]>([])
     const navigate = useNavigate()
 
@@ -279,13 +279,13 @@ export default function OrdersPage() {
                                                                 width={28}
                                                                 height={28}
                                                                 alt={order.product?.title}
-                                                                className="rounded-base object-cover h-8 w-8"
+                                                                className="rounded-sm object-cover h-8 w-8"
                                                             />
                                                             <span>{order.product?.title}</span>
                                                         </div>
                                                     </TableCell>
                                                     <TableCell>
-                                                        Nrs {order.totalAmt?.toFixed(2)}
+                                                        Nrs {formatNumber(order?.totalAmt ?? 0)}
                                                     </TableCell>
                                                     <TableCell className="hidden sm:table-cell">
                                                         {getPaymentStatusBadge(order.status)}
@@ -364,15 +364,16 @@ export default function OrdersPage() {
             </main>
 
             {/* Order Details Sheet */}
-            <Sheet open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
+            {/* <Sheet open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
                 <SheetContent className="sm:max-w-xl">
                     <SheetHeader>
                         <SheetTitle>Order Details</SheetTitle>
                         <SheetDescription>Complete information about this order</SheetDescription>
                     </SheetHeader>
-                    {/* {selectedOrder && <OrderDetails order={selectedOrder} />} */}
+                    {/* {selectedOrder && <OrderDetails order={selectedOrder} />} 
                 </SheetContent>
-            </Sheet>
+            </Sheet> */}
+
         </div>
     )
 }

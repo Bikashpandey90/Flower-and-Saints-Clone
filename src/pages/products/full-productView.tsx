@@ -18,14 +18,6 @@ import { toast } from "react-toastify"
 
 // Mock data for related products
 
-// Format price to currency
-const formatPrice = (price: number) => {
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    minimumFractionDigits: 2,
-  }).format(price / 100)
-}
 
 export default function ProductView() {
 
@@ -291,10 +283,10 @@ export default function ProductView() {
               <CardContent className="p-2 sm:p-4">
                 <h3 className="font-medium text-xs sm:text-sm line-clamp-2 mb-1 sm:mb-2">{product?.title}</h3>
                 <div className="flex items-baseline space-x-2">
-                  <span className="font-bold text-sm sm:text-base">{formatNumber(product?.actualAmt)}</span>
+                  <span className="font-bold text-sm sm:text-base">Nrs {formatNumber(product?.actualAmt)}</span>
                   {product?.discount > 0 && (
                     <span className="text-xs sm:text-sm text-muted-foreground line-through">
-                      {formatPrice(product?.price)}
+                      {formatNumber(product?.price)}
                     </span>
                   )}
                 </div>
@@ -323,7 +315,7 @@ export default function ProductView() {
                   <span className="font-bold text-sm sm:text-base">{formatNumber(product?.actualAmt)}</span>
                   {product?.discount > 0 && (
                     <span className="text-xs sm:text-sm text-muted-foreground line-through">
-                      {formatPrice(product?.price)}
+                      {formatNumber(product?.price)}
                     </span>
                   )}
                 </div>

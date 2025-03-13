@@ -5,7 +5,6 @@ import RegisterPage from "@/pages/auth/register-page";
 import NotFound from "@/pages/errors/not-found.page";
 import AdminPage from "@/pages/layout/admin-page.layout";
 import HomePageLayout from "@/pages/layout/home-page.layout";
-import Portfolio from "@/pages/layout/portfolio";
 import { FC, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -40,6 +39,7 @@ import OrdersPage from "@/pages/seller/order-page";
 import PaymentFailure from "@/pages/orders/payment-failure";
 import OrderDetailPage from "@/pages/orders/order-detail-page";
 import CustomerOrderDetailPage from "@/pages/customers/customer-order-detail";
+import CategoryDetailsPage from "@/pages/category/categoryDetailPage";
 
 
 const Routing: FC = () => {
@@ -61,6 +61,11 @@ const Routing: FC = () => {
                 //     element: <CategoryDetailPage />
 
                 // },
+                {
+                    path: 'search',
+                    element: <CategoryListPage />
+
+                },
                 {
                     path: "*", //wildcard error pages 404
                     element: <NotFound />,
@@ -171,6 +176,11 @@ const Routing: FC = () => {
 
                 },
                 {
+                    path: "category/:id",
+                    element: <CategoryDetailsPage />,
+
+                },
+                {
                     path: "brand/:id",
                     element: <BrandDetailsPage />
 
@@ -227,6 +237,10 @@ const Routing: FC = () => {
                     element: <SellerProfile />
                 },
                 {
+                    path: "customers",
+                    element: <CustomerListPage />
+                },
+                {
                     path: "products/:id",
                     element: <ProductDetail />
                 }
@@ -247,10 +261,7 @@ const Routing: FC = () => {
         },
 
 
-        {
-            path: "/portfolio",
-            element: <Portfolio />
-        }
+
     ]);
 
     const [queryClient] = useState(() => new QueryClient());

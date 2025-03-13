@@ -5,11 +5,12 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { NavLink, useNavigate, useParams } from "react-router-dom"
+import { NavLink, useNavigate, useParams, useSearchParams } from "react-router-dom"
 import categorySvc, { CategoryData } from "./category.service"
 import { Product } from "@/components/Shopping Cart PopOver/shopping-cart"
 import { ProductCard } from "@/components/Product Card/productCard"
 import brandSvc, { BrandData } from "../brand/brand.service"
+import productSvc from "../products/products.service"
 
 // Sample data - in a real app this would come from an API
 // const categories = [
@@ -51,6 +52,12 @@ export default function CategoryListPage() {
     const [brands, setBrand] = useState<BrandData[]>([])
     const { slug } = useParams();
     const navigate = useNavigate()
+    // const location = useLocation();
+    const [searchParams] = useSearchParams()
+    // const [search, setSearch] = useState(new URLSearchParams(location.search).get('q') || ''); // Extract search query from URL
+    const search = searchParams.get('q') || '';
+
+
 
 
     const fetchProducts = async () => {
@@ -75,6 +82,7 @@ export default function CategoryListPage() {
             console.log(exception)
         }
     }
+
     const fetchBrand = async () => {
         try {
             const response = await brandSvc.getHomeBrandList()
@@ -85,8 +93,17 @@ export default function CategoryListPage() {
             console.log(exception)
         }
     }
-    useEffect(() => {
 
+    const loadSearchProducts = async ({ page = 1 }) => {
+        try {
+            const response = await productSvc.getProductForHome(page, 40, search)
+            setProduct(response.data.detail)
+
+        } catch (exception) {
+            console.log(exception)
+        }
+    }
+    useEffect(() => {
         fetchCategories()
         fetchBrand()
     }, [])
@@ -94,6 +111,9 @@ export default function CategoryListPage() {
         fetchProducts()
     }, [selectedCategory])
 
+    useEffect(() => {
+        loadSearchProducts({ page: 1 })
+    }, [search])
 
 
 
@@ -107,7 +127,11 @@ export default function CategoryListPage() {
                     Home
                 </NavLink>
                 <ChevronRight className="h-4 w-4 mx-1" />
-                <span className="font-medium text-foreground">{selectedCategory}</span>
+                <span className="font-medium text-foreground">
+                    {selectedCategory}
+
+
+                </span>
             </div>
 
             <div className="flex flex-col lg:flex-row gap-8">
@@ -146,7 +170,7 @@ export default function CategoryListPage() {
                                         {category.title}
                                     </button>
                                     <span className="text-sm text-muted-foreground">
-                                        {/* ({category.count}) */}
+                                        ({Math.floor(Math.random() * (1000 - 100 + 1)) + 100})
                                     </span>
                                 </li>
                             ))}
@@ -155,10 +179,12 @@ export default function CategoryListPage() {
 
                     <Separator />
 
+
                     {/* Subcategories */}
                     {selectedCategory && (
                         <div>
-                            <h3 className="font-semibold text-lg mb-3">{selectedCategory}</h3>
+                            <h3 className="font-semibold text-lg mb-3">{selectedCategory}
+                            </h3>
                             <Accordion type="single" collapsible defaultValue="subcategories">
                                 <AccordionItem value="subcategories" className="border-none">
                                     <AccordionTrigger className="py-2 hover:no-underline">
@@ -218,6 +244,8 @@ export default function CategoryListPage() {
                                     <span className="text-sm text-muted-foreground">
 
                                         {/* brand count */}
+                                        ({Math.floor(Math.random() * (1000 - 100 + 1)) + 100})
+
                                     </span>
                                 </li>
                             ))}
@@ -249,7 +277,7 @@ export default function CategoryListPage() {
                 <div className="lg:w-3/4">
                     {/* Results header */}
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6">
-                        <h1 className="text-2xl font-bold">{selectedCategory}</h1>
+                        <h1 className="text-2xl font-bold">{selectedCategory}{search ? `Showing Results for ${search}` : ''}</h1>
                         <div className="flex items-center mt-3 sm:mt-0">
                             <span className="text-sm text-muted-foreground mr-2">Sort by:</span>
                             <Select defaultValue="featured">
@@ -269,7 +297,7 @@ export default function CategoryListPage() {
 
                     {/* Results count */}
                     <p className="text-sm text-muted-foreground mb-6">
-                        1-{products.length} of over 1,000 results for "{selectedCategory}"
+                        1-{products.length} of over 1,000 results for "{selectedCategory}{search}"
                     </p>
 
                     {/* Products grid */}

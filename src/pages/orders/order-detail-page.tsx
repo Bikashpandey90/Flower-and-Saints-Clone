@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Separator } from "@/components/ui/separator"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import orderSvc from "./order.service"
-import { formatDateTOYMD } from "@/lib/utils"
+import { formatDateTOYMD, formatNumber } from "@/lib/utils"
 import { useNavigate, useParams } from "react-router-dom"
 
 // This would come from your authentication system
@@ -129,13 +129,7 @@ export default function OrderDetailPage() {
         }
     }
 
-    // Format currency
-    const formatCurrency = (amount = 0) => {
-        return new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "NPR",
-        }).format(amount)
-    }
+
 
     // Get order ID display
     const getOrderIdDisplay = () => {
@@ -215,7 +209,7 @@ export default function OrderDetailPage() {
                                                             : "/placeholder.svg"
                                                     }
                                                     alt={orderData.product?.title || "Product image"}
-                                                    className="object-cover w-full h-full"
+                                                    className="object-cover w-full h-full "
                                                 />
                                             </div>
                                             <div className="flex-1 w-full">
@@ -226,9 +220,9 @@ export default function OrderDetailPage() {
                                                 <div className="mt-2 flex items-center justify-between">
                                                     <div>
                                                         <p className="text-xs sm:text-sm text-muted-foreground line-through">
-                                                            {formatCurrency((orderData.product?.price || 0))}
+                                                            {formatNumber((orderData.product?.price || 0))}
                                                         </p>
-                                                        <p className="font-medium text-sm sm:text-base">{formatCurrency(orderData.price || 0)}</p>
+                                                        <p className="font-medium text-sm sm:text-base">{formatNumber(orderData.price || 0)}</p>
                                                     </div>
                                                     <p className="text-xs sm:text-sm bg-green-100 text-green-800 px-2 py-1 rounded">
                                                         {orderData.product?.discount || 0}% OFF
@@ -290,7 +284,7 @@ export default function OrderDetailPage() {
                             <CardFooter className="flex flex-col sm:flex-row gap-4 sm:justify-between border-t pt-4 sm:pt-6">
                                 <div>
                                     <p className="text-xs sm:text-sm text-muted-foreground">Total Amount</p>
-                                    <p className="text-xl sm:text-2xl font-bold">{formatCurrency(orderData.totalAmt || 0)}</p>
+                                    <p className="text-xl sm:text-2xl font-bold">{formatNumber(orderData.totalAmt || 0)}</p>
                                 </div>
                                 {(userRole === "admin" || userRole === "seller") && (
                                     <div className="flex items-center gap-2 w-full sm:w-auto">
@@ -387,14 +381,14 @@ export default function OrderDetailPage() {
                                         <div className="flex justify-between">
                                             <p className="text-xs sm:text-sm text-muted-foreground">Subtotal</p>
                                             <p className="text-xs sm:text-sm">
-                                                {formatCurrency((orderData?.price || 0) * (orderData?.quantity || 0))}
+                                                {formatNumber((orderData?.price || 0) * (orderData?.quantity || 0))}
                                             </p>
                                         </div>
                                         <div className="flex justify-between">
                                             <p className="text-xs sm:text-sm text-muted-foreground">Discount</p>
                                             <p className="text-xs sm:text-sm text-green-600">
                                                 -
-                                                {formatCurrency(
+                                                {formatNumber(
                                                     ((orderData.product?.price || 0) / 100) * (orderData.quantity || 0) -
                                                     (orderData?.totalAmt || 0),
                                                 )}
@@ -407,7 +401,7 @@ export default function OrderDetailPage() {
                                         <Separator className="my-2" />
                                         <div className="flex justify-between font-medium">
                                             <p className="text-sm">Total</p>
-                                            <p className="text-sm">{formatCurrency(orderData.totalAmt || 0)}</p>
+                                            <p className="text-sm">{formatNumber(orderData.totalAmt || 0)}</p>
                                         </div>
                                     </div>
                                 </CardContent>

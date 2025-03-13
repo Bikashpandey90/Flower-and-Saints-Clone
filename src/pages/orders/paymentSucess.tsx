@@ -179,6 +179,9 @@ export default function PaymentSuccess() {
                                 if (auth.loggedInUser.role === 'admin') {
                                     navigate('/admin/order-detail/' + decodeData.transaction_uuid)
                                 }
+                                if (auth.loggedInUser.role === 'customer') {
+                                    navigate('/order/' + decodeData.transaction_uuid)
+                                }
                             }}
                         >
                             View Order Details

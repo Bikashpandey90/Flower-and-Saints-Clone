@@ -1,6 +1,3 @@
-
-import type React from "react"
-
 import { useContext, useState } from "react"
 import { ArrowLeft, Camera, Edit, Eye, EyeOff, Home, Plus, Save, Trash, X } from "lucide-react"
 
@@ -322,9 +319,9 @@ export default function ManageAccount() {
                                         <p className="text-sm text-muted-foreground">New York, NY 10001</p>
                                         <p className="text-sm text-muted-foreground">United States</p>
                                         <p className="text-sm text-muted-foreground">Phone: (555) 123-4567</p> */}
-                                        <p className="text-sm text-muted-foreground">{auth.loggedInUser.address}</p>
+                                        <p className="text-sm text-muted-foreground">{auth.loggedInUser?.address}</p>
                                         <p className="text-sm text-muted-foreground">Nepal</p>
-                                        <p className="text-sm text-muted-foreground">Phone: {auth.loggedInUser.phone}</p>
+                                        <p className="text-sm text-muted-foreground">Phone: {auth.loggedInUser?.phone}</p>
 
 
 

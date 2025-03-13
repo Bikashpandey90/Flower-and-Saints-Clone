@@ -30,7 +30,7 @@ class AuthService extends HttpService {
                 file: true,
 
             })
-            return response
+            return response.data
 
 
         }
@@ -41,7 +41,7 @@ class AuthService extends HttpService {
     activateUserAccount = async (data: any) => {
         try {
             const response = await this.postRequest('/activate', data)
-            return response
+            return response.data
 
         } catch (exception) {
             throw exception

@@ -37,9 +37,10 @@ const RecentlyViewed = () => {
                             <ProductCard
                                 name={product.title}
                                 image={product.images[0]}
-                                price={product.price}
+                                price={product.actualAmt}
                                 rating={4.2}
                                 reviews={35 + index}
+                                originalPrice={product.price}
                                 onClick={product.slug}
                                 isNew={true}
 

@@ -22,6 +22,7 @@ import Swal from "sweetalert2"
 import { useNavigate } from "react-router-dom"
 import { AddProductForm } from "@/components/seller-dashboard-components/add-product-form"
 import { EditProductForm } from "@/components/seller-dashboard-components/edit-form"
+import { formatNumber } from "@/lib/utils"
 
 export interface Product {
   _id: string
@@ -271,7 +272,7 @@ export default function AdminProductsPage() {
                   />
                   <div>
                     <div className="font-medium truncate max-w-[150px]">{data?.title}</div>
-                    <div className="text-sm text-muted-foreground">Nrs {data.price.toFixed(2)}</div>
+                    <div className="text-sm text-muted-foreground">Nrs {formatNumber(data.price)}</div>
                   </div>
                 </div>
                 <DropdownMenu onOpenChange={() => selectedItem(data._id)}>
@@ -354,7 +355,7 @@ export default function AdminProductsPage() {
                       {data?.category?.length > 0 ? data.category[0].title : "Parent"}
                     </TableCell>
                     <TableCell className="hidden md:table-cell">{data?.stock || 40}</TableCell>
-                    <TableCell>Nrs {data.price.toFixed(2)}</TableCell>
+                    <TableCell>Nrs {formatNumber(data.actualAmt)}</TableCell>
                     <TableCell className="hidden md:table-cell">
                       <Badge variant="outline" className={getStatusColor(data.status)}>
                         {data.status}

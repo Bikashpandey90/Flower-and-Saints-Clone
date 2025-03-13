@@ -35,7 +35,7 @@ import {
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
 import { NavLink, useNavigate, useParams } from "react-router-dom"
-import { formatDateTOYMD } from "@/lib/utils"
+import { formatDateTOYMD, formatNumber } from "@/lib/utils"
 import productSvc from "@/pages/products/products.service"
 import { AuthContext } from "@/context/auth-context"
 interface Category {
@@ -108,9 +108,7 @@ export default function ProductDetail() {
 
 
 
-    const formatPrice = (price: number) => {
-        return new Intl.NumberFormat("en-US").format(price)
-    }
+
 
     const handleStatusToggle = () => {
         setProductStatus(product?.status === "active" ? "inactive" : "active")
@@ -233,10 +231,10 @@ export default function ProductDetail() {
                                                 Price
                                             </h3>
                                             <div className="flex items-baseline gap-2">
-                                                <p className="text-2xl font-bold">${formatPrice((product?.actualAmt ?? 0) / 1000)}</p>
+                                                <p className="text-2xl font-bold">Nrs {formatNumber((product?.actualAmt ?? 0) )}</p>
                                                 {(product?.discount ?? 0) > 0 && (
                                                     <p className="text-sm line-through text-muted-foreground">
-                                                        ${formatPrice((product?.price ?? 0) / 1000)}
+                                                        Nrs {formatNumber((product?.price ?? 0))}
                                                     </p>
                                                 )}
                                             </div>

@@ -6,24 +6,24 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 export function formatNumber(num: number): string {
-  return num.toLocaleString('en-IN', {
+  return (num / 100).toLocaleString('en-IN', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 }
 
- export function setCookie(cname:string, cvalue:string, exdays:number) {
+export function setCookie(cname: string, cvalue: string, exdays: number) {
   const d = new Date();
   d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-  let expires = "expires="+d.toUTCString();
+  let expires = "expires=" + d.toUTCString();
   //name=value;expires=value;path=value;
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
- export function getCookie(cname:string) {
+export function getCookie(cname: string) {
   let name = cname + "=";
   let ca = document.cookie.split(';');
-  for(let i = 0; i < ca.length; i++) {
+  for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
     while (c.charAt(0) == ' ') {
       c = c.substring(1);
@@ -34,11 +34,11 @@ export function formatNumber(num: number): string {
   }
   return "";
 }
-export function formatDateTOYMD(date: string,format='yyyy-MM-dd' ) {
- if(format==='yyyy-MM-dd'){
-  return DateTime.fromJSDate(new Date(date)).toFormat('yyyy-MM-dd')
- }else if(format==='dd/MM/yyyy'){
-  return DateTime.fromJSDate(new Date(date)).toFormat('dd/MM/yyyy')
- }
-  
+export function formatDateTOYMD(date: string, format = 'yyyy-MM-dd') {
+  if (format === 'yyyy-MM-dd') {
+    return DateTime.fromJSDate(new Date(date)).toFormat('yyyy-MM-dd')
+  } else if (format === 'dd/MM/yyyy') {
+    return DateTime.fromJSDate(new Date(date)).toFormat('dd/MM/yyyy')
+  }
+
 }

@@ -5,6 +5,7 @@ import { getSearchSuggestions, popularSearches } from "./search-services"
 import { useNavigate } from "react-router-dom"
 import productSvc from "@/pages/products/products.service"
 import { Product } from "@/pages/products/admin-products.page"
+import { formatNumber } from "@/lib/utils"
 
 interface SearchBarProps {
     className?: string
@@ -160,7 +161,7 @@ export default function SearchBar({ className = "", onClose, isMobile = false }:
                                                         <span className="text-[10px] text-muted-foreground px-1.5 py-0.5 bg-muted rounded-full">
                                                             {product.category[0].title}
                                                         </span>
-                                                        <span className="font-medium text-xs text-primary">Nrs {product.actualAmt.toFixed(2)}</span>
+                                                        <span className="font-medium text-xs text-primary">Nrs {formatNumber(product.actualAmt)}</span>
                                                     </div>
                                                 </div>
                                             </div>

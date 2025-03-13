@@ -55,8 +55,6 @@ export function RegisterForm({ className, ...props }: React.ComponentPropsWithou
     setLoading(true)
 
     try {
-
-
       let response = await authSvc.registerApi(data)
       setLoading(false)
       setShowOtpModal(true)

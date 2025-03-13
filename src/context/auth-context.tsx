@@ -41,9 +41,6 @@ export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode 
 
     useEffect(() => {
         getLoggedInUser()
-
-
-
     }, [])
 
     // useEffect(()=>{

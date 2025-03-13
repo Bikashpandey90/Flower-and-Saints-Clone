@@ -17,6 +17,7 @@ import { AuthContext } from "@/context/auth-context"
 import { v4 as uuidv4 } from "uuid"
 import CryptoJS from "crypto-js"
 import type { Product } from "../products/admin-products.page"
+import { formatNumber } from "@/lib/utils"
 // Types
 interface CartItem {
     id: string
@@ -101,7 +102,7 @@ export default function EsewaCheckoutPage() {
         fetchOrders()
     }, [])
 
-    const latestOrderTotal = orderData.length ? orderData[orderData.length - 1].total.toString() : "10"
+    const latestOrderTotal = orderData.length ? formatNumber(orderData[orderData.length - 1].total).toString() : "10"
     const orderId = orderData.length ? orderData[orderData.length - 1]?._id : ""
     console.log("Order Id Check :", order_id)
     useEffect(() => {
@@ -117,8 +118,8 @@ export default function EsewaCheckoutPage() {
         product_service_charge: "0",
         product_delivery_charge: "0",
         product_code: "EPAYTEST",
-        success_url: "http://localhost:5173/payment-success",
-        failure_url: "http://localhost:5173/payementfailed",
+        success_url: `${import.meta.env.VITE_APP_BASE_URL}payment-success`,
+        failure_url: `${import.meta.env.VITE_APP_BASE_URL}payementfailed`,
         signature: "",
         secret: import.meta.env.VITE_APP_ESEWA_SECRET,
         orderId: "",
@@ -143,7 +144,7 @@ export default function EsewaCheckoutPage() {
     }
     useEffect(() => {
         if (orderData.length > 0) {
-            const totalAmount = orderData[orderData.length - 1].total.toString()
+            const totalAmount = formatNumber(orderData[orderData.length - 1].total).toString()
             const latestOrder = orderData[orderData.length - 1]
             setOrderId(latestOrder._id)
 
@@ -249,7 +250,7 @@ export default function EsewaCheckoutPage() {
                                         <div className="space-y-1">
                                             <div className="flex justify-between text-sm">
                                                 <span>Subtotal</span>
-                                                <span>NPR {subtotal.toFixed(2)}</span>
+                                                <span>NPR {formatNumber(subtotal)}</span>
                                             </div>
                                             <div className="flex justify-between text-sm">
                                                 <span>Shipping</span>
@@ -257,7 +258,7 @@ export default function EsewaCheckoutPage() {
                                             </div>
                                             <div className="flex justify-between text-sm">
                                                 <span>VAT (13%)</span>
-                                                <span>NPR {estimatedTax.toFixed(2)}</span>
+                                                <span>NPR {formatNumber(estimatedTax)}</span>
                                             </div>
                                         </div>
 
@@ -265,7 +266,7 @@ export default function EsewaCheckoutPage() {
 
                                         <div className="flex justify-between text-lg font-bold">
                                             <span>Total</span>
-                                            <span>NPR {total.toFixed(2)}</span>
+                                            <span>NPR {formatNumber(total)}</span>
                                         </div>
 
                                         <div className="mt-4 p-3 bg-green-50 rounded-md">

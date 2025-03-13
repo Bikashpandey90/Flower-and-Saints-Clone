@@ -8,6 +8,7 @@ import { AuthContext } from "@/context/auth-context";
 import { toast } from "react-toastify";
 import { Badge } from "../ui/badge";
 import { CartContext } from "@/context/cart-context";
+import { formatNumber } from "@/lib/utils";
 
 export function ProductCard({
   name,
@@ -127,9 +128,9 @@ export function ProductCard({
             <span className="text-xs text-muted-foreground">({reviews})</span>
           </div>
           <div className="mt-2 flex items-center gap-2">
-            <span className="font-bold">Nrs {price.toFixed(2)}</span>
+            <span className="font-bold">Nrs {formatNumber(price)}</span>
             {originalPrice && (
-              <span className="text-muted-foreground line-through text-sm">Nrs {originalPrice.toFixed(2)}</span>
+              <span className="text-muted-foreground line-through text-sm">Nrs {formatNumber(originalPrice)}</span>
             )}
           </div>
         </div>

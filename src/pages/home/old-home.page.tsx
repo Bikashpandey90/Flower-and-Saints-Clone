@@ -1,43 +1,43 @@
 import { useEffect, useState } from "react";
-import { PageTitle } from "../../components/page-title.component";
+import { PageTitle } from "../layout/page-title.component";
 import "./home.page.css"
 
-const HomePage = ()=>{
+const HomePage = () => {
 
-    const [userDetail,setUserDetail]=useState({
-        name:"Bikash",
-        email:"bikashpandey@gmail.com",
+    const [userDetail, setUserDetail] = useState({
+        name: "Bikash",
+        email: "bikashpandey@gmail.com",
 
     });
 
-    useEffect(()=>{
+    useEffect(() => {
         console.log("useEffect is called");
-        
+
     });
 
-    const [loading,setLoading]=useState(false);
+    const [loading, setLoading] = useState(false);
 
-    useEffect(()=>{
+    useEffect(() => {
 
         console.log("I am loaded only once at first render")
         setLoading(true);
         setUserDetail({
-            name:"Updated",
-            email:"updated@gmail.com"
+            name: "Updated",
+            email: "updated@gmail.com"
         })
 
-    },[])
-    useEffect(()=>{
+    }, [])
+    useEffect(() => {
 
         console.log("only executed when the loading is updated/changed")
 
-    },[loading])
-    
+    }, [loading])
 
-    return(
+
+    return (
         <div className="bg-red-100">
-            <PageTitle title="Hello world"/>
-            <PageTitle title="Second Title"/>
+            <PageTitle title="Hello world" />
+            <PageTitle title="Second Title" />
             <h1>{userDetail.name}</h1>
             <h1>{userDetail.email}</h1>
 
@@ -47,8 +47,8 @@ const HomePage = ()=>{
 
             <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum necessitatibus modi consequuntur id voluptatibus iusto quas quisquam magni iure? Iusto, eligendi. Sint magnam quisquam ea accusantium dignissimos distinctio commodi ullam.</p>
             <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+                Hello world!
+            </h1>
 
         </div>
     )

@@ -231,7 +231,7 @@ export default function SellerProfile() {
                                                             }}
 
 
-                                                            className="object-contain  transition-transform group-hover:scale-105"
+                                                            className="object-cover h-full w-full  transition-transform group-hover:scale-105"
                                                         />
                                                     </div>
                                                     <div className="p-3">

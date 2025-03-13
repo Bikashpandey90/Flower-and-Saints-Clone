@@ -5,6 +5,7 @@ import { ShoppingCart, X } from "lucide-react";
 import { useContext } from "react";
 import { AuthContext } from "@/context/auth-context";
 import { CartContext } from "@/context/cart-context";
+import { formatNumber } from "@/lib/utils";
 
 
 export interface Buyer {
@@ -112,7 +113,7 @@ const ShoppingCartPopover = () => {
                                 <div className="flex-1">
                                     <h5 className="font-medium text-sm">{item.product.title}</h5>
                                     <div className="text-sm text-muted-foreground">
-                                        {item.quantity} × Nrs {item.product.actualAmt.toFixed(2)}
+                                        {item.quantity} × Nrs {formatNumber(item.product.actualAmt)}
                                     </div>
                                 </div>
                                 <Button variant="ghost" size="icon" className="h-8 w-8"
@@ -137,9 +138,9 @@ const ShoppingCartPopover = () => {
                             auth.loggedInUser ?
                                 <div className="flex justify-between mb-3">
                                     <span>Subtotal:</span>
-                                    <span className="font-medium">{carts.reduce((total, cart) => {
+                                    <span className="font-medium">{formatNumber(carts.reduce((total, cart) => {
                                         return total + cart.product.actualAmt * cart.quantity;
-                                    }, 0).toFixed(2)}</span>
+                                    }, 0))}</span>
                                 </div>
                                 : <></>
                         }
