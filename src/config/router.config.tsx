@@ -40,6 +40,11 @@ import PaymentFailure from "@/pages/orders/payment-failure";
 import OrderDetailPage from "@/pages/orders/order-detail-page";
 import CustomerOrderDetailPage from "@/pages/customers/customer-order-detail";
 import CategoryDetailsPage from "@/pages/category/categoryDetailPage";
+import BrandsListingPage from "@/pages/brand/brand-listing";
+import WishlistPage from "@/pages/customers/customer-wishlist";
+import BlogPage from "@/pages/blog/blog";
+import CustomerOrderListing from "@/pages/customer/orders-page";
+
 
 
 const Routing: FC = () => {
@@ -106,7 +111,17 @@ const Routing: FC = () => {
                     path: 'payment-failure',
                     element: <PaymentFailure />
                 }
-                , {
+                ,
+                {
+                    path: 'brands',
+                    element: <BrandsListingPage />
+
+
+                }, {
+                    path: 'orders',
+                    element: <CustomerOrderListing />
+
+                }, {
                     path: '/customer',
                     element: <PermissionCheck allowedRole="customer">
                         <CustomerDashboard />
@@ -129,6 +144,16 @@ const Routing: FC = () => {
                         <ManageAccount />
                     </PermissionCheck>
 
+                }, {
+                    path: 'wishlist',
+                    element: <WishlistPage />
+                    //  <PermissionCheck allowedRole="customer">
+                    //     <WishlistPage />
+                    // </PermissionCheck>
+
+                }, {
+                    path: 'blog',
+                    element: <BlogPage />
                 }
             ]
         },

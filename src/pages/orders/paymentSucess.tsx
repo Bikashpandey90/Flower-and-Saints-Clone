@@ -180,7 +180,7 @@ export default function PaymentSuccess() {
                                     navigate('/admin/order-detail/' + decodeData.transaction_uuid)
                                 }
                                 if (auth.loggedInUser.role === 'customer') {
-                                    navigate('/order/' + decodeData.transaction_uuid)
+                                    navigate('/order-detail/' + decodeData.transaction_uuid)
                                 }
                             }}
                         >

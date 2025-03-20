@@ -1,33 +1,66 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { formatNumber } from "@/lib/utils";
+import customerSvc from "@/pages/customers/customer-servicepage"
+import { useEffect, useState } from "react"
+
+interface User {
+  _id: string;
+  name: string;
+  email: string;
+  role: string;
+  image: string;
+  status: string;
+}
+
 
 export function RecentSales() {
+  const [users, setUser] = useState<User[]>([])
+
+  const fetchCustomers = async () => {
+    try {
+      const response = await customerSvc.getAllCustomers()
+      setUser(response.data.data)
+
+    } catch (exception) {
+      console.log(exception)
+    }
+  }
+  useEffect(() => {
+    fetchCustomers()
+  }, [])
+
+
   return (
     <div className="space-y-8">
-      <div className="flex items-center">
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="/avatars/01.png" alt="Avatar" />
-          <AvatarFallback>OM</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Olivia Martin</p>
-          <p className="text-sm text-muted-foreground">
-            olivia.martin@email.com
-          </p>
-        </div>
-        <div className="ml-auto font-medium">+$1,999.00</div>
-      </div>
-      <div className="flex items-center">
-        <Avatar className="h-9 w-9">
-          <AvatarImage src="/avatars/02.png" alt="Avatar" />
-          <AvatarFallback>JL</AvatarFallback>
-        </Avatar>
-        <div className="ml-4 space-y-1">
-          <p className="text-sm font-medium leading-none">Jackson Lee</p>
-          <p className="text-sm text-muted-foreground">jackson.lee@email.com</p>
-        </div>
-        <div className="ml-auto font-medium">+$39.00</div>
-      </div>
-      <div className="flex items-center">
+      {
+        users && users.slice(0, 5).map((user, index) => (
+          <div className="flex items-center" key={index}>
+            <Avatar className="h-9 w-9">
+              <AvatarImage src={user.image} alt="Avatar" className="object-cover" />
+              <AvatarFallback>OM</AvatarFallback>
+            </Avatar>
+            <div className="ml-4 space-y-1">
+              <p className="text-sm font-medium leading-none">{user.name}</p>
+              <p className="text-sm text-muted-foreground">
+                {user.email}
+              </p>
+            </div>
+            <div className="ml-auto font-medium">
+             + Nrs {formatNumber(Math.floor(Math.random() * 100000) + 1)}
+            </div>
+          </div>
+        ))
+      }
+
+
+
+
+    </div>
+
+  )
+}
+
+{/* <div className="flex items-center">
         <Avatar className="h-9 w-9">
           <AvatarImage src="/avatars/03.png" alt="Avatar" />
           <AvatarFallback>IN</AvatarFallback>
@@ -60,9 +93,5 @@ export function RecentSales() {
           <p className="text-sm font-medium leading-none">Sofia Davis</p>
           <p className="text-sm text-muted-foreground">sofia.davis@email.com</p>
         </div>
-        <div className="ml-auto font-medium">+$39.00</div>
-      </div>
-    </div>
-  )
-}
+        <div className="ml-auto font-medium">+$39.00</div> */}
 

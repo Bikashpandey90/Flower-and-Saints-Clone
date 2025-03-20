@@ -7,12 +7,12 @@ const FeaturedCollections = () => {
             <h2 className="text-2xl md:text-3xl font-bold mb-6">Featured Collections</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
-                    { title: "New Arrivals", image: "https://d2731avvelbbmh.cloudfront.net/whetstone-products/jeevee_erp/2025-03-06/bd/bdd531628b1841651d65f0d339631598c13ef7fe" },
-                    { title: "Most Popular", image: "https://www.stuff.tv/wp-content/uploads/sites/2/2022/06/iOS-16-best-features.jpg?w=1024" },
-                    { title: "Bestsellers", image: "/src/components/Featured/image.jpg" },
+                    { title: "New Arrivals", image: "https://d2731avvelbbmh.cloudfront.net/whetstone-products/jeevee_erp/2025-03-06/bd/bdd531628b1841651d65f0d339631598c13ef7fe", slug: 'ultima' },
+                    { title: "Most Popular", image: "https://www.stuff.tv/wp-content/uploads/sites/2/2022/06/iOS-16-best-features.jpg?w=1024", slug: 'apple' },
+                    { title: "Bestsellers", image: "/src/components/Featured/image.jpg", slug: 'nike' },
                 ].map((collection, index) => (
                     <NavLink
-                        to={`/collection/${collection.title.toLowerCase().replace(/\s+/g, "-")}`}
+                        to={`/brand/${collection.slug}`}
                         key={index}
                         className="group"
                     >

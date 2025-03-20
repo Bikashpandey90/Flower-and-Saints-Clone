@@ -25,11 +25,40 @@ import { AuthContext } from "@/context/auth-context"
 import productSvc from "../products/products.service"
 import { Product } from "../products/admin-products.page"
 import { ProductCard } from "@/components/Product Card/productCard"
+import orderSvc from "../orders/order.service"
+import { formatDateTOYMD, formatNumber } from "@/lib/utils"
+interface Buyer {
+    _id: string;
+    name: string;
+    email: string;
+    phone: string;
+}
+
+interface Order {
+    _id: string;
+    buyer: Buyer;
+    orderDate: string;
+    subTotal: number;
+    discount: number;
+    tax: number;
+    serviceCharge: number;
+    deliveryCharge: number;
+    total: number;
+    status: string;
+    createdBy: string | null;
+    updatedBy: string | null;
+    createdAt: string;
+    updatedAt: string;
+    __v: number;
+}
+
+
 
 export default function CustomerDashboard() {
     const auth = useContext(AuthContext) as { loggedInUser: any }
     const navigate = useNavigate()
     const [recommendations, setRecommendations] = useState<Product[]>([])
+    const [orders, setOrder] = useState<Order[]>([])
 
     const fetchRecommendations = async () => {
         try {
@@ -43,6 +72,21 @@ export default function CustomerDashboard() {
     useEffect(() => {
         fetchRecommendations()
     }, [])
+
+    const fetchOrders = async () => {
+        try {
+            const response = await orderSvc.getMyOrders()
+            setOrder(response.data.detail)
+
+
+        } catch (exception) {
+            console.log(exception)
+        }
+    }
+    useEffect(() => {
+        fetchOrders()
+    }, [])
+
 
     return (
 
@@ -61,39 +105,34 @@ export default function CustomerDashboard() {
                             <CardTitle className="text-xl">Recent Orders</CardTitle>
                             <CardDescription>Track your recent purchases</CardDescription>
                         </div>
-                        <Button variant="ghost" size="sm" className="gap-1">
+                        <Button variant="ghost" size="sm" className="gap-1"
+                            onClick={() => {
+                                navigate('/orders')
+                            }}>
                             View all orders <ArrowRight className="h-4 w-4" />
                         </Button>
                     </CardHeader>
                     <CardContent>
                         <div className="space-y-4">
-                            <OrderItem
-                                id="A12345678"
-                                date="March 7, 2025"
-                                status="Delivered"
-                                items={2}
-                                total="$129.99"
-                                image="/placeholder.svg?height=80&width=80"
-                            />
-                            <Separator />
-                            <OrderItem
-                                id="A87654321"
-                                date="March 5, 2025"
-                                status="Shipped"
-                                items={1}
-                                total="$49.99"
-                                image="/placeholder.svg?height=80&width=80"
-                                estimatedDelivery="March 10"
-                            />
-                            <Separator />
-                            <OrderItem
-                                id="A11223344"
-                                date="March 1, 2025"
-                                status="Processing"
-                                items={3}
-                                total="$89.97"
-                                image="/placeholder.svg?height=80&width=80"
-                            />
+                            {
+                                orders.slice(0, 3).map((order, index) => (
+                                    <div>
+                                        <OrderItem
+                                            key={index}
+                                            id={order._id}
+                                            date={order.orderDate}
+                                            status={order.status}
+                                            items={2}
+                                            total={order.subTotal}
+                                            image="/placeholder.svg?height=80&width=80"
+                                        />
+                                        <Separator />
+                                    </div>
+
+                                ))
+                            }
+
+
                         </div>
                     </CardContent>
                 </Card>
@@ -213,14 +252,15 @@ export default function CustomerDashboard() {
 interface OrderItemProps {
     id: string
     date: string
-    status: "Processing" | "Shipped" | "Delivered"
+    status: string
     items: number
-    total: string
+    total: number
     image: string
     estimatedDelivery?: string
 }
 
-function OrderItem({ id, date, status, items, total, image, estimatedDelivery }: OrderItemProps) {
+function OrderItem({ id, date, status, items, total, estimatedDelivery }: OrderItemProps) {
+    const navigate = useNavigate()
     const getStatusColor = (status: string) => {
         switch (status) {
             case "Delivered":
@@ -250,13 +290,13 @@ function OrderItem({ id, date, status, items, total, image, estimatedDelivery }:
     return (
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
             <div className="shrink-0">
-                <img src={image || "/placeholder.svg"} alt="Product" width={80} height={80} className="rounded-md border" />
-                {/* <Box className="rounded-md border w-full h-full object-cover" /> */}
+                {/* <img src={image || "/placeholder.svg"} alt="Product" width={80} height={80} className="rounded-md border" /> */}
+                <Box className="rounded-md border w-full h-full object-cover" />
             </div>
             <div className="flex-1 space-y-1">
                 <div className="flex items-center justify-between">
                     <div className="font-medium">Order #{id}</div>
-                    <div className="text-sm text-muted-foreground">{date}</div>
+                    <div className="text-sm text-muted-foreground">{formatDateTOYMD(date)}</div>
                 </div>
                 <div className="flex items-center gap-2">
                     <span
@@ -276,8 +316,11 @@ function OrderItem({ id, date, status, items, total, image, estimatedDelivery }:
                 <Progress value={getProgressValue(status)} className="h-1.5" />
             </div>
             <div className="flex items-center gap-4">
-                <div className="font-medium">{total}</div>
-                <Button variant="outline" size="sm">
+                <div className="font-medium">Nrs {formatNumber(total)}</div>
+                <Button variant="outline" size="sm"
+                    onClick={() => {
+                        navigate('/order-detail/' + id)
+                    }}>
                     Details
                 </Button>
             </div>

@@ -21,7 +21,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 import { Separator } from "@/components/ui/separator"
-import { formatDateTOYMD } from "@/lib/utils"
+import { formatDateTOYMD, formatNumber } from "@/lib/utils"
 import { useParams } from "react-router-dom"
 import orderSvc from "../orders/order.service"
 
@@ -81,13 +81,7 @@ export default function CustomerOrderDetailPage() {
         }
     }, [id])
 
-    // Format currency
-    const formatCurrency = (amount = 0) => {
-        return new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "NPR",
-        }).format(amount)
-    }
+
 
     // Get order status progress
     const getOrderProgress = () => {
@@ -331,9 +325,9 @@ export default function CustomerOrderDetailPage() {
                                         <div className="mt-2 flex items-center justify-between">
                                             <div>
                                                 <p className="text-sm text-muted-foreground line-through">
-                                                    {formatCurrency((orderData.product?.price || 0) / 100)}
+                                                    {formatNumber((orderData.product?.price || 0))}
                                                 </p>
-                                                <p className="font-medium">{formatCurrency(orderData.price || 0)}</p>
+                                                <p className="font-medium">{formatNumber(orderData.price || 0)}</p>
                                             </div>
                                             <p className="text-sm bg-green-100 text-green-800 px-2 py-1 rounded">
                                                 {orderData.product?.discount || 0}% OFF
@@ -394,14 +388,15 @@ export default function CustomerOrderDetailPage() {
                             <div className="space-y-3">
                                 <div className="flex justify-between">
                                     <p className="text-sm text-muted-foreground">Subtotal</p>
-                                    <p className="text-sm">{formatCurrency((orderData.price || 0) * (orderData.quantity || 0))}</p>
+                                    <p className="text-sm">{formatNumber
+                                        ((orderData.price || 0) * (orderData.quantity || 0))}</p>
                                 </div>
                                 <div className="flex justify-between">
                                     <p className="text-sm text-muted-foreground">Discount</p>
                                     <p className="text-sm text-green-600">
                                         -
-                                        {formatCurrency(
-                                            ((orderData.product?.price || 0) / 100) * (orderData.quantity || 0) - (orderData.totalAmt || 0),
+                                        {formatNumber(
+                                            ((orderData.product?.price || 0)) * (orderData.quantity || 0) - (orderData.totalAmt || 0),
                                         )}
                                     </p>
                                 </div>
@@ -412,7 +407,7 @@ export default function CustomerOrderDetailPage() {
                                 <Separator className="my-2" />
                                 <div className="flex justify-between font-medium">
                                     <p>Total</p>
-                                    <p>{formatCurrency(orderData.totalAmt || 0)}</p>
+                                    <p>{formatNumber(orderData.totalAmt || 0)}</p>
                                 </div>
                             </div>
                         </CardContent>

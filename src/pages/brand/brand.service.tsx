@@ -75,16 +75,26 @@ class BrandService extends HttpService {
         }
     }
 
-    async getHomeBrandList() {
+    async getHomeBrandList(page?: number, limit?: number, search?: string) {
+        page = page ?? 1;
+        limit = limit ?? 10;
+        search = search ?? '';
         try {
-            const detail = await this.getRequest('brand/home-brand', { auth: false });
-            return detail
-
-
+            const detail = await this.getRequest('brand/home-brand', {
+                auth: false,
+                params: {
+                    page: page,
+                    limit: limit,
+                    search: search
+                }
+            });
+            return detail;
         } catch (exception) {
-            throw exception
+            throw exception;
         }
     }
+
+
     async fetchBySlug(slug: string) {
         try {
             const detail = await this.getRequest('/brand/' + slug + '/by-slug', { auth: false })

@@ -9,6 +9,7 @@ import { AppDispatch } from "@/config/store.config"
 import { useSelector } from "react-redux"
 import { Input } from "../ui/input"
 import { motion } from 'framer-motion'
+import { toast } from "react-toastify"
 
 interface ChatInterfaceProps {
     seller: User
@@ -56,6 +57,9 @@ export default function ChatInterface({ seller }: ChatInterfaceProps) {
     }, [seller])
 
     const handleSendMessage = (e: React.FormEvent) => {
+        if (!auth.loggedInUser) {
+            toast.info("You need to login first")
+        }
         e.preventDefault();
         setInputMessage('')
         //api to send messages

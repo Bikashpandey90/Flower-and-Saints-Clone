@@ -15,7 +15,6 @@ import categorySvc from "@/pages/category/category.service"
 import type { Category } from "../CategoryDialog/CategoryDialog"
 import { toast } from "react-toastify"
 import brandSvc, { BrandData } from "@/pages/brand/brand.service"
-import { formatNumber } from "@/lib/utils"
 
 export function EditProductForm({ productId }: { productId: string }) {
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -139,7 +138,7 @@ export function EditProductForm({ productId }: { productId: string }) {
             setValue("title", product?.title || "")
             setValue("status", product?.status || "inactive")
             setValue("description", product?.description || "")
-            setValue("price", + formatNumber(product?.price) || 0)
+            setValue("price", + (product?.price / 100) || 0)
             setValue("stock", product?.stock || 0)
             setValue("category", product.category?.[0]?._id || "")
             setValue("discount", product?.discount || 0)

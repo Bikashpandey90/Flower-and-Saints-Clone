@@ -7,7 +7,10 @@ import { BarChart3, Package, Search, Settings, ShoppingBag, Store, Users } from 
 
 import { NavLink, Outlet } from "react-router-dom"
 
+
 export default function SellerDashboard() {
+
+
 
 
     return (
@@ -101,26 +104,7 @@ export default function SellerDashboard() {
                             />
                         </div>
                     </form>
-                    {/* <Button variant="outline" size="icon" className="rounded-full">
-                        {auth.loggedInUser?.image ? (
-                            <img
-                                src={auth.loggedInUser.image}
-                                width={50}
-                                height={50}
-                                alt="Avatar"
-                                className="rounded-full"
-                            />
-                        ) : (
-                            <div className="flex items-center justify-center w-12 h-12 bg-muted rounded-full">
-                                <span className="text-lg font-medium text-white">
-                                    {auth.loggedInUser?.name
-                                        ? auth.loggedInUser.name.split(" ").map((n: string) => n[0]).join("")
-                                        : "?"}
-                                </span>
-                            </div>
-                        )}
-                        <span className="sr-only">Toggle user menu</span>
-                    </Button> */}
+
                     <UserNav />
                 </div>
             </header>

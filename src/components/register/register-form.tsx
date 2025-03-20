@@ -24,7 +24,7 @@ export function RegisterForm({ className, ...props }: React.ComponentPropsWithou
     confirmPassword: Yup.string().equals([Yup.ref('password')], "Confirm password and password must be same").required("Confirm password is required"),
     role: Yup.string().matches(/^(customer|seller)$/).default('customer'),
     gender: Yup.string().matches(/^(male|female|other)$/),
-    address: Yup.string().max(200).default(''),
+    address: Yup.string().max(200).default('').required(),
     phone: Yup.string().max(15),
     image: Yup.mixed()
 

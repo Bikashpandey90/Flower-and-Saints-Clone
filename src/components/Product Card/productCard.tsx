@@ -9,8 +9,10 @@ import { toast } from "react-toastify";
 import { Badge } from "../ui/badge";
 import { CartContext } from "@/context/cart-context";
 import { formatNumber } from "@/lib/utils";
+import wishListSvc from "@/pages/wishlist/wishlist.service";
 
 export function ProductCard({
+
   name,
   image,
   price,
@@ -27,6 +29,7 @@ export function ProductCard({
 
   const navigate = useNavigate()
   const [loading, setLoading] = useState(false)
+  const [filledHeart, setFilledHeart] = useState(false)
   const auth = useContext(AuthContext) as { loggedInUser: any }
   const cartContext = useContext(CartContext)
 
@@ -40,9 +43,9 @@ export function ProductCard({
 
     setLoading(true)
     try {
-      const response = await orderSvc.addItemsToCart(id, quantity)
+      await orderSvc.addItemsToCart(id, quantity)
       fetchCart()
-      console.log(response)
+
 
     } catch (exception) {
       console.log(exception)
@@ -50,6 +53,19 @@ export function ProductCard({
       setLoading(false)
     }
   }
+
+  const addToWishList = async (id: string) => {
+    try {
+      const response = await wishListSvc.wishlist(id)
+      if (response.data.status === 'ADD_TO_WISHLIST_SUCCESS') {
+        setFilledHeart(true)
+      }
+
+    } catch (exception) {
+      console.log(exception)
+    }
+  }
+
 
 
   return (
@@ -74,10 +90,14 @@ export function ProductCard({
           {isFeatured && <Badge className="absolute top-2 left-2 bg-purple-500 hover:bg-purple-600">Featured</Badge>}
           {isBestseller && <Badge className="absolute top-2 left-2 bg-amber-500 hover:bg-amber-600">Bestseller</Badge>}
           <div className="absolute top-2 right-2 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-            <Button size="icon" variant="secondary" className="h-8 w-8 rounded-full">
-              <Heart className="h-4 w-4" />
+            <Button size="icon" variant="secondary" className="h-8 w-8 rounded-full" onClick={() => {
+              const id: string = productId;
+              addToWishList(id);
+            }}>
+              <Heart className={`h-4 w-4 ${filledHeart ? "fill-red-500 text-red-500" : ""}`} />
               <span className="sr-only">Add to wishlist</span>
             </Button>
+
 
           </div>
           <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white p-2 translate-y-full group-hover:translate-y-0 transition-transform">

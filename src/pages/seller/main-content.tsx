@@ -9,11 +9,31 @@ import customerSvc from "../customers/customer-servicepage"
 import { User } from "../layout/admin-chat-page"
 import { useCallback, useEffect, useState } from "react"
 import { BarChart3, Package, Plus, ShoppingBag, Users } from "lucide-react"
+import productSvc from "../products/products.service"
+import { Product } from "../products/admin-products.page"
 
 
 const MainContent = () => {
     const [isAddProductOpen, setIsAddProductOpen] = useState(false)
     const [users, setUser] = useState<User[] | null>(null)
+    const [products, setProduct] = useState<Product[]>([])
+
+    const fetchProducts = async () => {
+
+        try {
+            const response = await productSvc.getMyProducts()
+            setProduct(response.data.detail)
+
+
+        } catch (exception) {
+            console.log(exception)
+        }
+
+    }
+
+    useEffect(() => {
+        fetchProducts()
+    }, [])
 
 
     const loadMyCustomers = useCallback(async () => {
@@ -141,14 +161,15 @@ const MainContent = () => {
                         </CardHeader>
                         <CardContent>
                             <div className="space-y-4">
-                                {["Premium Headphones", "Wireless Keyboard", "Smart Watch", "Bluetooth Speaker"].map(
+                                {products.slice(0, 4).map(
                                     (product, i) => (
                                         <div key={i} className="flex items-center">
                                             <div className="w-10 h-10 rounded bg-muted flex items-center justify-center">
-                                                <Package className="h-5 w-5" />
+                                                <img src={product.images[0]} alt={product.title} className="w-8 h-8 object-cover rounded-sm" />
+                                               {/* <Package className="h-5 w-5" /> */}
                                             </div>
                                             <div className="ml-4 space-y-1">
-                                                <p className="text-sm font-medium">{product}</p>
+                                                <p className="text-sm font-medium">{product.title}</p>
                                                 <p className="text-xs text-muted-foreground">
                                                     {Math.floor(Math.random() * 100)} units sold
                                                 </p>

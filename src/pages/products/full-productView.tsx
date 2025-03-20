@@ -3,7 +3,6 @@ import { ChevronDown, ChevronUp, Heart, MessageCircle, ShoppingCart, Star } from
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
-import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import ChatInterface from "@/components/Chat-interface/Chat-interface"
@@ -15,6 +14,9 @@ import { User } from "@/components/Chat-view/chat-view"
 import { CartContext } from "@/context/cart-context"
 import { AuthContext } from "@/context/auth-context"
 import { toast } from "react-toastify"
+import { ProductCard } from "@/components/Product Card/productCard"
+import wishListSvc from "../wishlist/wishlist.service"
+
 
 // Mock data for related products
 
@@ -29,6 +31,9 @@ export default function ProductView() {
   const [isChatOpen, setIsChatOpen] = useState(false)
   const navigate = useNavigate()
   const [loading] = useState(false)
+  const [activeTab] = useState("all")
+  const [filledHeart, setiFilledHeart] = useState(false)
+
 
   const [relatedProducts, setRelatedProduct] = useState<Product[]>([])
   // Get the first paragraph of description for the preview
@@ -55,6 +60,21 @@ export default function ProductView() {
   useEffect(() => {
     fetchProduct()
   }, [slug])
+
+  const addtoWishList = async (id: string) => {
+    try {
+      const response = await wishListSvc.wishlist(id)
+      console.log(response)
+
+      if (response?.data?.status === 'ADD_TO_WISHLIST_SUCCESS') {
+        setiFilledHeart(true)
+      }
+     
+
+    } catch (exception) {
+      console.log(exception)
+    }
+  }
 
 
 
@@ -181,8 +201,13 @@ export default function ProductView() {
                 <ShoppingCart className="mr-2 h-4 w-4" />
                 Add to Cart
               </Button>
-              <Button variant="outline" size="icon" aria-label="Add to wishlist">
-                <Heart className="h-4 w-4" />
+              <Button variant="outline" size="icon" aria-label="Add to wishlist"
+                onClick={() => {
+                  const id: string = product?._id ?? "";
+                  addtoWishList(id)
+                }}>
+                <Heart className={`h-4 w-4 ${filledHeart ? "fill-red-500 text-red-500" : ""}`} />
+
               </Button>
             </div>
 
@@ -265,62 +290,64 @@ export default function ProductView() {
       <div className="mt-10">
         <h2 className="text-2xl font-bold mb-6">Related Products</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
-          {relatedProducts.map((product: Product) => (
-            <Card key={product?._id} className="overflow-hidden">
-              <div className="aspect-square relative">
-                <img
-                  onClick={() => {
+          {relatedProducts.map((product: Product, index: number) => (
+            // <Card key={product?._id} className="overflow-hidden">
+            //   <div className="aspect-square relative">
+            //     <img
+            //       onClick={() => {
 
-                    navigate(`/products/${product.slug}`)
-                    fetchProduct()
+            //         navigate(`/products/${product.slug}`)
+            //         fetchProduct()
 
-                  }}
-                  src={product?.images[0] || "/placeholder.svg"}
-                  alt={product?.title}
-                  className="object-cover h-full w-full"
-                />
-              </div>
-              <CardContent className="p-2 sm:p-4">
-                <h3 className="font-medium text-xs sm:text-sm line-clamp-2 mb-1 sm:mb-2">{product?.title}</h3>
-                <div className="flex items-baseline space-x-2">
-                  <span className="font-bold text-sm sm:text-base">Nrs {formatNumber(product?.actualAmt)}</span>
-                  {product?.discount > 0 && (
-                    <span className="text-xs sm:text-sm text-muted-foreground line-through">
-                      {formatNumber(product?.price)}
-                    </span>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+            //       }}
+            //       src={product?.images[0] || "/placeholder.svg"}
+            //       alt={product?.title}
+            //       className="object-cover h-full w-full"
+            //     />
+            //   </div>
+            //   <CardContent className="p-2 sm:p-4">
+            //     <h3 className="font-medium text-xs sm:text-sm line-clamp-2 mb-1 sm:mb-2">{product?.title}</h3>
+            //     <div className="flex items-baseline space-x-2">
+            //       <span className="font-bold text-sm sm:text-base">Nrs {formatNumber(product?.actualAmt)}</span>
+            //       {product?.discount > 0 && (
+            //         <span className="text-xs sm:text-sm text-muted-foreground line-through">
+            //           {formatNumber(product?.price)}
+            //         </span>
+            //       )}
+            //     </div>
+            //   </CardContent>
+            // </Card>
+
+            <ProductCard
+              onClick={product.slug}
+              key={index}
+              name={product.title}
+              image={product.images[0]}
+              price={product.actualAmt}
+              rating={4 + (index % 2) * 0.5}
+              reviews={50 + index * 5}
+              isNew={activeTab === "new" || index % 3 === 0}
+              isFeatured={activeTab === "featured" || index % 4 === 0}
+              isBestseller={activeTab === "bestsellers" || index % 5 === 0}
+              productId={product._id}
+            />
           ))}
 
-          {relatedProducts.map((product: Product) => (
-            <Card key={product?._id} className="overflow-hidden">
-              <div className="aspect-square relative">
-                <img
-                  onClick={() => {
+          {relatedProducts.map((product: Product, index: number) => (
 
-                    navigate(`/products/${product.slug}`)
-                    fetchProduct()
-
-                  }}
-                  src={product?.images[0] || "/placeholder.svg"}
-                  alt={product?.title}
-                  className="object-cover h-full w-full"
-                />
-              </div>
-              <CardContent className="p-2 sm:p-4">
-                <h3 className="font-medium text-xs sm:text-sm line-clamp-2 mb-1 sm:mb-2">{product?.title}</h3>
-                <div className="flex items-baseline space-x-2">
-                  <span className="font-bold text-sm sm:text-base">{formatNumber(product?.actualAmt)}</span>
-                  {product?.discount > 0 && (
-                    <span className="text-xs sm:text-sm text-muted-foreground line-through">
-                      {formatNumber(product?.price)}
-                    </span>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+            <ProductCard
+              onClick={product.slug}
+              key={index}
+              name={product.title}
+              image={product.images[0]}
+              price={product.actualAmt}
+              rating={4 + (index % 2) * 0.5}
+              reviews={50 + index * 5}
+              isNew={activeTab === "new" || index % 3 === 0}
+              isFeatured={activeTab === "featured" || index % 4 === 0}
+              isBestseller={activeTab === "bestsellers" || index % 5 === 0}
+              productId={product._id}
+            />
           ))}
         </div>
       </div>

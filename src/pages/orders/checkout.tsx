@@ -77,10 +77,10 @@ export default function EsewaCheckoutPage() {
     const auth = useContext(AuthContext) as { loggedInUser: any }
 
     // Calculate totals
-    const subtotal = orderData.length ? orderData[orderData.length - 1].subTotal : 0
-    const estimatedTax = orderData.length ? orderData[orderData.length - 1].tax / 100 : 0 // 13 % VAT for Nepal
-    const shipping = deliveryOption === "express" ? 500 : subtotal > 5000 ? 0 : 200 // Shipping in NPR
-    const total = orderData.length ? orderData[orderData.length - 1].total : 0
+    const subtotal = orderData.length ? orderData[0].subTotal : 0
+    const estimatedTax = orderData.length ? orderData[0].tax / 100 : 0 // 13 % VAT for Nepal
+    const shipping = deliveryOption === "express" ? 500 : subtotal > 5000 ? 0 : 0 // Shipping in NPR
+    const total = orderData.length ? orderData[0].total : 0
 
     // Handle form submission
     const handleSubmit = (e: React.FormEvent) => {
@@ -102,8 +102,8 @@ export default function EsewaCheckoutPage() {
         fetchOrders()
     }, [])
 
-    const latestOrderTotal = orderData.length ? formatNumber(orderData[orderData.length - 1].total).toString() : "10"
-    const orderId = orderData.length ? orderData[orderData.length - 1]?._id : ""
+    const latestOrderTotal = orderData.length ? formatNumber(orderData[0].total).toString() : "10"
+    const orderId = orderData.length ? orderData[0]?._id : ""
     console.log("Order Id Check :", order_id)
     useEffect(() => {
         setOrderId(orderId)
@@ -144,8 +144,8 @@ export default function EsewaCheckoutPage() {
     }
     useEffect(() => {
         if (orderData.length > 0) {
-            const totalAmount = formatNumber(orderData[orderData.length - 1].total).toString()
-            const latestOrder = orderData[orderData.length - 1]
+            const totalAmount = formatNumber(orderData[0].total).toString()
+            const latestOrder = orderData[0]
             setOrderId(latestOrder._id)
 
             // Only update transaction_uuid when order_id is not empty

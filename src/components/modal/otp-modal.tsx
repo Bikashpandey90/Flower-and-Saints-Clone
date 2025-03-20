@@ -59,12 +59,7 @@ const OTPModal = ({ open, user = {} }: { open: boolean, user?: any }) => {
 
             />
           </div>
-          {/* <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="text-right">
-              Username
-            </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
-          </div> */}
+
         </div>
         <DialogFooter>
           <Button type="submit" onClick={submitOTP} >Send</Button>

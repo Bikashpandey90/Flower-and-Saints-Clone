@@ -1,4 +1,4 @@
-import { RegisterForm } from "@/components/register/register-form";
+import { RegisterForm } from "@/components/register/new-register";
 import { AuthContext } from "@/context/auth-context";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +19,7 @@ const RegisterPage = () => {
     <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
       <div className="w-full max-w-sm">
         <RegisterForm />
+
       </div>
     </div></>)
 
