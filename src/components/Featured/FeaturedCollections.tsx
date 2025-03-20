@@ -9,7 +9,7 @@ const FeaturedCollections = () => {
                 {[
                     { title: "New Arrivals", image: "https://d2731avvelbbmh.cloudfront.net/whetstone-products/jeevee_erp/2025-03-06/bd/bdd531628b1841651d65f0d339631598c13ef7fe", slug: 'ultima' },
                     { title: "Most Popular", image: "https://www.stuff.tv/wp-content/uploads/sites/2/2022/06/iOS-16-best-features.jpg?w=1024", slug: 'apple' },
-                    { title: "Bestsellers", image: "/src/components/Featured/image.jpg", slug: 'nike' },
+                    { title: "Bestsellers", image: "https://res.cloudinary.com/dwtbzhlph/image/upload/v1741882604/product/izfhw0rpoy5vtxctew22.jpg", slug: 'nike' },
                 ].map((collection, index) => (
                     <NavLink
                         to={`/brand/${collection.slug}`}
