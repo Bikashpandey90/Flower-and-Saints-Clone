@@ -27,9 +27,6 @@ export const Chat = () => {
     }
   }, [auth])
 
-
-
-
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
 
 

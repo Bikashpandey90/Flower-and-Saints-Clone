@@ -70,7 +70,7 @@ const ShoppingCartPopover = () => {
     const cartCount = carts.length
 
     return (
-        <Popover>
+        <Popover >
             <PopoverTrigger asChild>
                 <Button variant="ghost" size="icon" className="relative">
                     <ShoppingCart className="h-5 w-5" />
@@ -83,17 +83,17 @@ const ShoppingCartPopover = () => {
                 </Button>
             </PopoverTrigger>
 
-            <PopoverContent className="w-80 bg-slate-50 z-20 rounded-sm p-5" align="end">
+            <PopoverContent className="w-80 bg-slate-50 z-20 rounded-lg p-5 shadow-[0px_0px_10px_0px_rgba(0,0,0,0.3)]" align="end">
                 <div className="grid gap-4">
                     <div className="flex justify-between items-center">
                         <h4 className="font-medium">Shopping Cart ({cartCount})</h4>
                         {
                             auth.loggedInUser ?
                                 <NavLink to="/my-cart" className="text-sm text-primary hover:underline">
-                                    View Cart
+                                    View Full Cart
                                 </NavLink> :
                                 <NavLink to="/login" className="text-sm text-primary hover:underline">
-                                    View Cart
+                                    View Full Cart
                                 </NavLink>
 
                         }

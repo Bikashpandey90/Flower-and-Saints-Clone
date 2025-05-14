@@ -25,6 +25,7 @@
 - yarn add -D tailwindcss postcss autoprefixer
 - npx tailwindcss init -p
 
+
 ## Register
 -Fullname, email,password.connfirmPassword,phone, address,gender,role customer|seller, image
 

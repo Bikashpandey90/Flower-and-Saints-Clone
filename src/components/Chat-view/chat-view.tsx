@@ -50,7 +50,6 @@ export default function ChatView({ user }: ChatViewProps) {
 
   useEffect(() => {
     dispatch(getChatDetail(user._id))
-
   }, [user])
 
   const handleSendMessage = (e: React.FormEvent) => {
@@ -64,8 +63,6 @@ export default function ChatView({ user }: ChatViewProps) {
     socket.emit('newMessage', {
       receiver: user?._id,
       sender: auth.loggedInUser._id
-
-
     })
 
   }

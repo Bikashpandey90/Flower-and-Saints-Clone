@@ -2,7 +2,7 @@ import { Heart, ShoppingCart, Star } from "lucide-react";
 import { Card, CardContent } from "../ui/card";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext,  useState } from "react";
 import orderSvc from "@/pages/orders/order.service";
 import { AuthContext } from "@/context/auth-context";
 import { toast } from "react-toastify";
@@ -54,9 +54,37 @@ export function ProductCard({
     }
   }
 
+  // const checkWishlist = async () => {
+  //   try {
+  //     const response = await wishListSvc.getMyWishList()
+  //     const wishlist = response.data.detail
+
+  //     if (product && wishlist.some((item: any) => item.productId === product._id)) {
+  //       setiFilledHeart(true);
+  //     }
+
+
+  //   } catch (exception) {
+  //     console.log(exception)
+  //   }
+  // }
+  // useEffect(() => {
+  //   if (product) {
+  //     checkWishlist();
+  //   }
+  // }, [product]);
+
+
   const addToWishList = async (id: string) => {
     try {
+
+      if (!auth.loggedInUser) {
+        toast.info("You need to login first!")
+      }
+
       const response = await wishListSvc.wishlist(id)
+
+
       if (response.data.status === 'ADD_TO_WISHLIST_SUCCESS') {
         setFilledHeart(true)
       }

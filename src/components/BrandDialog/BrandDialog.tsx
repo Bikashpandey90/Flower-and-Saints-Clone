@@ -39,16 +39,9 @@ export function BrandDialog({ isOpen, onClose, brand }: BrandDialogProps) {
         defaultValues:{
             title:brand?.title||'',
             status:'inactive',
-           
-
         }
     });
  
-
- 
-
-
-
   const submitForm=async(data:any)=>{
     setLoading(true);
     try{

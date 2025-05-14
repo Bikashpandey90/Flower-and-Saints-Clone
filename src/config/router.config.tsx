@@ -44,6 +44,9 @@ import BrandsListingPage from "@/pages/brand/brand-listing";
 import WishlistPage from "@/pages/customers/customer-wishlist";
 import BlogPage from "@/pages/blog/blog";
 import CustomerOrderListing from "@/pages/customer/orders-page";
+import NewLandingPage from "@/pages/new-home/page";
+import NavMenu from "@/pages/new-home/cross-button";
+// import { WishListProvider } from "@/context/wishlist-context";
 
 
 
@@ -157,6 +160,7 @@ const Routing: FC = () => {
                 }
             ]
         },
+
         {
             path: "/admin",
             element: <PermissionCheck allowedRole="admin">
@@ -283,7 +287,16 @@ const Routing: FC = () => {
             </PermissionCheck>,
 
 
-        },
+
+        }, {
+            path: '/new-homepage',
+            element: <NewLandingPage />
+        }, {
+            path: '/navmenu',
+            element: <NavMenu />
+        }
+
+
 
 
 

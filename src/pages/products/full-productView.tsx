@@ -33,6 +33,7 @@ export default function ProductView() {
   const [loading] = useState(false)
   const [activeTab] = useState("all")
   const [filledHeart, setiFilledHeart] = useState(false)
+  const [wishlistId, setWishListId] = useState<string>('')
 
 
   const [relatedProducts, setRelatedProduct] = useState<Product[]>([])
@@ -65,16 +66,57 @@ export default function ProductView() {
     try {
       const response = await wishListSvc.wishlist(id)
       console.log(response)
+      checkWishlist()
 
       if (response?.data?.status === 'ADD_TO_WISHLIST_SUCCESS') {
         setiFilledHeart(true)
       }
-     
+
 
     } catch (exception) {
       console.log(exception)
     }
   }
+  const removeFromWishlist = async (id: string) => {
+    try {
+      const response = await wishListSvc.removeWishlist(id);
+      if (response?.data?.status === 'WISHLIST_ITEM_REMOVED') {
+        setiFilledHeart(false)
+      }
+    } catch (error: any) {
+      console.error("Error removing from wishlist:", error.response?.data || error.message);
+      toast.error("Failed to remove from wishlist. Please try again.");
+    }
+  };
+
+  const checkWishlist = async () => {
+    try {
+      const response = await wishListSvc.getMyWishList()
+      const wishlist = response.data.detail
+
+      // if (product && wishlist.some((item: any) => item.productId === product._id)) {
+      //   setiFilledHeart(true);
+      //   setWishListId(product._id)
+
+      // }
+      if (product) {
+        const wishlistItem = wishlist.find((item: any) => item.productId === product._id);
+        if (wishlistItem) {
+          setiFilledHeart(true);
+          setWishListId(wishlistItem._id); // Store the correct wishlist item ID
+        }
+      }
+
+
+    } catch (exception) {
+      console.log(exception)
+    }
+  }
+  useEffect(() => {
+    if (product) {
+      checkWishlist();
+    }
+  }, [product]);
 
 
 
@@ -203,8 +245,13 @@ export default function ProductView() {
               </Button>
               <Button variant="outline" size="icon" aria-label="Add to wishlist"
                 onClick={() => {
-                  const id: string = product?._id ?? "";
-                  addtoWishList(id)
+
+                  if (filledHeart === true) {
+                    removeFromWishlist(wishlistId)
+                  } else {
+                    const id: string = product?._id ?? "";
+                    addtoWishList(id)
+                  }
                 }}>
                 <Heart className={`h-4 w-4 ${filledHeart ? "fill-red-500 text-red-500" : ""}`} />
 
