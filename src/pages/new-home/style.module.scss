@@ -1,6 +1,7 @@
 .button {
     position: fixed;
     right: 0;
+    top: 20px;
     margin: 20px;
     width: 80px;
     height: 80px;
@@ -10,7 +11,6 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    z-index: 2;
 
     .burger {
         width: 100%;
@@ -60,6 +60,8 @@
     background-color: white;
     color: black;
     border-radius: 48px 0 0 48px;
+    z-index: 100;
+
 
     .body {
         padding: 140px;
@@ -72,7 +74,7 @@
             flex-direction: column;
             font-size: 56px;
             gap: 12px;
-            margin-top: 40px;
+            // margin-top: 40px;
 
             .header {
                 color: black;
@@ -99,13 +101,13 @@
     }
 }
 
-.svgCurve {
-    position: absolute;
-    top: 0;
-    left: -99px;
-    width: 100px;
-    height: 100%;
-    fill: rgb(41, 41, 41);
-    stroke: none;
+// .svgCurve {
+//     position: absolute;
+//     top: 0;
+//     left: -99px;
+//     width: 100px;
+//     height: 100%;
+//     fill: rgb(41, 41, 41);
+//     stroke: none;
 
-}
+// }

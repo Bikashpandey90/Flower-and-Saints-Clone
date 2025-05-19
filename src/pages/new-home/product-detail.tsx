@@ -1,5 +1,5 @@
 "use client"
-
+// import {  useTransform, motion, MotionValue } from "framer-motion";
 import { useState, useRef, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight, Facebook, Twitter, Instagram, Send, MessageSquare } from "lucide-react"
@@ -7,6 +7,7 @@ import ProductDescription from "./product-description"
 import HurryUpSection from "./hurry-up-section"
 import YouMayAlsoLike from "./you-may-also-like"
 import MagnetButton from "./magnet-button"
+import RoundedSlideButton from "./splash-button";
 
 export default function ProductDetail() {
     const [quantity, setQuantity] = useState(1)
@@ -46,7 +47,7 @@ export default function ProductDetail() {
     }, [])
 
     return (
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-4 py-8 overflow-hidden">
             <div className="flex flex-col md:flex-row gap-8 mb-16">
                 {/* Product Images - Main image on left, thumbnails on right */}
                 <div className="relative flex-1 order-1 rounded-4xl overflow-hidden">
@@ -64,6 +65,8 @@ export default function ProductDetail() {
 
                 {/* Thumbnails - Sticky on scroll */}
                 <div className="relative order-2 overflow-hidden md:block" style={{ width: "300px" }}>
+
+
                     <div
                         ref={thumbnailsRef}
                         className="flex flex-col gap-4 border-none"
@@ -72,9 +75,11 @@ export default function ProductDetail() {
                         {productImages.map((image, index) => (
                             <div
                                 key={index}
-                                className={`cursor-pointer ${activeImage === index ? "border border-gray-500" : "border border-transparent"}`}
+                                className={`cursor-pointer  ${activeImage === index ? "border border-gray-500" : "border border-transparent"}`}
                                 onClick={() => setActiveImage(index)}
                             >
+                                {/* <Carousel> */}
+
                                 <img
                                     src={image || "/placeholder.svg"}
                                     alt={`Product view ${index + 1}`}
@@ -82,16 +87,21 @@ export default function ProductDetail() {
                                     height={300}
                                     className="aspect-square object-cover rounded-2xl bg-black"
                                 />
+                                {/* </Carousel> */}
+
                             </div>
                         ))}
+
                     </div>
+
+
                 </div>
-              
+
 
 
 
                 {/* Mobile thumbnails */}
-                <div className="flex gap-4 overflow-x-auto md:hidden order-2">
+                <div className="flex gap-4 overflow-x-auto md:hidden order-2 ">
                     {productImages.map((image, index) => (
                         <div
                             key={index}
@@ -110,7 +120,7 @@ export default function ProductDetail() {
                 </div>
 
                 {/* Product Details */}
-                <div className="grid gap-4 md:gap-6 items-start order-3 md:w-1/3">
+                <div className="grid gap-4 md:gap-6 items-start order-3 md:w-1/3 ">
                     <div>
                         <p className="text-lg font-sans text-gray-500 mt-2 hover:underline  ">Flowers & Saints</p>
                         <h1 className="text-4xl font-sans md:text-5xl font-semibold mt-8 mb-2">
@@ -125,36 +135,45 @@ export default function ProductDetail() {
                         <p className="text-base p">In stock, ready to ship</p>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                            className="rounded-none h-8 w-8"
-                        >
-                            <ChevronLeft className="h-4 w-4" />
-                        </Button>
-                        <span className="w-8 text-center">{quantity}</span>
-                        <Button
-                            variant="outline"
-                            size="icon"
-                            onClick={() => setQuantity(quantity + 1)}
-                            className="rounded-none h-8 w-8"
-                        >
-                            <ChevronRight className="h-4 w-4" />
-                        </Button>
+                    <div className="flex items-center gap-4 m-4 ">
+                        <div className="flex border-[2px] p-4 rounded-2xl justify-between ">
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                                className="rounded-full p-0  h-8 w-8 border-none bg-transparent "
+                            >
+                                <ChevronLeft className="h-6 w-6 " />
+                            </Button>
+                            <span className="w-8 text-xl text-center">{quantity}</span>
+                            <Button
+                                variant="outline"
+                                size="icon"
+                                onClick={() => setQuantity(quantity + 1)}
+                                className="rounded-full h-8 w-8 border-none bg-transparent "
+                            >
+                                <ChevronRight className="h-4 w-4" />
+                            </Button>
+                        </div>
 
-                        <Button className="w-full bg-black text-white hover:bg-gray-900 h-16 rounded-xl">Add to cart</Button>
+                        {/* <Button className="w-full bg-black text-white hover:bg-gray-900 h-16 rounded-xl"> */}
+                        <RoundedSlideButton className="h-16 rounded-xl w-full justify-center items-center bg-black text-white hover:text-black before:bg-white ">
+                            Add to Cart
+                        </RoundedSlideButton>
+                        {/* </Button> */}
 
                     </div>
 
 
-                    <Button
+                    {/* <Button
                         variant="outline"
-                        className="w-full rounded-xl h-16 bg-indigo-600 text-white hover:bg-indigo-700 border-none"
+                        className="w-full flex rounded-xl h-16 bg-indigo-600 text-white text-xl hover:bg-indigo-700 border-none "
                     >
-                        Buy with ShopPay
-                    </Button>
+                        Buy now
+                    </Button> */}
+                    <RoundedSlideButton className="h-16 rounded-xl w-full justify-center  items-center bg-indigo-600 border-none text-white hover:text-black before:bg-indigo-700 ">
+                        Buy now
+                    </RoundedSlideButton>
 
                     <Button variant="link" className="w-full justify-center">
                         More payment options
@@ -181,6 +200,81 @@ export default function ProductDetail() {
 
             {/* You May Also Like */}
             <YouMayAlsoLike />
-        </div>
+        </div >
     )
 }
+
+// const Carousel = ({ children }: { children: any }) => {
+//     const ref = useRef(null);
+//     const { scrollYProgress } = useScroll({
+//         target: ref,
+//         offset: ["start start", "end start"],
+//     });
+
+//     return (
+//         <div className="relative ">
+
+//             <div ref={ref} className="relative z-0 flex flex-col gap-6 md:gap-12">
+//                 <CarouselItem
+//                     scrollYProgress={scrollYProgress}
+//                     position={1}
+//                     numItems={4}
+//                 >{children}</CarouselItem>
+//                 <CarouselItem
+//                     scrollYProgress={scrollYProgress}
+//                     position={2}
+//                     numItems={4}
+//                 >{children}</CarouselItem>
+//                 <CarouselItem
+//                     scrollYProgress={scrollYProgress}
+//                     position={3}
+//                     numItems={4}
+//                 >{children}</CarouselItem>
+//                 <CarouselItem
+//                     scrollYProgress={scrollYProgress}
+//                     position={4}
+//                     numItems={4}
+//                 >{children}</CarouselItem>
+//             </div>
+
+//             <Buffer />
+//         </div>
+//     );
+// };
+
+// const CarouselItem = ({
+//     scrollYProgress,
+//     position,
+//     numItems,
+//     children
+// }: {
+//     scrollYProgress: MotionValue<number>;
+//     position: number;
+//     numItems: number;
+//     children: any
+// }) => {
+//     const stepSize = 1 / numItems;
+//     const end = stepSize * position;
+//     const start = end - stepSize;
+
+//     const opacity = useTransform(scrollYProgress, [start, end], [1, 0]);
+//     const scale = useTransform(scrollYProgress, [start, end], [1, 0.75]);
+
+//     return (
+//         <motion.div
+//             style={{
+//                 opacity,
+//                 scale,
+//             }}
+//             className="grid aspect-video  shrink-0 place-content-center rounded-2xl bg-neutral-900"
+//         >
+//             {/* <span className="text-lg text-neutral-600">Feature demo here</span> */}
+//             {children}
+//         </motion.div>
+//     );
+// };
+
+
+
+// const Buffer = () => <div className="h-24 w-full md:h-48" />;
+

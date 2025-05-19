@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Input } from '@/components/ui/input'
-import { ScrollArea } from '@/components/ui/scroll-area'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+// import { motion } from 'framer-motion'
+// import { Input } from '@/components/ui/input'
+// import { ScrollArea } from '@/components/ui/scroll-area'
+// import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useSelector } from 'react-redux'
 import { Users } from 'lucide-react'
 
@@ -23,7 +23,7 @@ export default function UserSidebar({ onSelectUser }: UserSidebarProps) {
   const users = useSelector((root: { chat: { chatUserList: User[] } }) => {
     return root.chat.chatUserList
   })
-  const [searchTerm, setSearchTerm] = useState('')
+  // const [searchTerm, setSearchTerm] = useState('')
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
 
   // useEffect(() => {

@@ -1,9 +1,11 @@
 import bannerSvc from "@/pages/banner/banner.service";
 import { useEffect, useState } from "react";
-import Slider, { Settings } from "react-slick";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 
-var settings: Settings = {
+const settings = {
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -43,6 +45,8 @@ const BannerSlider = () => {
             }
 
 
-        </Slider></>)
+        </Slider>
+    </>
+    )
 }
 export default BannerSlider

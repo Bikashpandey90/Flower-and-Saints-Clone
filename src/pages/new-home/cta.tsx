@@ -4,7 +4,7 @@ import { Button } from "./shared-button";
 
 export const FinalCTA = () => {
     return (
-        <section className="mt-8 bg-neutral-900 px-2 py-24 md:px-4 rounded-t-[48px]">
+        <section className=" bg-neutral-900 px-2 py-24 md:px-4 rounded-t-2xl">
             <div className="mx-auto flex max-w-5xl flex-col items-center">
                 <LogoLarge />
                 <SectionHeading>Ready to go?</SectionHeading>

@@ -7,9 +7,9 @@ import {
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiMenu } from "react-icons/fi";
-import { FaRegUser, FaBasketShopping } from 'react-icons/fa6';
+import { FaRegUser } from 'react-icons/fa6';
 import MagnetButton from "./magnet-button";
-import NewNav from "./nav-header";
+import { CiShoppingCart, CiUser } from "react-icons/ci";
 
 
 export const RoundedDrawerNavExample = () => {
@@ -180,15 +180,17 @@ export const RoundedDrawerNav = ({
                         </button> */}
                         <MagnetButton>
                             <button className="hidden rounded-md bg-transparent  text-sm text-neutral-50  md:block">
-                                <FaRegUser className="size-5 " />
+                                {/* <FaRegUser className="size-5 " /> */}
+                                <CiUser className="size-6" />
+
                             </button>
                         </MagnetButton>
                         <MagnetButton>
                             <button className="hidden rounded-md bg-transparent  text-sm text-neutral-50  md:block" onClick={() => {
                                 setIsActive(!isActive)
-
                             }}>
-                                <FaBasketShopping className="size-5" />
+                                {/* <FaBasketShopping className="size-5" /> */}
+                                <CiShoppingCart className="size-6" />
                             </button>
                         </MagnetButton>
 
@@ -244,7 +246,7 @@ const DesktopLinks = ({
     activeSublinks: LinkType["sublinks"];
 }) => {
     return (
-        <div className="ml-9 mt-0.5 hidden md:block">
+        <div className="ml-9 mt-0.5 hidden md:block ">
             <div className="flex gap-6">
                 {links.map((l) => (
                     <TopLink key={l.title} setHovered={setHovered} title={l.title}>
@@ -264,7 +266,7 @@ const DesktopLinks = ({
                         exit={{
                             opacity: 0,
                         }}
-                        className="space-y-4 py-6"
+                        className="space-y-4 py-6 "
                     >
                         {activeSublinks.map((l) => (
                             <a

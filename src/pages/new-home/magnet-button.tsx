@@ -4,16 +4,16 @@ import {
     useMotionValue,
     useSpring,
 } from "framer-motion";
-import { User } from "lucide-react";
+// import { User } from "lucide-react";
 import { useRef } from "react";
 
-const MagnetButtonExample = () => {
-    return (
-        <div className="grid min-h-[400px] place-content-center bg-violet-200 p-4">
-            {/* <MagnetButton /> */}
-        </div>
-    );
-};
+// const MagnetButtonExample = () => {
+//     return (
+//         <div className="grid min-h-[400px] place-content-center bg-violet-200 p-4">
+//             {/* <MagnetButton /> */}
+//         </div>
+//     );
+// };
 
 const MagnetButton = ({ children, className }: { children: any, className?: string }) => {
     const ref = useRef<HTMLButtonElement | null>(null);

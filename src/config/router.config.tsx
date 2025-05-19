@@ -45,7 +45,10 @@ import WishlistPage from "@/pages/customers/customer-wishlist";
 import BlogPage from "@/pages/blog/blog";
 import CustomerOrderListing from "@/pages/customer/orders-page";
 import NewLandingPage from "@/pages/new-home/page";
-import NavMenu from "@/pages/new-home/cross-button";
+// import NavMenu from "@/pages/new-home/cross-button";
+import NewProductPage from "@/pages/new-home/product-page";
+import ListPage from "@/pages/new-home/list-page";
+import MainHome from "@/pages/new-home/mainpage";
 // import { WishListProvider } from "@/context/wishlist-context";
 
 
@@ -290,12 +293,21 @@ const Routing: FC = () => {
 
         }, {
             path: '/new-homepage',
-            element: <NewLandingPage />
-        }, {
-            path: '/navmenu',
-            element: <NavMenu />
+            element: <NewLandingPage />,
+            children: [
+                {
+                    index: true,
+                    element: <NewProductPage />
+                },
+                {
+                    path: 'apparel',
+                    element: <ListPage />
+                }, {
+                    path: 'home',
+                    element: <MainHome />
+                }
+            ]
         }
-
 
 
 

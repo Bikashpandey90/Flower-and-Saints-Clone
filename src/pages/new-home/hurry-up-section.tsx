@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { NavLink } from "react-router-dom"
+import RoundedSlideButton from "./splash-button"
 
 export default function HurryUpSection() {
     const [currentSlide, setCurrentSlide] = useState(0)
@@ -62,10 +63,42 @@ export default function HurryUpSection() {
     const visibleProducts = products.slice(currentSlide * 4, currentSlide * 4 + 4)
 
     return (
-        <div className="mb-16">
-            <div className="mb-6">
-                <p className="text-sm text-gray-500">Only a Few Pieces Left</p>
-                <h2 className="text-3xl md:text-4xl font-bold">Hurry Up!</h2>
+        <div className="mb-16 ml-4">
+            <div className="mb-6 flex justify-between items-center">
+                <div>
+                    <p className="text- md:text:4xl font-inter  text-gray-500 mb-3">Only a Few Pieces Left</p>
+                    <h2 className="text-4xl font-inter  md:text-5xl font-bold">Hurry Up!</h2>
+                </div>
+
+                <div className="flex  gap-2 mr-8">
+                    {/* <Button
+                        variant="outline"
+                        size="icon"
+                        className="  rounded-full h-14 w-14 bg-red-950"
+                        onClick={prevSlide}
+                    >
+
+                    </Button> */}
+                    <RoundedSlideButton disabled={false}
+                        onClick={prevSlide}
+                        className="rounded-full h-14 border-neutral-700">
+                        <ChevronLeft className="h-6 w-6 " />
+                    </RoundedSlideButton>
+
+
+                    {/* <Button
+                        variant="outline"
+                        size="icon"
+                        className="  rounded-full h-14 w-14 bg-red-950"
+                        onClick={nextSlide}
+                    >
+                        <ChevronRight className="h-5 w-5" />
+                    </Button> */}
+                    <RoundedSlideButton className="rounded-full h-14  border-neutral-700"
+                        onClick={nextSlide}>
+                        <ChevronRight className="h-6 w-6" />
+                    </RoundedSlideButton>
+                </div>
             </div>
 
             <div className="relative">
@@ -104,23 +137,7 @@ export default function HurryUpSection() {
                     ))}
                 </div>
 
-                <Button
-                    variant="outline"
-                    size="icon"
-                    className="absolute -left-5 top-1/2 transform -translate-y-1/2 rounded-full h-10 w-10 bg-white"
-                    onClick={prevSlide}
-                >
-                    <ChevronLeft className="h-5 w-5" />
-                </Button>
 
-                <Button
-                    variant="outline"
-                    size="icon"
-                    className="absolute -right-5 top-1/2 transform -translate-y-1/2 rounded-full h-10 w-10 bg-white"
-                    onClick={nextSlide}
-                >
-                    <ChevronRight className="h-5 w-5" />
-                </Button>
             </div>
         </div>
     )

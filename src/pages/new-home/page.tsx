@@ -1,10 +1,12 @@
 import { AnimatePresence } from "framer-motion"
 import { RoundedDrawerNav } from "./header"
-import ProductDetail from "./product-detail"
+// import ProductDetail from "./product-detail"
 import NewNav from "./nav-header"
 import { useState } from "react"
 import { Footer } from "./footer"
 import { FinalCTA } from "./cta"
+import { Outlet } from "react-router-dom"
+import RibbonLogos from "./components/last-sec"
 const NewLandingPage = () => {
     const [isActive, setIsActive] = useState(false)
     return (<>
@@ -111,12 +113,8 @@ const NewLandingPage = () => {
                             isActive && <NewNav isActive={isActive} setIsActive={setIsActive} />
                         }
                     </AnimatePresence>
-                    <main className="flex-1 ">
-                        <div>
-                            <ProductDetail />
-                        </div>
-
-                    </main>
+                    <Outlet />
+                    {/* <RibbonLogos /> */}
                     <FinalCTA />
                     <Footer />
 
