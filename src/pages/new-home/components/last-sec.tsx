@@ -38,23 +38,23 @@ const RibbonLogos = () => {
                 <TranslateWrapper>
                     <LogoItemsTop />
                 </TranslateWrapper>
-                <TranslateWrapper>
+                {/* <TranslateWrapper>
                     <LogoItemsTop />
                 </TranslateWrapper>
                 <TranslateWrapper>
                     <LogoItemsTop />
-                </TranslateWrapper>
+                </TranslateWrapper> */}
             </div>
             <div className="flex -translate-y-[50%] -rotate-[7deg] scale-110 overflow-hidden border-y-4 border-neutral-900 bg-neutral-50">
                 <TranslateWrapper reverse>
                     <LogoItemsBottom />
                 </TranslateWrapper>
-                <TranslateWrapper reverse>
+                {/* <TranslateWrapper reverse>
                     <LogoItemsBottom />
                 </TranslateWrapper>
                 <TranslateWrapper reverse>
                     <LogoItemsBottom />
-                </TranslateWrapper>
+                </TranslateWrapper> */}
             </div>
         </section>
     );
@@ -107,6 +107,7 @@ const LogoItemsTop = () => (
         <LogoItem Icon={SiBytedance} name="Bytedance" />
         <LogoItem Icon={SiChase} name="Chase" />
         <LogoItem Icon={SiCloudbees} name="Cloudebees" />
+        
     </>
 );
 

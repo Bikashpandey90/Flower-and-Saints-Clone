@@ -4,13 +4,7 @@ import {
     ChevronDown,
     ChevronLeft,
     ChevronRight,
-    Facebook,
-    Instagram,
-    PinIcon as Pinterest,
-    SnailIcon as Snapchat,
-    TwitterIcon as TikTok,
-    Twitter,
-    Youtube,
+   
 } from "lucide-react"
 import { useState, useRef, useEffect } from "react"
 import { cn } from "@/lib/utils"
@@ -58,16 +52,16 @@ export default function TillDeathDripsHotBundle() {
     return (
         <div className="relative min-h-screen bg-white">
 
-            <section className="relative">
+            <section className="relative m-5">
                 <div className="container mx-auto px-4 py-8">
                     <div className="md:grid md:grid-cols-3 md:gap-8">
                         {/* Left - Product Description */}
                         <div className="md:col-span-1 relative mb-8 md:mb-0 h-full">
-                            <div className="relative w-full h-full md:sticky md:top-8">
+                            <div className="relative w-full h-full md:sticky md:top-8 rounded-3xl overflow-hidden">
                                 <img
                                     src="https://flowersandsaints.com.au/cdn/shop/files/FNS_-_PYP_-_VOL_2_-Artboard_2_1.png?v=1746341933&width=1080"
                                     alt="Till Death Drips Hot Bundle"
-                                    className="object-cover w-full h-full rounded-3xl"
+                                    className="object-cover w-full h-full rounded-3xl overflow-hidden scale-125"
                                     style={{ height: "100%", objectFit: "cover" }}
                                 />
 

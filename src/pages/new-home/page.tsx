@@ -7,8 +7,12 @@ import { Footer } from "./footer"
 import { FinalCTA } from "./cta"
 import { Outlet } from "react-router-dom"
 import RibbonLogos from "./components/last-sec"
+import CartSidebar from "./cart-sidebar"
+import SearchSidebar from "./search-sidebar"
 const NewLandingPage = () => {
     const [isActive, setIsActive] = useState(false)
+    const [isCartOpen, setIsCartOpen] = useState(false)
+    const [isSearchOpen, setIsSearchOpen] = useState(true)
     return (<>
         <div className="flex min-h-screen flex-col ">
             <div className="bg-neutral-950 ">
@@ -105,6 +109,8 @@ const NewLandingPage = () => {
                     bodyBackground="bg-white"
                     isActive={isActive}
                     setIsActive={setIsActive}
+                    isCartOpen={isCartOpen}
+                    setIsCartOpen={setIsCartOpen}
                 >
                     {/* <div className="flex flex-col items-center justify-center px-12 py-32"> */}
 
@@ -113,8 +119,13 @@ const NewLandingPage = () => {
                             isActive && <NewNav isActive={isActive} setIsActive={setIsActive} />
                         }
                     </AnimatePresence>
+                    <AnimatePresence>
+                        {isCartOpen && <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} setIsOpen={setIsCartOpen} />}
+                    </AnimatePresence>
+                    <AnimatePresence>
+                        {isSearchOpen && <SearchSidebar isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />}
+                    </AnimatePresence>
                     <Outlet />
-                    {/* <RibbonLogos /> */}
                     <FinalCTA />
                     <Footer />
 

@@ -5,49 +5,14 @@ import CategoryCard from "./components/category-card"
 import RoundedSlideButton from "./splash-button"
 import TillDeathDripsBundle from "./till-death-drips"
 import RevenantSacred from "./revenantsacred"
+import RibbonLogos from "./components/last-sec"
 
 
 export default function MainHome() {
     return (
         <main>
-            {/* Social Sidebar - Fixed on all pages */}
-            {/* <SocialSidebar /> */}
 
-            {/* Hero Section */}
             <HeroSection />
-
-            {/* Brand Statement Section */}
-            {/* <section className="py-16 px-4 md:px-16 grid md:grid-cols-2 gap-16 items-center">
-                <div>
-                    <h2 className="text-4xl md:text-7xl font-inter font-semibold leading-tight mb-8">
-                        Our brand is more than just clothing – it's a movement.
-                        <span className="block h-1 w-32 bg-yellow-400 mt-4"></span>
-                    </h2>
-                    <RoundedSlideButton
-                        className="text-lg rounded-xl m-2 py-5 group flex items-center"
-                    >
-                        Our Story
-                        <span className="ml-2 inline-block">
-                            <ArrowRight
-                                className="h-5 w-5 transition-transform duration-300 group-hover:-rotate-45"
-                            />
-                        </span>
-                    </RoundedSlideButton>
-
-                </div>
-                <div>
-                    <p className="text-xl font-inter">
-                        At Flowers & Saints, we believe in wearing your story with pride. Every product we design is crafted with
-                        intention, combining style, quality, and purpose. Whether you're looking for a staple piece or something
-                        that speaks to your unique journey, we've got you covered.
-                    </p>
-                    <div className="mt-8">
-                        <h3 className="font-bold text-xl mb-2">Explore Our Journey</h3>
-                        <p>Discover the passion behind our designs and the community we're building together.</p>
-                    </div>
-                </div>
-            </section> */}
-
             <section className="py-16 px-4 md:px-16 grid md:grid-cols-2 gap-16 items-center">
                 <div>
                     <h2 className="text-4xl md:text-6xl font-inter font-semibold leading-tight mb-4">
@@ -172,6 +137,8 @@ export default function MainHome() {
             <RevenantSacred />
 
             <TillDeathDripsBundle />
+            <RibbonLogos />
+
 
             {/* Newsletter Section */}
             {/* <NewsletterSignup /> */}

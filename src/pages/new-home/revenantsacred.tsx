@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { ChevronLeft, ChevronRight, Plus } from "lucide-react"
+import { Plus } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 
 export default function RevenantSacred() {
@@ -110,7 +110,7 @@ export default function RevenantSacred() {
                 <img
                     src="https://flowersandsaints.com.au/cdn/shop/files/banner-about-us.jpg?v=1745029928&width=2000"
                     alt="Background"
-                    className={`w-full h-full object-cover`}
+                    className={`w-full h-full object-cover scale-150`}
                 />
                 <div className="absolute inset-0 bg-black/40"></div>
             </div>

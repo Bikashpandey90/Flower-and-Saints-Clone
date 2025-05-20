@@ -7,7 +7,6 @@ import {
 } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FiMenu } from "react-icons/fi";
-import { FaRegUser } from 'react-icons/fa6';
 import MagnetButton from "./magnet-button";
 import { CiShoppingCart, CiUser } from "react-icons/ci";
 
@@ -110,6 +109,8 @@ export const RoundedDrawerNavExample = () => {
                 bodyBackground="bg-white"
                 isActive={false}
                 setIsActive={() => { }}
+                setIsCartOpen={() => { }}
+                isCartOpen={false}
 
             >
                 <div className="flex flex-col items-center justify-center px-12 py-32">
@@ -136,7 +137,10 @@ export const RoundedDrawerNav = ({
     bodyBackground,
     links,
     isActive,
-    setIsActive
+    setIsActive,
+    isCartOpen,
+    setIsCartOpen
+
 
 }: {
     navBackground: string;
@@ -144,11 +148,16 @@ export const RoundedDrawerNav = ({
     children?: ReactNode;
     links: LinkType[];
     isActive: boolean;
-    setIsActive: Function
+    setIsActive: Function;
+    isCartOpen: boolean;
+    setIsCartOpen: Function;
+
+
 
 }) => {
     const [hovered, setHovered] = useState<string | null>(null);
     const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
 
     const activeSublinks = useMemo(() => {
         if (!hovered) return [];
@@ -179,7 +188,9 @@ export const RoundedDrawerNav = ({
                             <FaRegUser className="size-6" />
                         </button> */}
                         <MagnetButton>
-                            <button className="hidden rounded-md bg-transparent  text-sm text-neutral-50  md:block">
+                            <button className="hidden rounded-md bg-transparent  text-sm text-neutral-50  md:block" onClick={() => {
+                                setIsCartOpen(!isCartOpen)
+                            }}>
                                 {/* <FaRegUser className="size-5 " /> */}
                                 <CiUser className="size-6" />
 
