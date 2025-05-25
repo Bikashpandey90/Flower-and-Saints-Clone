@@ -28,19 +28,22 @@ export default function ListPage() {
             <HiMiniHome size={20} />
           </MagnetButton>
         </NavLink>
-        <span className="text-sm font-thin font-sans">Apparel</span>
+        <span className="text-sm font-thin font-inter">Apparel</span>
       </div>
 
       {/* Page Title */}
       <div className="px-4 md:px-6 pb-6 pt-4 md:pt-6">
-        <h1 className="text-4xl md:text-6xl font-sans font-semibold">Apparel</h1>
+        <h1 className="text-4xl md:text-7xl font-inter font-normal">Apparel</h1>
       </div>
 
       {/* Filter Controls - NOT sticky */}
       <div className="px-4 md:px-6">
         <div className="flex flex-col md:flex-row justify-between md:items-center mb-6 gap-4">
           <div className="flex items-center gap-4 overflow-x-auto pb-2 hide-scrollbar p-2">
-            <RoundedSlideButton className="py-2 md:py-3 shrink-0 rounded-xl " onClick={() => setIsFilterVisible(!isFilterVisible)}>
+            <RoundedSlideButton
+              className="py-2 md:py-3 shrink-0 rounded-xl"
+              onClick={() => setIsFilterVisible(!isFilterVisible)}
+            >
               <SlidersHorizontal className="w-4 h-4" />
               <span className="ml-2">{isFilterVisible ? "Hide filters" : "Show filters"}</span>
             </RoundedSlideButton>
@@ -51,25 +54,25 @@ export default function ListPage() {
                   Tees<sup>29</sup>
                 </NavLink>
               </MagnetButton>
-              <span className="text-thin mt-4 mx-4">/</span>
+              <span className="text-thin mt-4 mx-10">/</span>
               <MagnetButton>
                 <NavLink to="?category=sweatshirts" className="whitespace-nowrap">
                   Sweatshirts<sup>8</sup>
                 </NavLink>
               </MagnetButton>
-              <span className="text-thin mt-4 mx-4">/</span>
+              <span className="text-thin mt-4 mx-10">/</span>
               <MagnetButton>
                 <NavLink to="?category=hoodies" className="whitespace-nowrap">
                   Hoodies<sup>7</sup>
                 </NavLink>
               </MagnetButton>
-              <span className="text-thin mt-4 mx-4">/</span>
+              <span className="text-thin mt-4 mx-10">/</span>
               <MagnetButton>
                 <NavLink to="?category=trackpants" className="whitespace-nowrap">
                   Trackpants<sup>2</sup>
                 </NavLink>
               </MagnetButton>
-              <span className="text-thin mt-4 mx-4">/</span>
+              <span className="text-thin mt-4 mx-10">/</span>
               <MagnetButton>
                 <NavLink to="?category=shorts" className="whitespace-nowrap">
                   Shorts<sup>2</sup>
@@ -78,16 +81,18 @@ export default function ListPage() {
             </div>
           </div>
 
-          <div className="hidden  md:flex items-center gap-2 shrink-0">
-            <span className="text-lg  ">Sort by:</span>
+          <div className="hidden md:flex items-center gap-2 shrink-0">
+            <span className="text-lg">Sort by:</span>
             <SortButton />
           </div>
         </div>
       </div>
 
       {/* Filters and Products */}
-      <div className="px-4 md:px-6 pb-24 md:pb-16 ">
-        <div className="grid grid-cols-1 md:grid-cols-[minmax(250px,300px)_1fr] gap-8">
+      <div className="px-4 md:px-6 pb-24 md:pb-16">
+        <div
+          className={`grid grid-cols-1 ${isFilterVisible ? "md:grid-cols-[minmax(250px,300px)_1fr]" : "md:grid-cols-1"} gap-8`}
+        >
           {/* Filters Container - Desktop */}
           <div className={`${isFilterVisible ? "block" : "hidden"}`}>
             {/* This is the sticky filter content */}
@@ -171,8 +176,8 @@ export default function ListPage() {
             </div>
           </div>
 
-          {/* Products Grid */}
-          <ProductGrid />
+          {/* Products Grid - Pass isFilterVisible as a prop */}
+          <ProductGrid isFilterVisible={isFilterVisible} />
         </div>
       </div>
 

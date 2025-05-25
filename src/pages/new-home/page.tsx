@@ -6,7 +6,7 @@ import { useState } from "react"
 import { Footer } from "./footer"
 import { FinalCTA } from "./cta"
 import { Outlet } from "react-router-dom"
-import RibbonLogos from "./components/last-sec"
+// import RibbonLogos from "./components/last-sec"
 import CartSidebar from "./cart-sidebar"
 import SearchSidebar from "./search-sidebar"
 const NewLandingPage = () => {

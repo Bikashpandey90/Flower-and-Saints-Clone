@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import type { Settings } from "react-slick";
+const TypedSlider = Slider as unknown as React.ComponentType<any>;
 
 
-const settings = {
+const settings: Settings = {
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -32,7 +34,7 @@ const BannerSlider = () => {
 
     console.log(bannerData)
     return (<>
-        <Slider {...settings}>
+        <TypedSlider {...settings}>
             {
                 bannerData && bannerData.map((banner: any, i: number) => (
                     <div className=" flex item-center justify-center" key={i}>
@@ -45,7 +47,7 @@ const BannerSlider = () => {
             }
 
 
-        </Slider>
+        </TypedSlider>
     </>
     )
 }

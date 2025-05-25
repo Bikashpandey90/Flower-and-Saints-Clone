@@ -178,31 +178,31 @@ const ProductCard = ({ image, title, price, brand, colors }: ProductCardProps) =
         </div>
     )
 }
-const NewsletterSignup = () => {
-    return (
-        <section className="bg-black text-white py-16 px-4">
-            <div className="container mx-auto max-w-4xl">
-                <h2 className="text-3xl md:text-4xl font-bold mb-8">
-                    Stay updated about the latest releases and get exclusive deals :-)
-                </h2>
-                <div className="flex">
-                    <input type="email" placeholder="Enter your email" className="newsletter-input w-full" />
-                    <button className="newsletter-button">
-                        <span className="sr-only">Submit</span>
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M5 12H19M19 12L12 5M19 12L12 19"
-                                stroke="white"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </section>
-    )
-}
+// const NewsletterSignup = () => {
+//     return (
+//         <section className="bg-black text-white py-16 px-4">
+//             <div className="container mx-auto max-w-4xl">
+//                 <h2 className="text-3xl md:text-4xl font-bold mb-8">
+//                     Stay updated about the latest releases and get exclusive deals :-)
+//                 </h2>
+//                 <div className="flex">
+//                     <input type="email" placeholder="Enter your email" className="newsletter-input w-full" />
+//                     <button className="newsletter-button">
+//                         <span className="sr-only">Submit</span>
+//                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+//                             <path
+//                                 d="M5 12H19M19 12L12 5M19 12L12 19"
+//                                 stroke="white"
+//                                 strokeWidth="2"
+//                                 strokeLinecap="round"
+//                                 strokeLinejoin="round"
+//                             />
+//                         </svg>
+//                     </button>
+//                 </div>
+//             </div>
+//         </section>
+//     )
+// }
 
 

@@ -41,13 +41,13 @@ export default function RevenantSacred() {
         },
     ]
 
-    const nextSlide = () => {
-        setActiveSlide((prev) => (prev === products.length - 1 ? 0 : prev + 1))
-    }
+    // const nextSlide = () => {
+    //     setActiveSlide((prev) => (prev === products.length - 1 ? 0 : prev + 1))
+    // }
 
-    const prevSlide = () => {
-        setActiveSlide((prev) => (prev === 0 ? products.length - 1 : prev - 1))
-    }
+    // const prevSlide = () => {
+    //     setActiveSlide((prev) => (prev === 0 ? products.length - 1 : prev - 1))
+    // }
 
     useEffect(() => {
         if (sliderRef.current && isMobile) {
