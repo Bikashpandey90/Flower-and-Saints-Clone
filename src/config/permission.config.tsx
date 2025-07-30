@@ -38,12 +38,5 @@ const PermissionCheck=({allowedRole,children}:PermissionCheckProps)=>{
         toast.warning("Please login to access !")
         return<><Navigate to={'/login'}/></>
     }
-
-
-
-
-
-
-
 }
 export default PermissionCheck

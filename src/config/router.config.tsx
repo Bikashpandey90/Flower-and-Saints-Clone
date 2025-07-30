@@ -1,10 +1,10 @@
 import { AuthProvider } from "@/context/auth-context";
-import AboutUs from "@/pages/about-us/about-us.pae";
-import LoginPage from "@/pages/auth/login-page";
-import RegisterPage from "@/pages/auth/register-page";
+// import AboutUs from "@/pages/about-us/about-us.pae";
+// import LoginPage from "@/pages/auth/login-page";
+// import RegisterPage from "@/pages/auth/register-page";
 import NotFound from "@/pages/errors/not-found.page";
 import AdminPage from "@/pages/layout/admin-page.layout";
-import HomePageLayout from "@/pages/layout/home-page.layout";
+// import HomePageLayout from "@/pages/layout/home-page.layout";k
 import { FC, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
@@ -25,8 +25,8 @@ import SellerDashboard from "@/pages/seller/seller-dashboard";
 import MainContent from "@/pages/seller/main-content";
 import SellerProfile from "@/pages/seller/seller-profile";
 import ProductDetail from "@/components/seller-dashboard-components/product-detailpage";
-import HomePageDraft from "@/pages/home/homepage-draft";
-import ProductPage from "@/pages/products/full-productView";
+// import HomePageDraft from "@/pages/home/homepage-draft";
+// import ProductPage from "@/pages/products/full-productView";
 import CategoryListPage from "@/pages/category/fetch-by-category";
 import BrandProductListing from "@/pages/brand/brand-fetchProduct";
 import CartPage from "@/pages/orders/cart-fullpage";
@@ -44,12 +44,18 @@ import BrandsListingPage from "@/pages/brand/brand-listing";
 import WishlistPage from "@/pages/customers/customer-wishlist";
 import BlogPage from "@/pages/blog/blog";
 import CustomerOrderListing from "@/pages/customer/orders-page";
-import NewLandingPage from "@/pages/new-home/page";
+
+import NewLandingPage from "@/pages/layout/layout";
+
 // import NavMenu from "@/pages/new-home/cross-button";
-import NewProductPage from "@/pages/new-home/product-page";
-import ListPage from "@/pages/new-home/list-page";
-import MainHome from "@/pages/new-home/mainpage";
-// import { WishListProvider } from "@/context/wishlist-context";
+import NewProductPage from "@/pages/product/product-page"
+import ListPage from "@/pages/ListPage/list";
+import MainHome from "@/pages/home/mainpage";
+
+import AuthLayout from "@/pages/auth/auth.layout";
+import NewLoginPage from "@/pages/auth/new-login";
+import NewRegisterPage from "@/pages/auth/new-registerpage";
+
 
 
 
@@ -57,45 +63,34 @@ const Routing: FC = () => {
     const router = createBrowserRouter([
         {
             path: "",
-            element: <HomePageLayout />,
+            element: <NewLandingPage />,
             children: [
                 {
                     index: true,
-                    element: <HomePageDraft />,
+                    element: <MainHome />,
                 },
-                {
-                    path: "\about-us",
-                    element: <AboutUs />,
-                },
-                // {
-                //     path: "category/:slug",
-                //     element: <CategoryDetailPage />
 
-                // },
                 {
                     path: 'search',
-                    element: <CategoryListPage />
+                    element: <ListPage />
 
                 },
                 {
                     path: "*", //wildcard error pages 404
                     element: <NotFound />,
                 },
-                {
-                    path: "/login",
-                    element: <LoginPage />,
-                }, {
-                    path: "/register",
-                    element: <RegisterPage />,
-                },
+
                 {
                     path: "products/:slug",
-                    element: <ProductPage />
+                    element: <NewProductPage />
 
                 }, {
                     path: 'category/:slug',
                     element: <CategoryListPage />
-                }, {
+                },
+
+
+                {
                     path: 'brand/:slug',
                     element: <BrandProductListing />
                 }, {
@@ -160,6 +155,21 @@ const Routing: FC = () => {
                 }, {
                     path: 'blog',
                     element: <BlogPage />
+                }
+            ]
+        },
+        {
+            path: '/auth',
+            element: <AuthLayout />,
+            children: [
+                {
+                    path: "login",
+                    element: <NewLoginPage />,
+                    index: true
+                },
+                {
+                    path: "register",
+                    element: <NewRegisterPage />,
                 }
             ]
         },

@@ -1,4 +1,6 @@
 import { get } from "@/config/axios.config";
+import { useIsMobile } from "@/hooks/use-mobile";
+import { LogoLarge, LogoSmall } from "@/components/Logo/logo";
 import { setLoggedInUser } from "@/reducer/chat-reducer";
 import React, { createContext, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -12,6 +14,7 @@ export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode 
     // const {data,isLoading,error}=useGetLoggedInUser() as {data:any,isLoading:boolean,error:any};
     const [data, setData] = useState<any>();
     const [isLoading, setIsLoading] = useState(true);
+    const isMobile = useIsMobile()
 
     const getLoggedInUser = async () => {
         try {
@@ -75,18 +78,23 @@ export const AuthProvider = ({ children }: Readonly<{ children: React.ReactNode 
             <div id="splash-screen" className="fixed top-0 left-0 w-full h-full flex flex-col z-[9999]">
                 <div
                     id="top-layout"
-                    className="w-full h-1/2 bg-white flex justify-center items-end absolute transition-transform duration-1000 ease-in-out top-0 pb-[2%]"
+                    className="w-full h-1/2 bg-neutral-900 flex justify-center items-end  absolute transition-transform duration-1000 ease-in-out top-0 pb-[2%]"
                 >
-                    <div className="w-[15vw] h-[15vw] max-w-[180px] max-h-[180px] overflow-hidden mb-[3%]">
-                        <img className="w-full h-full rounded-full" src="/src/context/image.png" alt="Logo" />
+                    <div className="sm:w-[12vw] sm:h-[12vw] h-[16vw] w-[16vw] max-w-[300px] max-h-[300px] overflow-hidden mb-[0%] justify-center items-center">
+                        {/* <img className="w-full h-full rounded-full" src="/src/context/image.png" alt="Logo" /> */}
+                        {isMobile?<>
+                        <LogoLarge color="white" className="p h-full w-full  justify-center items-center" />
+                        </>:<>
+                        <LogoSmall  className="p h-full w-full  justify-center items-center" />
+                        </>}
                     </div>
                 </div>
                 <div
                     id="bottom-layout"
-                    className="w-full h-1/2 bg-white flex justify-center items-start absolute transition-transform duration-1000 ease-in-out bottom-0 pt-[2%]"
+                    className="w-full h-1/2 bg-neutral-900 flex justify-center items-start absolute transition-transform duration-1000 ease-in-out bottom-0 pt-[2%]"
                 >
-                    <div className="w-2/5 h-6 bg-gray-100 rounded-xl overflow-hidden mt-[3%]">
-                        <div id="loading-progress" className="w-0 h-full bg-yellow-400 transition-[width] duration-[150ms] linear"></div>
+                    <div className="w-2/5 h-3 sm:h-6 bg-neutral-700 rounded-xl overflow-hidden mt-[3%]">
+                        <div id="loading-progress" className="w-0 h-full bg-white transition-[width] duration-[150ms] linear"></div>
                     </div>
                 </div>
             </div>
