@@ -128,7 +128,7 @@ const NewLandingPage = () => {
                         {isCartOpen && <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} setIsOpen={setIsCartOpen} />}
                     </AnimatePresence>
                     <AnimatePresence mode="wait">
-                        {isSearchOpen && <SearchSidebar isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />}
+                        {isSearchOpen && <SearchSidebar isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)}  />}
                     </AnimatePresence>
                     <Outlet />
                     <FinalCTA />

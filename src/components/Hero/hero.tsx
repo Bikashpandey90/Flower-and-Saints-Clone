@@ -1,15 +1,38 @@
+import bannerSvc from "@/pages/banner/banner.service";
+import { useEffect, useState } from "react";
 
 
 export default function HeroSection() {
+    const [HomeBanner, setHomeBanner] = useState<any>([]);
+
+    const fetchHeroBanner = async () => {
+        try {
+            const HeroBanner = await bannerSvc.getHomeBannerList();
+            // setHomeBanner(HeroBanner.data.detail)
+            setHomeBanner(HeroBanner.data)
+
+
+        } catch (exception) {
+            console.error("Error fetching hero banner:", exception);
+
+        }
+    }
+    console.log("HomeBanner", HomeBanner);
+    useEffect(() => {
+        fetchHeroBanner();
+    }, [])
+
+
+
     return (
         <section className="relative w-full h-[80vh] sm:h-[80vh] pt-3 overflow rounded-t-2xl m-0">
             {/* Desktop Image */}
 
-            <div className="hidden  sm:block m-4 sm:m-8 rounded-3xl overflow-hidden h-full z-0  ">
+            <div className="hidden sm:block m-4 sm:m-8 rounded-3xl overflow-hidden h-full z-0  ">
                 <img
-                    src="https://flowersandsaints.com.au/cdn/shop/files/banner1_02e43f14-41aa-4502-807d-e609fbfae4b3.jpg?v=1744413924&width=2000"
+                    src={HomeBanner?.[0]?.image || "https://flowersandsaints.com.au/cdn/shop/files/banner1_02e43f14-41aa-4502-807d-e609fbfae4b3.jpg?v=1744413924&width=2000"}
                     alt="Hero image desktop"
-                    className="object-cover  rounded-3xl transition-transform duration-500 scale-110 sm:scale-150 z-0 "
+                    className="object-cover h-full w-full  rounded-3xl transition-transform duration-500 scale-110 sm:scale-150 z-0 "
                     sizes="(min-width: 640px) 100vw"
 
                 />
@@ -18,9 +41,9 @@ export default function HeroSection() {
             {/* Mobile Image */}
             <div className="  flex sm:hidden m-4 rounded-3xl overflow-hidden h-full">
                 <img
-                    src="https://flowersandsaints.com.au/cdn/shop/files/aa.jpg?v=1744968366&width=800"
+                    src={HomeBanner?.[0]?.mobileImage || "https://flowersandsaints.com.au/cdn/shop/files/aa.jpg?v=1744968366&width=800"}
                     alt="Hero image mobile"
-                    className="object-cover rounded-3xl transition-transform duration-500"
+                    className="object-cover w-full h-full rounded-3xl transition-transform duration-500"
                     sizes="100vw"
 
                 />
@@ -32,10 +55,10 @@ export default function HeroSection() {
 
             {/* Text Content */}
             <div className="absolute bottom-6 sm:bottom-10 left-6 sm:left-24  text-white z-10">
-                <h1 className="text-[2rem] xs:text-3xl sm:text-5xl lg:text-6xl font-bold leading-tight max-w-xs p-3 sm:max-w-2xl">
+                <h1 className="text-[2rem] xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight max-w-xs p-3 sm:max-w-2xl sm:p-0">
                     PROTECT YOUR PEACE VOL.1
                 </h1>
-                <p className="mt-2 hidden sm:block sm:mt-4 text-sm sm:text-lg opacity-90 max-w-xs sm:max-w-md">
+                <p className="mt-2 hidden sm:block sm:mt-4 text-sm sm:text-base md:text-lg lg:text-xl opacity-90 max-w-xs sm:max-w-md  lg:max-w-lg">
                     Discover tranquility in every moment
                 </p>
             </div>
@@ -44,5 +67,5 @@ export default function HeroSection() {
 
         </section>
     )
-    
+
 }

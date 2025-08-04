@@ -10,6 +10,8 @@ import YouMayAlsoLike from "@/components/YouMayAlsoLike/section"
 import MagnetButton from "@/components/MagenetButton/button"
 import RoundedSlideButton from "@/components/SplashButton/button"
 import TextUnderline from "@/components/textUnderline/text"
+import productSvc from "../products/products.service"
+import { useParams } from "react-router-dom"
 
 export default function ProductDetail() {
     const [quantity, setQuantity] = useState(1)
@@ -20,6 +22,9 @@ export default function ProductDetail() {
     const [isHovered, setIsHovered] = useState(false)
     const [isNavLinkHovered, setIsNavLinkHovered] = useState(false)
 
+    const [product, setProduct] = useState<any>(null)
+    const [related,setRelated] = useState<any>([])
+
     // Refs
     const containerRef = useRef<HTMLDivElement>(null)
     const sideImagesRef = useRef<HTMLDivElement>(null)
@@ -28,6 +33,9 @@ export default function ProductDetail() {
     const mainImageRef = useRef<HTMLDivElement>(null)
     const contentRef = useRef<HTMLDivElement>(null)
     const spacerRef = useRef<HTMLDivElement>(null)
+
+
+    const { slug } = useParams()
 
     // Images for the product
     const productImages = [
@@ -110,6 +118,23 @@ export default function ProductDetail() {
         }
     }, [isMobile])
 
+    const fetchProductDetail = async () => {
+        try {
+            const product = await productSvc.fetchProductBySlug(slug as string)
+            setProduct(product.data.detail.product)
+            setRelated(product.data.detail.related)
+
+            console.log("Product detail fetched:", product.data)
+
+
+        } catch (exception) {
+            console.log(exception)
+        }
+    }
+    useEffect(() => {
+        fetchProductDetail()
+    }, [slug])
+
     return (
         <div className="relative ">
             {/* Main product section */}
@@ -119,7 +144,7 @@ export default function ProductDetail() {
                     <div ref={mainImageRef} className={`flex-1 order-1 ${isMobile ? "" : "md:sticky md:top-8 md:h-fit"}`}>
                         <div className="relative">
                             <img
-                                src="https://flowersandsaints.com.au/cdn/shop/files/FNS8.jpg?v=1744530624&width=600"
+                                src={ "https://flowersandsaints.com.au/cdn/shop/files/FNS8.jpg?v=1744530624&width=600"}
                                 alt="Flowers & Saints Signature Bottle"
                                 width={600}
                                 height={600}
@@ -216,7 +241,7 @@ export default function ProductDetail() {
                                     variant="outline"
                                     size="icon"
                                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                                    className="rounded-full p-0 h-8 w-8 border-none bg-transparent"
+                                    className="rounded-full bg-none shadow-none p-0 h-8 w-8 border-none "
                                 >
                                     <ChevronLeft className="h-6 w-6" />
                                 </Button>
@@ -225,7 +250,7 @@ export default function ProductDetail() {
                                     variant="outline"
                                     size="icon"
                                     onClick={() => setQuantity(quantity + 1)}
-                                    className="rounded-full h-8 w-8 border-none bg-transparent"
+                                    className="rounded-full h-8 w-8  border-none bg-none shadow-none"
                                 >
                                     <ChevronRight className="h-4 w-4" />
                                 </Button>
@@ -289,7 +314,7 @@ export default function ProductDetail() {
                 <HurryUpSection />
 
                 {/* You May Also Like */}
-                <YouMayAlsoLike />
+                <YouMayAlsoLike  products={related}/>
             </div>
         </div>
     )

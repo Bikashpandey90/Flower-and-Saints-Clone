@@ -5,54 +5,71 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { NavLink } from "react-router-dom"
 import RoundedSlideButton from "../SplashButton/button"
 import TextUnderline from "../textUnderline/text"
+import productSvc from "@/pages/products/products.service"
+interface Product {
+    images: string[]
+    title: string
+    price: string
+    brand: { title: string }
+    colors: string[]
+}
+
 
 export default function HurryUpSection() {
     const productsRef = useRef<HTMLDivElement>(null)
     // const [isScrolling, setIsScrolling] = useState(false)
-
-    const products = [
+    const [products, setProducts] = useState<Product[]>([
         {
-            id: 1,
-            name: "Till Death Drips Hot - Eco Canvas Tote Bag",
+            title: "Till Death Drips Hot - Eco Canvas Tote Bag",
             price: "Rs. 1,100.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/SK3.jpg?v=1745136233&width=1080",
-            brand: "FLOWERS & SAINTS",
-            color: ["#f5e6d8"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/SK3.jpg?v=1745136233&width=1080"],
+            brand: { title: "FLOWERS & SAINTS" },
+            colors: ["#f5e6d8"],
         },
         {
-            id: 2,
-            name: "Till Death Drips Hot - Bottle",
+            title: "Till Death Drips Hot - Bottle",
             price: "Rs. 2,200.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/SB8.jpg?v=1744542414&width=600",
-            brand: "FLOWERS & SAINTS",
-            color: ["#1e3a8a"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/SB8.jpg?v=1744542414&width=600"],
+            brand: { title: "FLOWERS & SAINTS" },
+            colors: ["#1e3a8a"],
 
         },
         {
-            id: 3,
-            name: "Stay Humble - Eco Canvas Tote Bag",
+            title: "Stay Humble - Eco Canvas Tote Bag",
             price: "Rs. 1,100.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/SH3_c4d8bafd-f03a-4a94-a6c9-6c1fa518124d.jpg?v=1745141996&width=1080",
-            brand: "FLOWERS & SAINTS",
-            color: ["#000000"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/SH3_c4d8bafd-f03a-4a94-a6c9-6c1fa518124d.jpg?v=1745141996&width=1080"],
+            brand: { title: "FLOWERS & SAINTS" },
+            colors: ["#000000"],
         },
         {
-            id: 4,
-            name: "Positive Vibes - Eco Canvas Tote Bag",
+            title: "Positive Vibes - Eco Canvas Tote Bag",
             price: "Rs. 1,100.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/PV3.jpg?v=1745145672&width=1080",
-            brand: "FLOWERS & SAINTS",
-            color: ["#ffc0cb"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/PV3.jpg?v=1745145672&width=1080"],
+            brand: { title: "FLOWERS & SAINTS" },
+            colors: ["#ffc0cb"],
         },
         {
-            id: 5,
-            name: "Love Is Blind - Eco Canvas Tote Bag",
+            title: "Love Is Blind - Eco Canvas Tote Bag",
             price: "Rs. 1,100.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/LB3.jpg?v=1745147803&width=1080",
-            brand: "FLOWERS & SAINTS",
-            color: ["#f5e6d8"]
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/LB3.jpg?v=1745147803&width=1080"],
+            brand: { title: "FLOWERS & SAINTS" },
+            colors: ["#f5e6d8"]
         },
     ]
+    )
+
+    const fetchHurryUpProducts = async () => {
+        try {
+            const products = await productSvc.getDealsProduct()
+            setProducts(products.data.detail)
+
+        } catch (exception) {
+            console.log(exception)
+        }
+    }
+    useEffect(() => {
+        fetchHurryUpProducts()
+    }, [])
 
     const smoothScrollTo = (element: HTMLElement, targetScrollLeft: number, duration = 800) => {
         const startScrollLeft = element.scrollLeft
@@ -199,11 +216,11 @@ export default function HurryUpSection() {
                     {products.map((product, index) => (
                         <div key={index} className="min-w-[280px] snap-start p-2">
                             <ProductCard
-                                image={product.image}
-                                title={product.name}
+                                image={product.images[0]}
+                                title={product.title}
                                 price={product.price}
-                                brand={product.brand}
-                                colors={product.color}
+                                brand={product.brand?.title}
+                                colors={product.colors}
                             />
                         </div>
                     ))}
@@ -223,11 +240,11 @@ export default function HurryUpSection() {
                     {products.map((product, index) => (
                         <div key={index} className="flex-shrink-0 w-72 lg:w-80">
                             <ProductCard
-                                image={product.image}
-                                title={product.name}
+                                image={product.images[0]}
+                                title={product.title}
                                 price={product.price}
-                                brand={product.brand}
-                                colors={product.color}
+                                brand={product.brand?.title}
+                                colors={product.colors}
                             />
                         </div>
                     ))}
@@ -274,7 +291,7 @@ const ProductCard = ({ image, title, price, brand, colors }: ProductCardProps) =
                     <img
                         src={image || "/placeholder.svg"}
                         alt={title}
-                        className="object-cover rounded-t-2xl transition-transform duration-300 group-hover:scale-105"
+                        className="object-cover w-full h-full rounded-t-2xl transition-transform duration-300 group-hover:scale-105"
                     />
                 </div>
                 <div className="text-xs uppercase tracking-wider text-gray-500 mb-1" onMouseEnter={() => setIsNavLinkHovered(true)} onMouseLeave={() => setIsNavLinkHovered(false)}><TextUnderline isNavLinkHovered={isNavLinkHovered}>{brand}</TextUnderline></div>
@@ -282,7 +299,7 @@ const ProductCard = ({ image, title, price, brand, colors }: ProductCardProps) =
                 <div className="font-thin font-inter font-xl">{price}</div>
                 <div className="flex mt-2 space-x-2">
                     {/* {colors.map((color, index) => (
-                        <div key={index} className="color-swatch" style={{ backgroundColor: color }} />
+                        <div key={index} className="color-swatch" style={{ backgroundColors: color }} />
                     ))} */}
                 </div>
             </NavLink>

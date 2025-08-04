@@ -7,6 +7,7 @@ import RoundedSlideButton from "../SplashButton/button"
 import { menuSlide } from "@/lib/anim"
 import { useIsMobile } from "@/hooks/use-mobile"
 import DragCloseDrawer from "../Drawer/drawer"
+import TextUnderline from "../textUnderline/text"
 
 type CategoryLink = {
     name: string
@@ -24,6 +25,7 @@ export default function SearchSidebar({ isOpen, onClose }: { isOpen: boolean; on
     const [searchQuery, setSearchQuery] = useState("")
     const [showResults, setShowResults] = useState(false)
     const [searchResults, setSearchResults] = useState<Product[]>([])
+    const [isHovered, setIsHovered] = useState(false)
 
     const apparelLinks: CategoryLink[] = [
         { name: "Tees", href: "#" },
@@ -133,10 +135,10 @@ export default function SearchSidebar({ isOpen, onClose }: { isOpen: boolean; on
                 </div>
                 {/* Search Results or Categories */}
                 {showResults ? (
-                    <>
-                        <div className="flex flex-col gap-6">
+                    <div>
+                        <div className="flex flex-col gap-6 ">
                             <h3 className="text-base text-neutral-500 tracking-wider">PRODUCTS</h3>
-                            <div className="flex flex-col gap-6">
+                            <div className="flex flex-col gap-6 ">
                                 {searchResults.map((product) => (
                                     <div key={product.id} className="group flex gap-4 items-center cursor-pointer">
                                         <div className="w-[100px] h-[100px] rounded-[18px] overflow-hidden flex items-center justify-center">
@@ -146,18 +148,22 @@ export default function SearchSidebar({ isOpen, onClose }: { isOpen: boolean; on
                                                 className="w-full h-full object-contain rounded-2xl"
                                             />
                                         </div>
-                                        <div className="flex-1">
-                                            <h4 className="text-lg font-medium mb-1 group-hover:underline">{product.name}</h4>
+                                        <div className="flex-1 ">
+                                            <h4 className="text-lg font-medium " onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+                                                <TextUnderline isNavLinkHovered={isHovered}>
+                                                    {product.name}
+                                                </TextUnderline>
+                                            </h4>
                                             <p className="text-sm text-neutral-600">Rs. {product.price.toLocaleString()}</p>
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         </div>
-                        <RoundedSlideButton className="sticky bottom-0 mx-auto text-xl flex items-center justify-center gap-2 z-10 p-4 bg-neutral-900 text-white hover:text-black before:bg-white border rounded-xl h-14 mt-4">
+                        <RoundedSlideButton className="sticky bottom-4 mx-auto  text-xl flex items-center justify-center gap-2 z-10 p-4  bg-neutral-900 text-white hover:text-black before:bg-white border rounded-xl h-12  mt-4">
                             See all Results <ArrowRight size={24} />
                         </RoundedSlideButton>
-                    </>
+                    </div>
                 ) : (
                     <div className="flex flex-col gap-8">
                         {/* Apparel Category */}

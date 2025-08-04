@@ -4,74 +4,115 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import RoundedSlideButton from "../SplashButton/button"
 import { NavLink } from "react-router-dom"
 import TextUnderline from "../textUnderline/text"
+import productSvc from "@/pages/products/products.service"
 
+interface Products {
 
+    id?: string
+    images: string[]
+    title: string
+    price: string
+    brand: { title: string }
+    colors: string[]
+    slug?: string | ''
+}
 
 
 export default function BestSellers() {
     const [activeCategory, setActiveCategory] = useState("Drink Bottles")
     const productsRef = useRef<HTMLDivElement>(null)
     // const [isScrolling, setIsScrolling] = useState(false)
-
-    const products = [
+    const [products, setProducts] = useState<Products[]>([
         {
-            image: "https://flowersandsaints.com.au/cdn/shop/files/Cat6.jpg?v=1744444109&width=1080",
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/Cat6.jpg?v=1744444109&width=1080"],
             title: "Cats Doodle - Bottle",
-            price: "Rs. 2,200.00",
-            brand: "FLOWERS & SAINTS",
+            price: "Rs. 2,200.0]0",
+            brand: {
+                title: "Flowers & Saints",
+            },
             colors: ["#f5e6d8"],
         },
         {
-            image: "https://flowersandsaints.com.au/cdn/shop/files/PM8.jpg?v=1744535986&width=600",
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/PM8.jpg?v=1744535986&width=600"],
             title: "Cosmic Trip - Bottle",
             price: "Rs. 2,200.00",
-            brand: "FLOWERS & SAINTS",
+            brand: {
+                title: "Flowers & Saints",
+            },
             colors: ["#1e3a8a"],
         },
         {
-            image: "https://flowersandsaints.com.au/cdn/shop/files/FNS8.jpg?v=1744530624&width=600",
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/FNS8.jpg?v=1744530624&width=600"],
             title: "Flowers & Saints Signature Bottle - Stealth Edition",
             price: "Rs. 2,200.00",
-            brand: "FLOWERS & SAINTS",
+            brand: {
+                title: "Flowers & Saints",
+            },
             colors: ["#000000"],
         },
         {
-            image: "https://flowersandsaints.com.au/cdn/shop/files/CFP8.jpg?v=1744533406&width=600",
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/CFP8.jpg?v=1744533406&width=600"],
             title: "Meow Mode - Bottle",
             price: "Rs. 2,200.00",
-            brand: "FLOWERS & SAINTS",
+            brand: {
+                title: "Flowers & Saints",
+            },
             colors: ["#ffc0cb"],
         },
         {
-            image: "https://flowersandsaints.com.au/cdn/shop/files/Cat6.jpg?v=1744444109&width=1080",
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/Cat6.jpg?v=1744444109&width=1080"],
             title: "Cats Doodle - Bottle",
             price: "Rs. 2,200.00",
-            brand: "FLOWERS & SAINTS",
+            brand: {
+                title: "Flowers & Saints",
+            },
             colors: ["#f5e6d8"],
         },
         {
-            image: "https://flowersandsaints.com.au/cdn/shop/files/PM8.jpg?v=1744535986&width=600",
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/PM8.jpg?v=1744535986&width=600"],
             title: "Cosmic Trip - Bottle",
             price: "Rs. 2,200.00",
-            brand: "FLOWERS & SAINTS",
+            brand: {
+                title: "Flowers & Saints",
+            },
             colors: ["#1e3a8a"],
         },
         {
-            image: "https://flowersandsaints.com.au/cdn/shop/files/FNS8.jpg?v=1744530624&width=600",
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/FNS8.jpg?v=1744530624&width=600"],
             title: "Flowers & Saints Signature Bottle - Stealth Edition",
             price: "Rs. 2,200.00",
-            brand: "FLOWERS & SAINTS",
+            brand: {
+                title: "Flowers & Saints",
+            },
             colors: ["#000000"],
         },
         {
-            image: "https://flowersandsaints.com.au/cdn/shop/files/CFP8.jpg?v=1744533406&width=600",
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/CFP8.jpg?v=1744533406&width=600"],
             title: "Meow Mode - Bottle",
             price: "Rs. 2,200.00",
-            brand: "FLOWERS & SAINTS",
+            brand: {
+                title: "Flowers & Saints",
+            },
             colors: ["#ffc0cb"],
         },
         // Add more products as needed
-    ];
+    ])
+
+
+
+    const fetchBestProducts = async () => {
+        try {
+            const products = await productSvc.getProductForHome(1, 30)
+            setProducts(products.data.detail)
+            console.log("Best Sellers fetched:", products.data.detail)
+
+        } catch (exception) {
+            console.log(exception);
+        }
+    }
+    useEffect(() => {
+        fetchBestProducts()
+    }, [])
 
     const categories = ["Drink Bottles", "Essential Tees", "Tote Bags"]
 
@@ -231,11 +272,12 @@ export default function BestSellers() {
                     {products.map((product, index) => (
                         <div key={index} className="min-w-[280px] snap-start p-2">
                             <ProductCard
-                                image={product.image}
+                                image={product.images[0]}
                                 title={product.title}
                                 price={product.price}
-                                brand={product.brand}
-                                colors={product.colors}
+                                brand={product.brand?.title}
+                                colors={product.colors || ["#f5e6d8", '#1e3a8a', '#000000', '#ffc0cb']}
+
                             />
                         </div>
                     ))}
@@ -255,11 +297,11 @@ export default function BestSellers() {
                     {products.map((product, index) => (
                         <div key={index} className="flex-shrink-0 w-72 lg:w-80">
                             <ProductCard
-                                image={product.image}
+                                image={product.images[0]}
                                 title={product.title}
                                 price={product.price}
-                                brand={product.brand}
-                                colors={product.colors}
+                                brand={product.brand?.title}
+                                colors={product.colors || ["#f5e6d8", '#1e3a8a', '#000000', '#ffc0cb']}
                             />
                         </div>
                     ))}
@@ -306,14 +348,14 @@ const ProductCard = ({ image, title, price, brand, colors }: ProductCardProps) =
                     <img
                         src={image || "/placeholder.svg"}
                         alt={title}
-                        className="object-cover rounded-t-2xl transition-transform duration-300 group-hover:scale-105"
+                        className="object-cover h-full w-full rounded-t-2xl transition-transform duration-300 group-hover:scale-105"
                     />
                 </div>
                 <div className="text-xs uppercase tracking-wider text-gray-500 mb-1" onMouseEnter={() => { setIsHovered(true) }} onMouseLeave={() => { setIsHovered(false) }}><TextUnderline isNavLinkHovered={isHovered}>{brand}</TextUnderline></div>
                 <h3 className="font-medium font-inter text-2xl mb-1" onMouseEnter={() => { setIsNavLinkHovered(true) }} onMouseLeave={() => { setIsNavLinkHovered(false) }}>
                     <TextUnderline isNavLinkHovered={isNavLinkHovered} >{title}</TextUnderline>
                 </h3>
-                <div className="font-thin font-inter font-xl">{price}</div>
+                <div className="font-thin font-inter font-xl">Rs {price}</div>
                 <div className="flex mt-2 space-x-2">
                     {/* {colors.map((color, index) => (
                         <div key={index} className="color-swatch" style={{ backgroundColor: color }} />

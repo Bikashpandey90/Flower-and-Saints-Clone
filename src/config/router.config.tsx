@@ -93,17 +93,21 @@ const Routing: FC = () => {
                 {
                     path: 'brand/:slug',
                     element: <BrandProductListing />
-                }, {
+                },
+                {
                     path: "my-cart",
                     element: <CartPage />
-                }, {
+                },
+                {
                     path: "chat",
                     element: <Chat />
-                }, {
+                },
+                {
                     path: 'checkout',
                     element: <EsewaCheckoutPage />
 
-                }, {
+                },
+                {
                     path: 'payment-success',
                     element: <PaymentSuccess />
                 }
@@ -118,11 +122,13 @@ const Routing: FC = () => {
                     element: <BrandsListingPage />
 
 
-                }, {
+                },
+                {
                     path: 'orders',
                     element: <CustomerOrderListing />
 
-                }, {
+                },
+                {
                     path: '/customer',
                     element: <PermissionCheck allowedRole="customer">
                         <CustomerDashboard />

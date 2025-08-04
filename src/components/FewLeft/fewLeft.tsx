@@ -5,126 +5,166 @@ import { ChevronLeft, ChevronRight } from "lucide-react"
 import { NavLink } from "react-router-dom"
 import RoundedSlideButton from "../SplashButton/button"
 import TextUnderline from "../textUnderline/text"
+import productSvc from "@/pages/products/products.service"
+interface Products {
+    id?: string
+    images: string[]
+    title: string
+    price: string
+    brand: { title: string }
+    colors: string[]
+    slug?: string | ''
+
+}
 
 export default function YouMayAlsoLike() {
     const productsRef = useRef<HTMLDivElement>(null)
-    // const [isScrolling, setIsScrolling] = useState(false)
-
-    const products = [
+    const [products, setProducts] = useState<Products[]>([
         {
-            id: 1,
-            name: "You Grow Girl - Customized Bottle",
+            title: "You Grow Girl - Customized Bottle",
             price: "Rs. 2,800.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/Girl8.jpg?v=1744528511&width=600",
-            brand: "FLOWERS & SAINTS",
-            color: ["#f5e6d8"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/Girl8.jpg?v=1744528511&width=600"],
+            brand: {
+                title: "FLOWERS & SAINTS",
+            },
+            colors: ["#f5e6d8"],
         },
         {
-            id: 2,
-            name: "Cats Doodle - Bottle",
+            title: "Cats Doodle - Bottle",
             price: "Rs. 2,200.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/Cat8.jpg?v=1744444109&width=600",
-            brand: "FLOWERS & SAINTS",
-            color: ["#1e3a8a"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/Cat8.jpg?v=1744444109&width=600"],
+            brand: {
+                title: "FLOWERS & SAINTS",
+            },
+            colors: ["#1e3a8a"],
         },
         {
-            id: 3,
-            name: "Owl Eyes On You - Bottle",
+            title: "Owl Eyes On You - Bottle",
             price: "Rs. 2,200.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/PO8.jpg?v=1744540529&width=600",
-            brand: "FLOWERS & SAINTS",
-            color: ["#000000"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/PO8.jpg?v=1744540529&width=600"],
+            brand: {
+                title: "FLOWERS & SAINTS",
+            },
+            colors: ["#000000"],
         },
         {
-            id: 4,
-            name: "Cosmic Trip - Bottle",
+            title: "Cosmic Trip - Bottle",
             price: "Rs. 2,200.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/PM2.jpg?v=1744535986&width=1080",
-            brand: "FLOWERS & SAINTS",
-            color: ["#ffc0cb"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/PM2.jpg?v=1744535986&width=1080"],
+            brand: {
+                title: "FLOWERS & SAINTS",
+            },
+            colors: ["#ffc0cb"],
         },
         {
-            id: 5,
-            name: "You Grow Girl - Customized Bottle",
+            title: "You Grow Girl - Customized Bottle",
             price: "Rs. 2,800.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/Girl8.jpg?v=1744528511&width=600",
-            brand: "FLOWERS & SAINTS",
-            color: ["#f5e6d8"]
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/Girl8.jpg?v=1744528511&width=600"],
+            brand: {
+                title: "FLOWERS & SAINTS",
+            },
+            colors: ["#f5e6d8"]
         },
         {
-            id: 6,
-            name: "Cats Doodle - Bottle",
+            title: "Cats Doodle - Bottle",
             price: "Rs. 2,200.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/Cat8.jpg?v=1744444109&width=600",
-            brand: "FLOWERS & SAINTS",
-            color: ["#1e3a8a"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/Cat8.jpg?v=1744444109&width=600"],
+            brand: {
+                title: "FLOWERS & SAINTS",
+            },
+            colors: ["#1e3a8a"],
         },
         {
-            id: 7,
-            name: "Cosmic Trip - Bottle",
+            title: "Cosmic Trip - Bottle",
             price: "Rs. 2,200.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/PM2.jpg?v=1744535986&width=1080",
-            brand: "FLOWERS & SAINTS",
-            color: ["#1e3a8a"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/PM2.jpg?v=1744535986&width=1080"],
+            brand: {
+                title: "FLOWERS & SAINTS",
+            },
+            colors: ["#1e3a8a"],
         },
         {
-            id: 1,
-            name: "You Grow Girl - Customized Bottle",
+            title: "You Grow Girl - Customized Bottle",
             price: "Rs. 2,800.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/Girl8.jpg?v=1744528511&width=600",
-            brand: "FLOWERS & SAINTS",
-            color: ["#f5e6d8"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/Girl8.jpg?v=1744528511&width=600"],
+            brand: {
+                title: "FLOWERS & SAINTS",
+            },
+            colors: ["#f5e6d8"],
         },
         {
-            id: 2,
-            name: "Cats Doodle - Bottle",
+            title: "Cats Doodle - Bottle",
             price: "Rs. 2,200.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/Cat8.jpg?v=1744444109&width=600",
-            brand: "FLOWERS & SAINTS",
-            color: ["#1e3a8a"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/Cat8.jpg?v=1744444109&width=600"],
+            brand: {
+                title: "FLOWERS & SAINTS",
+            },
+            colors: ["#1e3a8a"],
         },
         {
-            id: 3,
-            name: "Owl Eyes On You - Bottle",
+            title: "Owl Eyes On You - Bottle",
             price: "Rs. 2,200.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/PO8.jpg?v=1744540529&width=600",
-            brand: "FLOWERS & SAINTS",
-            color: ["#000000"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/PO8.jpg?v=1744540529&width=600"],
+            brand: {
+                title: "FLOWERS & SAINTS",
+            },
+            colors: ["#000000"],
         },
         {
-            id: 4,
-            name: "Cosmic Trip - Bottle",
+            title: "Cosmic Trip - Bottle",
             price: "Rs. 2,200.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/PM2.jpg?v=1744535986&width=1080",
-            brand: "FLOWERS & SAINTS",
-            color: ["#ffc0cb"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/PM2.jpg?v=1744535986&width=1080"],
+            brand: {
+                title: "FLOWERS & SAINTS",
+            },
+            colors: ["#ffc0cb"],
         },
         {
-            id: 5,
-            name: "You Grow Girl - Customized Bottle",
+            title: "You Grow Girl - Customized Bottle",
             price: "Rs. 2,800.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/Girl8.jpg?v=1744528511&width=600",
-            brand: "FLOWERS & SAINTS",
-            color: ["#f5e6d8"]
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/Girl8.jpg?v=1744528511&width=600"],
+            brand: {
+                title: "FLOWERS & SAINTS",
+            },
+            colors: ["#f5e6d8"]
         },
         {
-            id: 6,
-            name: "Cats Doodle - Bottle",
+            title: "Cats Doodle - Bottle",
             price: "Rs. 2,200.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/Cat8.jpg?v=1744444109&width=600",
-            brand: "FLOWERS & SAINTS",
-            color: ["#1e3a8a"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/Cat8.jpg?v=1744444109&width=600"],
+            brand: {
+                title: "FLOWERS & SAINTS",
+            },
+            colors: ["#1e3a8a"],
         },
         {
-            id: 7,
-            name: "Cosmic Trip - Bottle",
+            title: "Cosmic Trip - Bottle",
             price: "Rs. 2,200.00",
-            image: "https://flowersandsaints.com.au/cdn/shop/files/PM2.jpg?v=1744535986&width=1080",
-            brand: "FLOWERS & SAINTS",
-            color: ["#1e3a8a"],
+            images: ["https://flowersandsaints.com.au/cdn/shop/files/PM2.jpg?v=1744535986&width=1080"],
+            brand: {
+                title: "FLOWERS & SAINTS",
+            },
+            colors: ["#1e3a8a"],
         },
 
     ]
+    )
+    // const [isScrolling, setIsScrolling] = useState(false)
+
+
+    const fetchProducts = async () => {
+        try {
+            const products = await productSvc.getDealsProduct()
+            setProducts(products.data.detail)
+            console.log("Products fetched:", products.data)
+
+        } catch (exception) {
+            console.log(exception)
+        }
+    }
+    useEffect(() => {
+        fetchProducts();
+    }, [])
 
     const smoothScrollTo = (element: HTMLElement, targetScrollLeft: number, duration = 800) => {
         const startScrollLeft = element.scrollLeft
@@ -254,7 +294,7 @@ export default function YouMayAlsoLike() {
             </div>
 
             {/* Products Container - Responsive Layout */}
-            <div className="relative">
+            <div className="relative ">
                 {/* Mobile: Horizontal Scroll */}
                 <div
                     ref={productsRef}
@@ -267,11 +307,13 @@ export default function YouMayAlsoLike() {
                     {products.map((product, index) => (
                         <div key={index} className="min-w-[280px] snap-start p-2">
                             <ProductCard
-                                image={product.image}
-                                title={product.name}
+                                image={product.images[0]}
+                                title={product.title}
                                 price={product.price}
-                                brand={product.brand}
-                                colors={product.color}
+                                brand={product.brand?.title}
+                                slug={product.slug}
+                                // colors={product.color}
+                                colors={['#f5e6d8', '#1e3a8a', '#000000', '#ffc0cb']}
                             />
                         </div>
                     ))}
@@ -291,11 +333,12 @@ export default function YouMayAlsoLike() {
                     {products.map((product, index) => (
                         <div key={index} className="flex-shrink-0 w-72 lg:w-80">
                             <ProductCard
-                                image={product.image}
-                                title={product.name}
+                                image={product.images[0]}
+                                title={product.title}
                                 price={product.price}
-                                brand={product.brand}
-                                colors={product.color}
+                                brand={product.brand?.title}
+                                slug={product.slug}
+                                colors={['#f5e6d8', '#1e3a8a', '#000000', '#ffc0cb']}
                             />
                         </div>
                     ))}
@@ -324,32 +367,34 @@ export default function YouMayAlsoLike() {
     )
 }
 interface ProductCardProps {
+    id?: string
     image: string
     title: string
     price: string
     brand: string
     colors: string[]
+    slug?: string | ''
 
 }
 
-const ProductCard = ({ image, title, price, brand, colors }: ProductCardProps) => {
+const ProductCard = ({ image, title, price, brand, colors, slug }: ProductCardProps) => {
     const [isTitleHovered, setIsTitleHovered] = useState(false)
     const [isFSHovered, setIsFSHovered] = useState(false)
     return (
         <div className="product-card rounded-2xl">
-            <NavLink to={`/products/${title.toLowerCase().replace(/\s+/g, "-")}`} className="block">
+            <NavLink to={`/products/${slug}`} className="block">
                 <div className="relative aspect-square overflow-hidden mb-4">
                     <img
                         src={image || "/placeholder.svg"}
                         alt={title}
-                        className="object-cover rounded-t-2xl transition-transform duration-300 group-hover:scale-105"
+                        className="object-cover h-full w-full rounded-t-2xl transition-transform duration-300 group-hover:scale-105"
                     />
                 </div>
                 <div className="text-xs uppercase tracking-wider text-gray-500 mb-1" onMouseEnter={() => setIsFSHovered(true)}
                     onMouseLeave={() => setIsFSHovered(false)}> <TextUnderline isNavLinkHovered={isFSHovered}>{brand}</TextUnderline></div>
                 <h3 className="font-medium font-inter text-2xl mb-1" onMouseEnter={() => setIsTitleHovered(true)}
                     onMouseLeave={() => setIsTitleHovered(false)}><TextUnderline isNavLinkHovered={isTitleHovered}>{title}</TextUnderline></h3>
-                <div className="font-thin font-inter font-xl">{price}</div>
+                <div className="font-thin font-inter font-xl">Rs {price}</div>
                 <div className="flex mt-2 space-x-2">
                     {/* {colors.map((color, index) => (
                         <div key={index} className="color-swatch" style={{ backgroundColor: color }} />
