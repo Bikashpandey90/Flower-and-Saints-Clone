@@ -7,7 +7,7 @@ import RoundedSlideButton from "../SplashButton/button"
 import TextUnderline from "../textUnderline/text"
 
 export default function TillDeathDripsHotBundle() {
-    const [currentSlide, setCurrentSlide] = useState(0)
+    const [currentSlide] = useState(0)
     const sliderRef = useRef<HTMLDivElement>(null)
     const [isMobile, setIsMobile] = useState(false)
     const [isHovered, setIsHovered] = useState(false)

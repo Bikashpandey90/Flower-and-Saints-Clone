@@ -23,7 +23,9 @@ export default function ProductDetail() {
     const [isNavLinkHovered, setIsNavLinkHovered] = useState(false)
 
     const [product, setProduct] = useState<any>(null)
-    const [related,setRelated] = useState<any>([])
+    const [related, setRelated] = useState<any>([])
+    console.log(product)
+    console.log(mainImageHeight)
 
     // Refs
     const containerRef = useRef<HTMLDivElement>(null)
@@ -144,7 +146,7 @@ export default function ProductDetail() {
                     <div ref={mainImageRef} className={`flex-1 order-1 ${isMobile ? "" : "md:sticky md:top-8 md:h-fit"}`}>
                         <div className="relative">
                             <img
-                                src={ "https://flowersandsaints.com.au/cdn/shop/files/FNS8.jpg?v=1744530624&width=600"}
+                                src={"https://flowersandsaints.com.au/cdn/shop/files/FNS8.jpg?v=1744530624&width=600"}
                                 alt="Flowers & Saints Signature Bottle"
                                 width={600}
                                 height={600}
@@ -314,7 +316,7 @@ export default function ProductDetail() {
                 <HurryUpSection />
 
                 {/* You May Also Like */}
-                <YouMayAlsoLike  products={related}/>
+                <YouMayAlsoLike products={related} />
             </div>
         </div>
     )

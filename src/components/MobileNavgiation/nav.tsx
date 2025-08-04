@@ -152,9 +152,9 @@ const MobileNavigation = ({ onVisibilityChange }: MobileNavigationProps) => {
                     <span className="text-[0.7rem] mt-1">Account</span>
                 </NavLink>
             </div>
-            <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+            <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} setIsOpen={setIsCartOpen} />
 
-            <SearchSidebar isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+            <SearchSidebar isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)}  />
         </>
     )
 }

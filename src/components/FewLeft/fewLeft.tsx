@@ -396,9 +396,9 @@ const ProductCard = ({ image, title, price, brand, colors, slug }: ProductCardPr
                     onMouseLeave={() => setIsTitleHovered(false)}><TextUnderline isNavLinkHovered={isTitleHovered}>{title}</TextUnderline></h3>
                 <div className="font-thin font-inter font-xl">Rs {price}</div>
                 <div className="flex mt-2 space-x-2">
-                    {/* {colors.map((color, index) => (
+                    {colors.map((color, index) => (
                         <div key={index} className="color-swatch" style={{ backgroundColor: color }} />
-                    ))} */}
+                    ))}
                 </div>
             </NavLink>
         </div>

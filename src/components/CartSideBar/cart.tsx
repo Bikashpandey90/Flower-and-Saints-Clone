@@ -263,7 +263,7 @@ export default function CartSidebar({
             image: "https://flowersandsaints.com.au/cdn/shop/files/CFP8.jpg?v=1744533406&width=540",
         },
     ])
-    const [RecentlyViewedItems, setRecentlyViewedItems] = useState<CartItem[]>([
+    const [RecentlyViewedItems] = useState<CartItem[]>([
         {
             id: "1",
             name: "Stay Humble Relax Crew",

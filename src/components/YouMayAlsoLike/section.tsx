@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom"
 import RoundedSlideButton from "../SplashButton/button"
 import TextUnderline from "../textUnderline/text"
 interface Product {
-    id: number
+    id?: number
     title: string
     price: string
     images: string[]
@@ -17,67 +17,141 @@ interface Product {
 export default function YouMayAlsoLike({ products }: { products?: Product[] }) {
     const productsRef = useRef<HTMLDivElement>(null)
     const [isScrolling, setIsScrolling] = useState(false)
-    
 
-    // // const products = [
-    // //     {
-    // //         id: 1,
-    // //         name: "You Grow Girl - Customized Bottle",
-    // //         price: "Rs. 2,800.00",
-    // //         image: "https://flowersandsaints.com.au/cdn/shop/files/Girl8.jpg?v=1744528511&width=600",
-    // //         brand: "FLOWERS & SAINTS",
-    // //         color: ["#f5e6d8"],
-    // //     },
-    // //     {
-    // //         id: 2,
-    // //         name: "Cats Doodle - Bottle",
-    // //         price: "Rs. 2,200.00",
-    // //         image: "https://flowersandsaints.com.au/cdn/shop/files/Cat8.jpg?v=1744444109&width=600",
-    // //         brand: "FLOWERS & SAINTS",
-    // //         color: ["#1e3a8a"],
-    // //     },
-    // //     {
-    // //         id: 3,
-    // //         name: "Owl Eyes On You - Bottle",
-    // //         price: "Rs. 2,200.00",
-    // //         image: "https://flowersandsaints.com.au/cdn/shop/files/PO8.jpg?v=1744540529&width=600",
-    // //         brand: "FLOWERS & SAINTS",
-    // //         color: ["#000000"],
-    // //     },
-    // //     {
-    // //         id: 4,
-    // //         name: "Cosmic Trip - Bottle",
-    // //         price: "Rs. 2,200.00",
-    // //         image: "https://flowersandsaints.com.au/cdn/shop/files/PM2.jpg?v=1744535986&width=1080",
-    // //         brand: "FLOWERS & SAINTS",
-    // //         color: ["#ffc0cb"],
-    // //     },
-    // //     {
-    // //         id: 5,
-    // //         name: "You Grow Girl - Customized Bottle",
-    // //         price: "Rs. 2,800.00",
-    // //         image: "https://flowersandsaints.com.au/cdn/shop/files/Girl8.jpg?v=1744528511&width=600",
-    // //         brand: "FLOWERS & SAINTS",
-    // //         color: ["#f5e6d8"]
-    // //     },
-    // //     {
-    // //         id: 6,
-    // //         name: "Cats Doodle - Bottle",
-    // //         price: "Rs. 2,200.00",
-    // //         image: "https://flowersandsaints.com.au/cdn/shop/files/Cat8.jpg?v=1744444109&width=600",
-    // //         brand: "FLOWERS & SAINTS",
-    // //         color: ["#1e3a8a"],
-    // //     },
-    // //     {
-    // //         id: 7,
-    // //         name: "Cosmic Trip - Bottle",
-    // //         price: "Rs. 2,200.00",
-    // //         image: "https://flowersandsaints.com.au/cdn/shop/files/PM2.jpg?v=1744535986&width=1080",
-    // //         brand: "FLOWERS & SAINTS",
-    // //         color: ["#1e3a8a"],
-    // //     },
+    if (products?.length === 0) {
+        products = [
+            {
+                title: "You Grow Girl - Customized Bottle",
+                price: "Rs. 2,800.00",
+                images: ["https://flowersandsaints.com.au/cdn/shop/files/Girl8.jpg?v=1744528511&width=600"],
+                brand: {
+                    title: "FLOWERS & SAINTS",
+                },
+                color: ["#f5e6d8"],
+            },
+            {
+                title: "Cats Doodle - Bottle",
+                price: "Rs. 2,200.00",
+                images: ["https://flowersandsaints.com.au/cdn/shop/files/Cat8.jpg?v=1744444109&width=600"],
+                brand: {
+                    title: "FLOWERS & SAINTS",
+                },
+                color: ["#1e3a8a"],
+            },
+            {
+                title: "Owl Eyes On You - Bottle",
+                price: "Rs. 2,200.00",
+                images: ["https://flowersandsaints.com.au/cdn/shop/files/PO8.jpg?v=1744540529&width=600"],
+                brand: {
+                    title: "FLOWERS & SAINTS",
+                },
+                color: ["#000000"],
+            },
+            {
+                title: "Cosmic Trip - Bottle",
+                price: "Rs. 2,200.00",
+                images: ["https://flowersandsaints.com.au/cdn/shop/files/PM2.jpg?v=1744535986&width=1080"],
+                brand: {
+                    title: "FLOWERS & SAINTS",
+                },
+                color: ["#ffc0cb"],
+            },
+            {
+                title: "You Grow Girl - Customized Bottle",
+                price: "Rs. 2,800.00",
+                images: ["https://flowersandsaints.com.au/cdn/shop/files/Girl8.jpg?v=1744528511&width=600"],
+                brand: {
+                    title: "FLOWERS & SAINTS",
+                },
+                color: ["#f5e6d8"]
+            },
+            {
+                title: "Cats Doodle - Bottle",
+                price: "Rs. 2,200.00",
+                images: ["https://flowersandsaints.com.au/cdn/shop/files/Cat8.jpg?v=1744444109&width=600"],
+                brand: {
+                    title: "FLOWERS & SAINTS",
+                },
+                color: ["#1e3a8a"],
+            },
+            {
+                title: "Cosmic Trip - Bottle",
+                price: "Rs. 2,200.00",
+                images: ["https://flowersandsaints.com.au/cdn/shop/files/PM2.jpg?v=1744535986&width=1080"],
+                brand: {
+                    title: "FLOWERS & SAINTS",
+                },
+                color: ["#1e3a8a"],
+            },
+            {
+                title: "You Grow Girl - Customized Bottle",
+                price: "Rs. 2,800.00",
+                images: ["https://flowersandsaints.com.au/cdn/shop/files/Girl8.jpg?v=1744528511&width=600"],
+                brand: {
+                    title: "FLOWERS & SAINTS",
+                },
+                color: ["#f5e6d8"],
+            },
+            {
+                title: "Cats Doodle - Bottle",
+                price: "Rs. 2,200.00",
+                images: ["https://flowersandsaints.com.au/cdn/shop/files/Cat8.jpg?v=1744444109&width=600"],
+                brand: {
+                    title: "FLOWERS & SAINTS",
+                },
+                color: ["#1e3a8a"],
+            },
+            {
+                title: "Owl Eyes On You - Bottle",
+                price: "Rs. 2,200.00",
+                images: ["https://flowersandsaints.com.au/cdn/shop/files/PO8.jpg?v=1744540529&width=600"],
+                brand: {
+                    title: "FLOWERS & SAINTS",
+                },
+                color: ["#000000"],
+            },
+            {
+                title: "Cosmic Trip - Bottle",
+                price: "Rs. 2,200.00",
+                images: ["https://flowersandsaints.com.au/cdn/shop/files/PM2.jpg?v=1744535986&width=1080"],
+                brand: {
+                    title: "FLOWERS & SAINTS",
+                },
+                color: ["#ffc0cb"],
+            },
+            {
+                title: "You Grow Girl - Customized Bottle",
+                price: "Rs. 2,800.00",
+                images: ["https://flowersandsaints.com.au/cdn/shop/files/Girl8.jpg?v=1744528511&width=600"],
+                brand: {
+                    title: "FLOWERS & SAINTS",
+                },
+                color: ["#f5e6d8"]
+            },
+            {
+                title: "Cats Doodle - Bottle",
+                price: "Rs. 2,200.00",
+                images: ["https://flowersandsaints.com.au/cdn/shop/files/Cat8.jpg?v=1744444109&width=600"],
+                brand: {
+                    title: "FLOWERS & SAINTS",
+                },
+                color: ["#1e3a8a"],
+            },
+            {
+                title: "Cosmic Trip - Bottle",
+                price: "Rs. 2,200.00",
+                images: ["https://flowersandsaints.com.au/cdn/shop/files/PM2.jpg?v=1744535986&width=1080"],
+                brand: {
+                    title: "FLOWERS & SAINTS",
+                },
+                color: ["#1e3a8a"],
+            },
 
-    // // ]
+        ]
+    }
+
+
+
 
     const smoothScrollTo = (element: HTMLElement, targetScrollLeft: number, duration = 800) => {
         const startScrollLeft = element.scrollLeft
@@ -224,7 +298,7 @@ export default function YouMayAlsoLike({ products }: { products?: Product[] }) {
                                 title={product.title}
                                 price={product.price}
                                 brand={product.brand?.title}
-                                colors={product.color}
+                                color={product.color}
                             />
                         </div>
                     ))}
@@ -248,7 +322,7 @@ export default function YouMayAlsoLike({ products }: { products?: Product[] }) {
                                 title={product.title}
                                 price={product.price}
                                 brand={product.brand?.title}
-                                colors={product.color}
+                                color={product.color}
                             />
                         </div>
                     ))}
@@ -281,10 +355,10 @@ interface ProductCardProps {
     title: string
     price: string
     brand: string
-    colors: string[]
+    color: string[]
 }
 
-const ProductCard = ({ image, title, price, brand, colors }: ProductCardProps) => {
+const ProductCard = ({ image, title, price, brand, color }: ProductCardProps) => {
     const [isHovered, setIsHovered] = useState(false)
     const [isHovered2, setIsHovered2] = useState(false)
     return (
@@ -301,9 +375,9 @@ const ProductCard = ({ image, title, price, brand, colors }: ProductCardProps) =
                 <h3 className="font-medium font-inter text-2xl mb-1" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}><TextUnderline isNavLinkHovered={isHovered} >{title}</TextUnderline></h3>
                 <div className="font-thin font-inter font-xl">{price}</div>
                 <div className="flex mt-2 space-x-2">
-                    {/* {colors.map((color, index) => (
+                    {color.map((color, index) => (
                         <div key={index} className="color-swatch" style={{ backgroundColor: color }} />
-                    ))} */}
+                    ))}
                 </div>
             </NavLink>
         </div>

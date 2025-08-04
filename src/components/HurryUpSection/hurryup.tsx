@@ -298,9 +298,9 @@ const ProductCard = ({ image, title, price, brand, colors }: ProductCardProps) =
                 <h3 className="font-medium font-inter text-2xl mb-1" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}><TextUnderline isNavLinkHovered={isHovered}>{title}</TextUnderline></h3>
                 <div className="font-thin font-inter font-xl">{price}</div>
                 <div className="flex mt-2 space-x-2">
-                    {/* {colors.map((color, index) => (
-                        <div key={index} className="color-swatch" style={{ backgroundColors: color }} />
-                    ))} */}
+                    {colors.map((color, index) => (
+                        <div key={index} className="color-swatch" style={{ backgroundColor: color }} />
+                    ))}
                 </div>
             </NavLink>
         </div>
