@@ -3,7 +3,7 @@ import { ChevronDown, SlidersHorizontal, X } from "lucide-react"
 import ProductGrid from "@/pages/product/product-grid"
 import ColorFilter from "@/components/Color Filter/color"
 import CategoryFilter from "@/components/CategoryFilter/category"
-import { NavLink } from "react-router-dom"
+import { NavLink, useParams } from "react-router-dom"
 import SortButton from "@/components/SortButton/button"
 import { useEffect, useState } from "react"
 import RoundedSlideButton from "@/components/SplashButton/button"
@@ -19,6 +19,7 @@ export default function ListPage() {
   const [isNavVisible, setIsNavVisible] = useState(true)
   const [lastScrollY, setLastScrollY] = useState(0)
 
+  const { slug } = useParams()
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY
@@ -82,12 +83,12 @@ export default function ListPage() {
             </svg>
           </MagnetButton>
         </NavLink>
-        <span className="text-sm font-thin font-inter">Apparel</span>
+        <span className="text-sm font-thin font-inter">{slug?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</span>
       </div>
 
       {/* Page Title */}
       <div className="px-4 md:px-6 pb-6 pt-4 md:pt-6">
-        <h1 className="text-5xl md:text-8xl font-inter font-semibold">Apparel</h1>
+        <h1 className="text-5xl md:text-8xl font-inter font-semibold">{slug?.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}</h1>
       </div>
 
       {/* Filter Controls - Desktop Only */}

@@ -27,7 +27,7 @@ import SellerProfile from "@/pages/seller/seller-profile";
 import ProductDetail from "@/components/seller-dashboard-components/product-detailpage";
 // import HomePageDraft from "@/pages/home/homepage-draft";
 // import ProductPage from "@/pages/products/full-productView";
-import CategoryListPage from "@/pages/category/fetch-by-category";
+// import CategoryListPage from "@/pages/category/fetch-by-category";
 import BrandProductListing from "@/pages/brand/brand-fetchProduct";
 import CartPage from "@/pages/orders/cart-fullpage";
 import EsewaCheckoutPage from "@/pages/orders/checkout";
@@ -55,6 +55,9 @@ import MainHome from "@/pages/home/mainpage";
 import AuthLayout from "@/pages/auth/auth.layout";
 import NewLoginPage from "@/pages/auth/new-login";
 import NewRegisterPage from "@/pages/auth/new-registerpage";
+import { StickyCards } from "@/pages/dbrand";
+import ImageRevealGallery from "@/pages/dbrand/image-gallery";
+import DBrand from "@/pages/dbrand/dbrand";
 
 
 
@@ -71,7 +74,7 @@ const Routing: FC = () => {
                 },
 
                 {
-                    path: 'search',
+                    path: 'categories/:slug',
                     element: <ListPage />
 
                 },
@@ -84,10 +87,11 @@ const Routing: FC = () => {
                     path: "products/:slug",
                     element: <NewProductPage />
 
-                }, {
-                    path: 'category/:slug',
-                    element: <CategoryListPage />
                 },
+                //  {
+                //     path: 'category/:slug',
+                //     element: <CategoryListPage />
+                // },
 
 
                 {
@@ -323,7 +327,14 @@ const Routing: FC = () => {
                     element: <MainHome />
                 }
             ]
+        }, {
+            path: '/dbrand',
+            element: <StickyCards />
+        }, {
+            path: "/anim",
+            element: <DBrand />
         }
+
 
 
 
