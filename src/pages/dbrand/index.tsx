@@ -2,7 +2,6 @@ import { MotionValue, useScroll, motion, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { IconType } from "react-icons";
 import {
-  FiArrowRight,
   FiAward,
   FiCalendar,
   FiCopy,
@@ -53,9 +52,8 @@ const Card = ({ position, card, scrollYProgress }: CardProps) => {
         background: isOddCard ? "black" : "white",
         color: isOddCard ? "white" : "black",
       }}
-      className="sticky top-0 flex w-full h-full origin-top flex-col items-center justify-center "
+      className="sticky mb-0 border-none top-0 flex w-full h-full origin-top flex-col items-center justify-center "
     >
-      {/* <card.Icon className="mb-4 text-4xl" /> */}
       {
         card?.image ? <img src={card?.image} alt={card.title} className=" w-full h-full object-cover" /> : null
       }
@@ -70,10 +68,7 @@ const Card = ({ position, card, scrollYProgress }: CardProps) => {
       }}
       className="sticky top-0 flex w-full h-full origin-top flex-col items-center justify-center "
     >
-      {/* <card.Icon className="mb-4 text-4xl" /> */}
-      {/* {
-        card?.image ? <img src={card?.image} alt={card.title} className="mb-4 h-32 w-32 object-cover" /> : null
-      } */}
+
       <h3 className=" text-center text-4xl font-semibold md:text-6xl">
         {card.title}
       </h3>
@@ -89,7 +84,6 @@ const Card = ({ position, card, scrollYProgress }: CardProps) => {
           }`}
       >
         <span>{card?.button || "Learn  more"}</span>
-        {/* <FiArrowRight /> */}
       </a>
     </motion.div>
 

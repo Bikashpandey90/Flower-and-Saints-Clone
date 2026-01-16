@@ -117,13 +117,7 @@ const NewLandingPage = () => {
                     isSearchOpen={isSearchOpen}
                     setIsSearchOpen={setIsSearchOpen}
                 >
-                    {/* <div className="flex flex-col items-center justify-center px-12 py-32"> */}
-{/* 
-                    <AnimatePresence mode='wait'>
-                        {
-                            isActive && <NewNav isActive={isActive} setIsActive={setIsActive} />
-                        }
-                    </AnimatePresence> */}
+                   
                     <AnimatePresence mode="wait">
                         {isCartOpen && <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} setIsOpen={setIsCartOpen} />}
                     </AnimatePresence>

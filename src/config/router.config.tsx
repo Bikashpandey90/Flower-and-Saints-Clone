@@ -56,7 +56,6 @@ import AuthLayout from "@/pages/auth/auth.layout";
 import NewLoginPage from "@/pages/auth/new-login";
 import NewRegisterPage from "@/pages/auth/new-registerpage";
 import { StickyCards } from "@/pages/dbrand";
-import ImageRevealGallery from "@/pages/dbrand/image-gallery";
 import DBrand from "@/pages/dbrand/dbrand";
 
 

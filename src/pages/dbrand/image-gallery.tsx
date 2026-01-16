@@ -66,8 +66,8 @@ export default function ImageRevealGallery({ sections }: ImageRevealGalleryProps
                     const headline = detail.querySelector(".reveal")
                     const animation = gsap
                         .timeline()
-                        .to(photos[index], { clipPath: "inset(0% 0% 0% 0%)", autoAlpha: 1, duration: 2.5 })
-                        .set(allPhotos[index], { autoAlpha: 1, duration: 1.5 })
+                        .to(photos[index] as Element, { clipPath: "inset(0% 0% 0% 0%)", autoAlpha: 1, duration: 2.5 })
+                        .set(allPhotos[index] as Element, { autoAlpha: 1, duration: 1.5 })
 
                     ScrollTrigger.create({
                         trigger: headline,
